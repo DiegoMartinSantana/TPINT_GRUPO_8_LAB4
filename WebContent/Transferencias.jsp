@@ -18,7 +18,13 @@
                 <option value="propia">Entre Mis Cuentas</option>
                 <option value="ajena">A Cuenta Ajena</option>
             </select>
-    
+      <div id="cuentaOrigen" style="display: block;margin-top: 15px;">
+                <label for="cuentaOrigen">Cuenta Origen:</label>
+                <select id="cuentaOrigen">
+                    <option value="cuenta1">Cuenta 1</option>
+                    <option value="cuenta2">Cuenta 2</option>
+                </select>
+            </div>
             <div id="cuentaDestinoPropia" style="display: block;margin-top: 15px;">
                 <label for="cuentaDestino">Cuenta Destino:</label>
                 <select id="cuentaDestino">
@@ -38,6 +44,6 @@
             </div>
 
             <button  style="margin-top: 15px;">Enviar Transferencia</button>
-        </div> </div> 
+        </div>         </div> 
 </body>
 </html>
