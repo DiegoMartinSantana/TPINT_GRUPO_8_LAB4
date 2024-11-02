@@ -1,0 +1,17 @@
+ @charset "ISO-8859-1"
+ body { font-family: Arial, sans-serif; }
+        .container { max-width: 600px; margin: auto; padding: 20px; }
+        .section { margin-bottom: 20px; margin-top: 60px; }
+        h2 { color: #333; }
+        button {
+            margin-top: 5px;
+            padding: 13px;
+            background-color: #51bb55;
+            color: white;
+            border: 1px solid #51bb55;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        table { width: 100%; margin-top: 10px; border-collapse: collapse; }
+        th, td { padding: 8px; border: 1px solid #ddd; text-align: center; }
+        select, input { padding: 8px; width: 100%; margin-top: 5px; border-radius: 10px;}
