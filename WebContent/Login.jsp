@@ -11,11 +11,10 @@
 </head>
 <body>
 
-  <div class="container">
-       
+<div class="container">
         <div class="section">
             <h2>Iniciar Sesión</h2>
-            <form action="loginServlet" method="post">
+            <form action="LoginServlet" method="get">
                 <label for="username">Nombre de Usuario:</label>
                 <input type="text" id="username" name="username" required>
                 
@@ -23,11 +22,14 @@
                 <input type="password" id="password" name="password" required>
                 
                 <div style="margin-top: 15px;">
-                    <button type="submit">Aceptar</button>
+                    
+                    <input type="submit" value="Aceptar">
                 </div>
             </form>
         </div>
-      
+        <%if(request.getAttribute("UsuarioValido")!=null){ %>
+        	<p style="color:red; "> Usuario o Contraseña invalidos. </p>
+        <%} %>
     </div>
 
 </body>
