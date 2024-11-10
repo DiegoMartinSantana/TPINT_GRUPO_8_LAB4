@@ -1,6 +1,5 @@
  @charset "ISO-8859-1"
  body { font-family: Arial, sans-serif; }
-        .container { max-width: 600px; margin: auto; padding: 20px; }
         .section { margin-bottom: 20px; margin-top: 60px; }
         h2 { color: #333; }
         button {
