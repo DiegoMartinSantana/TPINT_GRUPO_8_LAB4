@@ -69,8 +69,37 @@ public class UsuarioDao implements IUsuarioDao {
 
 
 	@Override
-	public boolean Insertar(String nombre, int tipo, String pass) {
-		return true;
+	public boolean Insertar(String nombre_usuario, int tipo, String pass) {
+		PreparedStatement statement;
+        Connection conexion = Conexion.getConexion().getSQLConexion();
+        boolean isInsertExitoso = false;
+        try 
+        {
+        	statement = conexion.prepareStatement(insertar);
+            statement.setString(1, nombre_usuario);
+            statement.setInt(2, tipo);
+            statement.setString(3, pass);
+            
+            if(statement.executeUpdate() > 0)
+			{
+				conexion.commit();
+				isInsertExitoso = true;
+			}
+        }
+        catch (SQLException e) 
+		{
+			e.printStackTrace();
+			try 
+			{
+				conexion.rollback();
+			} 
+			catch (SQLException e1) 
+			{
+				e1.printStackTrace();
+			}
+		}
+		
+		return isInsertExitoso;	
 	}
 
 	@Override

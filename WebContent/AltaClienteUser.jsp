@@ -27,7 +27,7 @@ label, select, input[type="text"], input[type="date"] {
        	</div>
         <div class="section col-8">
             <h2>Alta de Cliente</h2>
-            <form action="altaClienteServlet" method="post">
+            <form action="servletUsuario" method="post">
             
             <label for="dni">DNI:</label>
             <input type="text" id="dni" name="dni" required>
@@ -44,9 +44,9 @@ label, select, input[type="text"], input[type="date"] {
             <label for="sexo">Sexo:</label>
             <select id="sexo" name="sexo" required>
                 <option value="">Seleccione...</option>
-                <option value="Masculino">Masculino</option>
-                <option value="Femenino">Femenino</option>
-                <option value="Otro">Otro</option>
+                <option value="1">Masculino</option>
+                <option value="2">Femenino</option>
+                <option value="3">Otro</option>
             </select>
             
             <label for="nacionalidad">Nacionalidad:</label>
@@ -76,10 +76,8 @@ label, select, input[type="text"], input[type="date"] {
             <label for="contrasena">Contraseña:</label>
             <input type="password" id="contrasena" name="contrasena" required>
             
-            <div style="margin-top: 15px;">
-                    <button type="submit">Aceptar</button>
-                </div>
             
+            <input type="submit" value="Aceptar" name="btnAceptar">
             </form>
             
         </div>

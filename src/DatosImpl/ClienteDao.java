@@ -13,7 +13,7 @@ public class ClienteDao implements IClienteDao{
 	
 	private static ClienteDao instancia = null;
 	
-	private static final String insert = "INSERT INTO Cliente(nombre_usuario, dni, cuil, nombre, apellido, sexo, nacionalidad,nacimiento, domicilio, localidad, id_provincia, email, telefono, activo) VALUES(?, ?, ?,?, ?, ?,?,?, ?, ?,?, ?, ?,?)";
+	private static final String insert = "INSERT INTO Cliente(nombre_usuario, dni, cuil, nombre, apellido, sexo, nacionalidad, domicilio, localidad, id_provincia, email, telefono, activo) VALUES(?, ?, ?,?, ?, ?,?,?, ?, ?,?, ?, ?)";
 	
 	public static ClienteDao ObtenerInstancia() {
 		if(instancia == null) {
@@ -24,7 +24,7 @@ public class ClienteDao implements IClienteDao{
 	
 	
 	public boolean insert(String nombre_usuario, int dni, String cuil, String nombre, String apellido, int sexo,
-			String nacionalidad, String nacimiento, String domicilio, String localidad, int id_provincia, String email,
+			String nacionalidad, String domicilio, String localidad, int id_provincia, String email,
 			String telefono, boolean activo) 
 	{
 		
@@ -42,13 +42,13 @@ public class ClienteDao implements IClienteDao{
             statement.setString(5, apellido);
             statement.setInt(6, sexo);
             statement.setString(7, nacionalidad);
-            statement.setString(8, nacimiento);
-            statement.setString(9, domicilio);
-            statement.setString(10, localidad);
-            statement.setInt(11, id_provincia);
-            statement.setString(12, email);
-            statement.setString(13, telefono);
-            statement.setBoolean(14, activo);
+            //statement.setString(8, nacimiento);
+            statement.setString(8, domicilio);
+            statement.setString(9, localidad);
+            statement.setInt(10, id_provincia);
+            statement.setString(11, email);
+            statement.setString(12, telefono);
+            statement.setBoolean(13, activo);
             if(statement.executeUpdate() > 0)
 			{
 				conexion.commit();
@@ -71,4 +71,13 @@ public class ClienteDao implements IClienteDao{
     		
     		return isInsertExitoso;	
 }
+
+
+	@Override
+	public boolean insert(String nombre_usuario, int dni, String cuil, String nombre, String apellido, int sexo,
+			String nacionalidad, String nacimiento, String domicilio, String localidad, int id_provincia, String email,
+			String telefono, boolean activo) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }
