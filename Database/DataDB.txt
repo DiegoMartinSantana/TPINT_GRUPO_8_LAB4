@@ -1,0 +1,9 @@
+use SistemaBancario;
+
+insert into usuario(nombre_usuario, pass, tipo) values
+('admin1', '123', 1),
+('admin2', '123', 1),
+('cliente1', '123', 2),
+('cliente2', '123', 2);
+
+

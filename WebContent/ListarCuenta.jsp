@@ -10,14 +10,14 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h3>Listado que muestra cuentas x dni + nombre usuario permitiendo modificar la cuenta </h3>
-<h3>click en modificar permite modificar/eliminar x cada cuenta </h3>
+
 <div class="row">
        <div class="col-2"> 
        <%@include file="NavegacionComponente.jsp" %>
        	</div>
         <div class="section col-9">
-        
+        <h3>Listado que muestra cuentas x dni + nombre usuario permitiendo modificar la cuenta </h3>
+<h3>click en modificar permite modificar/eliminar x cada cuenta </h3>
         
         </div>
 </div>

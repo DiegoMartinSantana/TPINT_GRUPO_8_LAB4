@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import Datos.IUsuarioDao;
 import Dominio.TipoUsuario;
 import Dominio.Usuario;
+import daoImpl.Conexion;
 
 public class UsuarioDao implements IUsuarioDao {
 	
@@ -70,7 +71,7 @@ public class UsuarioDao implements IUsuarioDao {
 
 	@Override
 	public boolean Insertar(String nombre, int tipo, String pass) {
-		return true;
+	return true;
 	}
 
 	@Override

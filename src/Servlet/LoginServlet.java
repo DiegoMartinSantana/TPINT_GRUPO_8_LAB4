@@ -34,38 +34,74 @@ public class LoginServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		UsuarioNegocio usuarioNegocio = new UsuarioNegocio();
-	String nombreUsuario = request.getParameter("username");
-    String password = request.getParameter("password");
-    
-    Usuario usuario = usuarioNegocio.login(nombreUsuario,password);
-    if(usuario == null){
+		
+		String nombreUsuario = request.getParameter("username");
+	    String password = request.getParameter("password");
+	    
+	    Usuario usuarioLogin = usuarioNegocio.login(nombreUsuario,password);
+	    
+		
+	
+ 
+    if(usuarioLogin == null){
 		request.setAttribute("UsuarioNulo", false);
 		 RequestDispatcher rd = request.getRequestDispatcher("Login.jsp");
 	        rd.forward(request, response);
 	}
-	if(usuario.isActivo()) {
+    
+	if(usuarioLogin.isActivo()) {
 		//Si es admin va hacia posible home admin
-		if(usuario.getTipo().codigo== 1) {
-			 RequestDispatcher rd = request.getRequestDispatcher("AutorizacionPrestamo.jsp");
+		if(usuarioLogin.getTipo().codigo== 1) {
+			 RequestDispatcher rd = request.getRequestDispatcher("ListarBanco.jsp");
 		        rd.forward(request, response);
-		}else if(usuario.getTipo().codigo==2) {
+		}else if(usuarioLogin.getTipo().codigo==2) {
 			 RequestDispatcher rd = request.getRequestDispatcher("Home.jsp");
 		        rd.forward(request, response);
-			
 		}
-	}else{
+		
+		request.getSession().setAttribute("UsuarioNombre", usuarioLogin.getNombre_usuario());
+		request.getSession().setAttribute("Usuario", usuarioLogin);
+
+		}else {
 		request.setAttribute("UsuarioInactivo", true);
 		 RequestDispatcher rd = request.getRequestDispatcher("Login.jsp");
 	        rd.forward(request, response);
-	}
+		}
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+	
+
+		request.getSession().removeAttribute("UsuarioNombre");
+		request.getSession().removeAttribute("Usuario");
+		RequestDispatcher rd = request.getRequestDispatcher("Login.jsp");
+		
+		
 	}
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

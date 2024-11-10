@@ -48,7 +48,7 @@
 </style>
 
 <aside class="sidebar">
-  <h5>User en session Obtener</h5>
+  <h5><%=session.getAttribute("UsuarioNombre") %></h5>
     <ul class="nav flex-column">
         <!-- Menú "Clientes" con submenú colapsable -->
         <li class="nav-item">
