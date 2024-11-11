@@ -60,7 +60,6 @@ public class servletUsuario extends HttpServlet {
 		     String email = request.getParameter("correoElectronico");
 		     String telefono = request.getParameter("telefono");
 		     
-		     Cliente cliente = new Cliente(nombreUsuario,1, dni, cuil, nombre, apellido, sexo, nacionalidad, domicilio, localidad, email, telefono, activo);
 			 
 		     UsuarioDao udao= new UsuarioDao();
 		     udao.Insertar(nombreUsuario,tipoUsuario,contrasena);

@@ -13,7 +13,7 @@ public class ClienteDao implements IClienteDao{
 	
 	private static ClienteDao instancia = null;
 	
-	private static final String insert = "INSERT INTO Cliente(nombre_usuario, dni, cuil, nombre, apellido, sexo, nacionalidad, domicilio, localidad, id_provincia, email, telefono, activo) VALUES(?, ?, ?,?, ?, ?,?,?, ?, ?,?, ?, ?)";
+	private static final String insert = "insert into cliente(nombre_usuario, dni, cuil, nombre, apellido, sexo, nacionalidad, domicilio, localidad, id_provincia, email, telefono, activo) VALUES(?, ?, ?,?, ?, ?,?,?, ?, ?,?, ?, ?)";
 	
 	public static ClienteDao ObtenerInstancia() {
 		if(instancia == null) {
