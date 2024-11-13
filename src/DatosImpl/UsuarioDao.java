@@ -34,6 +34,11 @@ public class UsuarioDao implements IUsuarioDao {
 	public Usuario Loguear(String nombre_usuario, String pass) {
         PreparedStatement statement;
         Connection conexion = Conexion.getConexion().getSQLConexion();
+        
+        if (conexion == null) {
+            throw new IllegalStateException("No se pudo obtener la conexión a la base de datos.");
+        }
+        
         Usuario usuario = null;
 
         try {

@@ -65,7 +65,7 @@ public class servletUsuario extends HttpServlet {
 		     udao.Insertar(nombreUsuario,tipoUsuario,contrasena);
 		     
 		     ClienteDao cdao =new ClienteDao();
-		     cdao.insert(nombreUsuario, dni, cuil, nombre, apellido, sexo, nacionalidad, domicilio, localidad, 1, email, telefono, activo);
+		     cdao.insert(nombreUsuario, dni, cuil, nombre, apellido, sexo, nacionalidad, domicilio, localidad, telefono, 1, email, telefono, activo);
 		     
 		     
 			 

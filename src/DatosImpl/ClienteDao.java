@@ -2,10 +2,13 @@ package DatosImpl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import Datos.IClienteDao;
+import Dominio.Cliente;
 
 
 
@@ -14,6 +17,9 @@ public class ClienteDao implements IClienteDao{
 	private static ClienteDao instancia = null;
 	
 	private static final String insert = "insert into cliente(nombre_usuario, dni, cuil, nombre, apellido, sexo, nacionalidad, domicilio, localidad, id_provincia, email, telefono, activo) VALUES(?, ?, ?,?, ?, ?,?,?, ?, ?,?, ?, ?)";
+	private static final String select = "SELECT * FROM Cliente WHERE Activo = 1";
+	
+	public ClienteDao() {}
 	
 	public static ClienteDao ObtenerInstancia() {
 		if(instancia == null) {
@@ -21,13 +27,11 @@ public class ClienteDao implements IClienteDao{
 		}
 		return instancia;
 	}
-	
-	
+
+	@Override
 	public boolean insert(String nombre_usuario, int dni, String cuil, String nombre, String apellido, int sexo,
-			String nacionalidad, String domicilio, String localidad, int id_provincia, String email,
-			String telefono, boolean activo) 
-	{
-		
+			String nacionalidad, String nacimiento, String domicilio, String localidad, int id_provincia, String email,
+			String telefono, boolean activo) {
 		PreparedStatement statement;
         Connection conexion = Conexion.getConexion().getSQLConexion();
         boolean isInsertExitoso = false;
@@ -70,14 +74,42 @@ public class ClienteDao implements IClienteDao{
     		}
     		
     		return isInsertExitoso;	
-}
-
+	}
 
 	@Override
-	public boolean insert(String nombre_usuario, int dni, String cuil, String nombre, String apellido, int sexo,
-			String nacionalidad, String nacimiento, String domicilio, String localidad, int id_provincia, String email,
-			String telefono, boolean activo) {
-		// TODO Auto-generated method stub
-		return false;
+	public List<Cliente> listar() {
+		PreparedStatement statement;
+        ResultSet resultSet;
+        ArrayList<Cliente> clientes = new ArrayList<>();
+        
+        Connection conexion = Conexion.getConexion().getSQLConexion();
+        
+        try {
+            statement = conexion.prepareStatement(select);
+            resultSet = statement.executeQuery();
+            
+            while(resultSet.next()) {
+                Cliente cliente = new Cliente();
+                cliente.setNombreUsuario(resultSet.getString("nombre_usuario"));
+                cliente.setDni(resultSet.getInt("dni"));
+                cliente.setCuil(resultSet.getString("cuil"));
+                cliente.setNacionalidad(resultSet.getString("nacionalidad"));
+                cliente.setNombre(resultSet.getString("nombre"));
+                cliente.setApellido(resultSet.getString("apellido"));
+                cliente.setSexo(resultSet.getInt("sexo"));
+                cliente.setNacionalidad(resultSet.getString("nacionalidad"));
+                cliente.setDomicilio(resultSet.getString("domicilio"));
+                cliente.setLocalidad(resultSet.getString("localidad"));
+                cliente.setEmail(resultSet.getString("email"));
+                cliente.setTelefono(resultSet.getString("telefono"));
+                cliente.setActivo(resultSet.getBoolean("activo"));
+                
+                clientes.add(cliente);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return clientes;
 	}
 }

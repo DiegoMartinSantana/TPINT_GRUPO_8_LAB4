@@ -58,7 +58,7 @@
             <div id="clientesSubmenu" class="collapse" style="font-size: medium;">
                 <ul class="nav flex-column pl-3">
                     <li class="nav-item">
-                        <a class="nav-link" href="ListarBanco.jsp">Listado</a>
+                        <a class="nav-link" href="ClienteServlet">Listado</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="AltaClienteUser.jsp">Dar de alta</a>

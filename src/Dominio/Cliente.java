@@ -2,13 +2,13 @@ package Dominio;
 
 public class Cliente {
 	
-	private final String nombreUsuario;
-	private final int id;
-	private final int dni;
-	private final String cuil;
+	private String nombreUsuario;
+	private  int id;
+	private  int dni;
+	private  String cuil;
 	private String nombre;
 	private String apellido;
-	private final int sexo;
+	private  int sexo;
 	private String nacionalidad;
 	//private Calendar nacimiento;
 	private String domicilio;
@@ -18,7 +18,8 @@ public class Cliente {
 	private String telefono;
 	private boolean activo;
 	
-
+	public Cliente() {}
+	
 	public Cliente(String nombreUsuario, int id, int dni, String cuil, String nombre, String apellido, int sexo,
 			String nacionalidad, String domicilio, String localidad, String email, String telefono, boolean activo) {
 		this.nombreUsuario = nombreUsuario;
@@ -120,7 +121,10 @@ public class Cliente {
 	public String getNombreUsuario() {
 		return nombreUsuario;
 	}
-
+	
+	public void setNombreUsuario(String nombre_usuario) { 
+		this.nombreUsuario = nombre_usuario; 
+	}
 
 	public int getId() {
 		return id;
@@ -140,6 +144,26 @@ public class Cliente {
 	public int getSexo() {
 		return sexo;
 	}
+
+
+	public void setDni(int dni) {
+		this.dni = dni;
+		
+	}
+
+
+	public void setCuil(String cuil) {
+		this.cuil = cuil;
+		
+	}
+
+
+	public void setSexo(int sexo) {
+		this.sexo = sexo;
+		
+	}
+
+
 	
 	
 	
