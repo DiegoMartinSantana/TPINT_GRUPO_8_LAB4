@@ -46,7 +46,7 @@ public class servletUsuario extends HttpServlet {
 			 String nombreUsuario = request.getParameter("usuario");
 			 String contrasena = request.getParameter("contrasena");
 			 int tipoUsuario = 2;
-			 boolean activo = true;
+			
 			 
 			 
 			 int dni = Integer.parseInt(request.getParameter("dni"));
@@ -55,6 +55,7 @@ public class servletUsuario extends HttpServlet {
 		     String apellido = request.getParameter("apellido");
 		     int sexo = Integer.parseInt(request.getParameter("sexo"));
 		     String nacionalidad = request.getParameter("nacionalidad");
+		     String nacimiento = request.getParameter("fechaNacimiento");
 		     String domicilio = request.getParameter("domicilio");
 		     String localidad = request.getParameter("localidad");
 		     String email = request.getParameter("correoElectronico");
@@ -65,7 +66,7 @@ public class servletUsuario extends HttpServlet {
 		     udao.Insertar(nombreUsuario,tipoUsuario,contrasena);
 		     
 		     ClienteDao cdao =new ClienteDao();
-		     cdao.insert(nombreUsuario, dni, cuil, nombre, apellido, sexo, nacionalidad, domicilio, localidad, telefono, 1, email, telefono, activo);
+		     cdao.insert(nombreUsuario, dni, cuil, nombre, apellido, sexo, nacionalidad,nacimiento, domicilio, localidad, 1, email, telefono);
 		     
 		     
 			 

@@ -55,8 +55,8 @@ label, select, input[type="text"], input[type="date"] {
             <label for="fechaNacimiento">Fecha de Nacimiento:</label>
             <input type="date" id="fechaNacimiento" name="fechaNacimiento" required>
 
-            <label for="direccion">Dirección:</label>
-            <input type="text" id="direccion" name="direccion" required>
+            <label for="domicilio">Domicilio:</label>
+            <input type="text" id="domicilio" name="domicilio" required>
 
             <label for="localidad">Localidad:</label>
             <input type="text" id="localidad" name="localidad" required>
@@ -64,16 +64,16 @@ label, select, input[type="text"], input[type="date"] {
             <label for="provincia">Provincia:</label>
             <input type="text" id="provincia" name="provincia" required>
 
-            <label for="correoElectronico">Correo Electrónico:</label>
+            <label for="correoElectronico">Correo Electronico:</label>
             <input type="email" id="correoElectronico" name="correoElectronico" required>
 
-            <label for="telefono">Teléfono:</label>
+            <label for="telefono">Telofono:</label>
             <input type="tel" id="telefono" name="telefono" required>
 
             <label for="usuario">Usuario:</label>
             <input type="text" id="usuario" name="usuario" required>
 
-            <label for="contrasena">Contraseña:</label>
+            <label for="contrasena">Contrasena:</label>
             <input type="password" id="contrasena" name="contrasena" required>
             
             
@@ -82,10 +82,5 @@ label, select, input[type="text"], input[type="date"] {
             
         </div>
         </div>
-      
-   
-
-<!-- Test git -->
-
 </body>
 </html>
