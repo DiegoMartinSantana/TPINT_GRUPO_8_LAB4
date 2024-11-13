@@ -53,7 +53,7 @@ public class LoginServlet extends HttpServlet {
 	if(usuarioLogin.isActivo()) {
 		//Si es admin va hacia posible home admin
 		if(usuarioLogin.getTipo().codigo== 1) {
-			 RequestDispatcher rd = request.getRequestDispatcher("ListarBanco.jsp");
+			 RequestDispatcher rd = request.getRequestDispatcher("ClienteServlet");
 		        rd.forward(request, response);
 		}else if(usuarioLogin.getTipo().codigo==2) {
 			 RequestDispatcher rd = request.getRequestDispatcher("Home.jsp");

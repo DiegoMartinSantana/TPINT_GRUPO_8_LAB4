@@ -21,16 +21,40 @@ public class CuentaServlet extends HttpServlet {
        
     public void init() {
         cuentaDao = CuentaDao.obtenerInstancia();
+        
     }
 	
     public CuentaServlet() {
         super();
     }
 
+    public void actualizarCuenta (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	List<Cuenta> listaCuenta = cuentaDao.listarCuentas();
+        request.setAttribute("cuentas", listaCuenta);
+        request.getRequestDispatcher("ListarCuenta.jsp").forward(request, response);
+        
+    }
+    
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		 List<Cuenta> listaCuenta = cuentaDao.listarCuentas();
-	        request.setAttribute("cuentas", listaCuenta);
-	        request.getRequestDispatcher("ListarCuenta.jsp").forward(request, response);
+		 //List<Cuenta> listaCuenta = cuentaDao.listarCuentas();
+	       // request.setAttribute("cuentas", listaCuenta);
+	       // request.getRequestDispatcher("ListarCuenta.jsp").forward(request, response);
+	             
+	        
+		
+	        //eliminar cuenta
+	        if(request.getParameter("EliminarIdCuenta")!=null) {
+	        	
+	        	int idCuenta = Integer.parseInt(request.getParameter("EliminarIdCuenta"));
+	        	
+	        	cuentaDao.eliminarCuenta(idCuenta);
+	        	    
+	        	
+	        }
+	        actualizarCuenta (request, response);
+	        
+	        
+	        
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

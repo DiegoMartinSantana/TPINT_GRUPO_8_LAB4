@@ -26,5 +26,7 @@ public class ClienteServlet extends HttpServlet {
         List<Cliente> listaClientes = clienteDao.listar();
         request.setAttribute("clientes", listaClientes);
         request.getRequestDispatcher("ListarBanco.jsp").forward(request, response);
+        
+        
     }
 }

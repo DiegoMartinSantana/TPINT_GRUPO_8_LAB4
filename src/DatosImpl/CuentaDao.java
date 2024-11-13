@@ -17,7 +17,7 @@ public class CuentaDao implements ICuentaDao {
     private static final String INSERT = "INSERT INTO cuenta(id_cliente, tipo, creacion, cbu, saldo, activa) VALUES (?, ?, ?, ?, ?, ?)";
     private static final String UPDATE = "UPDATE cuenta SET id_cliente = ?, tipo = ?, creacion = ?, cbu = ?, saldo = ?, activa = ? WHERE id_cuenta = ?";
     private static final String DELETE = "DELETE FROM cuenta WHERE id_cuenta = ?";
-    private static final String SELECT_ALL = "SELECT nombre, apellido, dni, creacion, tipo, cbu, saldo FROM cuenta c INNER JOIN cliente cl on cl.id_cliente = c.id_cliente";
+    private static final String SELECT_ALL = "SELECT id_cuenta, nombre, apellido, dni, creacion, tipo, cbu, saldo FROM cuenta c INNER JOIN cliente cl on cl.id_cliente = c.id_cliente";
     private static final String SELECT_BY_ID = "SELECT * FROM cuenta WHERE id_cuenta = ?";
 
     private CuentaDao() { }
@@ -136,6 +136,8 @@ public class CuentaDao implements ICuentaDao {
                 cliente.setDni(resultSet.getInt("dni"));
 
                 Cuenta cuenta = new Cuenta();
+                
+                cuenta.setIdCuenta(resultSet.getInt("id_cuenta"));
                 cuenta.setCreacion(resultSet.getDate("creacion"));
                 cuenta.setTipo(resultSet.getInt("tipo"));
                 cuenta.setCbu(resultSet.getString("cbu"));
