@@ -1,5 +1,8 @@
 package Dominio;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Cliente {
 	
 	private String nombreUsuario;
@@ -12,13 +15,17 @@ public class Cliente {
 	private String nacionalidad;
 	//private Calendar nacimiento;
 	private String domicilio;
+	private List<Cuenta> cuentasCliente;
 	private String localidad;
 	//Provincia provincia;
 	private String email;
 	private String telefono;
 	private boolean activo;
 	
-	public Cliente() {}
+	public Cliente() {
+		this.cuentasCliente = new ArrayList<>();
+	}
+
 	
 	public Cliente(String nombreUsuario, int id, int dni, String cuil, String nombre, String apellido, int sexo,
 			String nacionalidad, String domicilio, String localidad, String email, String telefono, boolean activo) {
@@ -35,9 +42,22 @@ public class Cliente {
 		this.email = email;
 		this.telefono = telefono;
 		this.activo = activo;
+		this.cuentasCliente = new ArrayList<>();
 	}
 
-
+	public void agregarCuenta(Cuenta cuenta) {
+		this.cuentasCliente.add(cuenta);
+		cuenta.setCliente(this);
+	}
+	
+	public List<Cuenta> getCuentas(){
+		return cuentasCliente;
+	}
+	
+	public void setCuentas(List<Cuenta> cuentas) {
+		this.cuentasCliente = cuentas;
+	}
+	
 	public String getNombre() {
 		return nombre;
 	}

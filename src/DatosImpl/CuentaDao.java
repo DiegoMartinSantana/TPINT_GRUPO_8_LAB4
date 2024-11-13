@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import Datos.ICuentaDao;
+import Dominio.Cliente;
 import Dominio.Cuenta;
 
 public class CuentaDao implements ICuentaDao {
@@ -16,7 +17,7 @@ public class CuentaDao implements ICuentaDao {
     private static final String INSERT = "INSERT INTO cuenta(id_cliente, tipo, creacion, cbu, saldo, activa) VALUES (?, ?, ?, ?, ?, ?)";
     private static final String UPDATE = "UPDATE cuenta SET id_cliente = ?, tipo = ?, creacion = ?, cbu = ?, saldo = ?, activa = ? WHERE id_cuenta = ?";
     private static final String DELETE = "DELETE FROM cuenta WHERE id_cuenta = ?";
-    private static final String SELECT_ALL = "SELECT * FROM cuenta";
+    private static final String SELECT_ALL = "SELECT nombre, apellido, dni, creacion, tipo, cbu, saldo FROM cuenta c INNER JOIN cliente cl on cl.id_cliente = c.id_cliente";
     private static final String SELECT_BY_ID = "SELECT * FROM cuenta WHERE id_cuenta = ?";
 
     private CuentaDao() { }
@@ -129,15 +130,18 @@ public class CuentaDao implements ICuentaDao {
             resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
+            	Cliente cliente = new Cliente();
+                cliente.setNombre(resultSet.getString("nombre"));
+                cliente.setApellido(resultSet.getString("apellido"));
+                cliente.setDni(resultSet.getInt("dni"));
+
                 Cuenta cuenta = new Cuenta();
-                cuenta.setIdCuenta(resultSet.getInt("id_cuenta"));
-                cuenta.setIdCliente(resultSet.getInt("id_cliente"));
-                cuenta.setTipo(resultSet.getInt("tipo"));
                 cuenta.setCreacion(resultSet.getDate("creacion"));
+                cuenta.setTipo(resultSet.getInt("tipo"));
                 cuenta.setCbu(resultSet.getString("cbu"));
                 cuenta.setSaldo(resultSet.getFloat("saldo"));
-                cuenta.setActiva(resultSet.getBoolean("activa"));
-
+                
+                cuenta.setCliente(cliente);
                 cuentas.add(cuenta);
             }
         } catch (SQLException e) {

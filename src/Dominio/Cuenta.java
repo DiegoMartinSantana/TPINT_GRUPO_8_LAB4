@@ -9,6 +9,7 @@ public class Cuenta {
     private Date creacion;
     private String cbu;
     private float saldo;
+    private Cliente cliente;
     private boolean activa;
     
     public Cuenta() {}
@@ -78,4 +79,13 @@ public class Cuenta {
     public void setActiva(boolean activa) {
         this.activa = activa;
     }
+    
+    public Cliente getCliente() {
+    	return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+    	this.cliente = cliente;
+    }
+    
 }

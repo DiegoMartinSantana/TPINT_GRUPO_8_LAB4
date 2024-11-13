@@ -30,8 +30,13 @@
 			<table class="table table-striped">
 				<thead>
 					<tr>
-						<th>IdCuenta</th>
-						<th>IdCliente</th>
+						<th>Nombre</th>
+						<th>Apellido</th>
+						<th>DNI</th>
+						<th>Fecha Creacion</th>
+						<th>CBU</th>
+						<th>Tipo de Cuenta</th>
+						<th>Saldo</th>
 						<th>Acciones</th>
 					</tr>
 				</thead>
@@ -42,8 +47,16 @@
 						for (Cuenta cuenta : cuentas) {
 					%>
 					<tr>
-						<td><%=cuenta.getIdCuenta()%></td>
-						<td><%=cuenta.getIdCliente()%></td>
+						<td><%=cuenta.getCliente().getNombre()%></td>
+						<td><%=cuenta.getCliente().getApellido()%></td>
+						<td><%= cuenta.getCliente().getDni() %></td>
+    					<td><%= cuenta.getCreacion() %></td>
+    					<td><%= cuenta.getCbu() %></td>
+    					<td>
+        				<%= cuenta.getTipo() == 1 ? "Caja de ahorro" : 
+            				cuenta.getTipo() == 2 ? "Cuenta Corriente" : "" %>
+    					</td>
+    					<td><%= cuenta.getSaldo() %></td>
 
 						<td><a
 							href="CuentaServlet?accion=editar&dni=<%=cuenta.getIdCuenta()%>"
