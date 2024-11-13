@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="Dominio.Cliente" %>  <!-- Asegúrate de que este sea el paquete correcto de tu clase Cliente -->
+<%@ page import="Dominio.Cliente" %> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -46,7 +46,7 @@
                 </tr>
             </thead>
             <tbody>
-                 <%
+                 <%                    
                 List<Cliente> clientes = (List<Cliente>)request.getAttribute("clientes");
                 if(clientes != null && !clientes.isEmpty()) {
                     for(Cliente cliente : clientes) {

@@ -11,9 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import DatosImpl.ClienteDao;
 import DatosImpl.UsuarioDao;
-import Dominio.Cliente;
-import Dominio.TipoUsuario;
-import Dominio.Usuario;
 
 /**
  * Servlet implementation class servletUsuario

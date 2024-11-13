@@ -76,7 +76,7 @@
             <div id="cuentasSubmenu" class="collapse" style="font-size: medium;">
                 <ul class="nav flex-column pl-3">
                     <li class="nav-item">
-                        <a class="nav-link" href="ListarCuenta.jsp">Listado</a>
+                        <a class="nav-link" href="CuentaServlet">Listado</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="AltaCuenta.jsp">Crear</a>
