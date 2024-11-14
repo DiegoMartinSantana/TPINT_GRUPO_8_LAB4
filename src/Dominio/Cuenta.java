@@ -6,7 +6,7 @@ public class Cuenta {
 	private int idCuenta;
     private int idCliente;
     private int tipo;
-    private Date creacion;
+    private String creacion;
     private String cbu;
     private float saldo;
     private Cliente cliente;
@@ -14,7 +14,7 @@ public class Cuenta {
     
     public Cuenta() {}
 
-    public Cuenta(int idCuenta, int idCliente, int tipo, Date creacion, String cbu, float saldo, boolean activa) {
+    public Cuenta(int idCuenta, int idCliente, int tipo, String creacion, String cbu, float saldo, boolean activa) {
         this.idCuenta = idCuenta;
         this.idCliente = idCliente;
         this.tipo = tipo;
@@ -48,11 +48,11 @@ public class Cuenta {
         this.tipo = tipo;
     }
 
-    public Date getCreacion() {
+    public String getCreacion() {
         return creacion;
     }
 
-    public void setCreacion(Date creacion) {
+    public void setCreacion(String creacion) {
         this.creacion = creacion;
     }
 

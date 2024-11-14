@@ -39,7 +39,7 @@ public class CuentaDao implements ICuentaDao {
             statement = conexion.prepareStatement(INSERT);
             statement.setInt(1, cuenta.getIdCliente());
             statement.setInt(2, cuenta.getTipo());
-            statement.setDate(3, new java.sql.Date(cuenta.getCreacion().getTime()));
+            statement.setString(3, cuenta.getCreacion());
             statement.setString(4, cuenta.getCbu());
             statement.setFloat(5, cuenta.getSaldo());
             statement.setBoolean(6, cuenta.isActiva());
@@ -70,7 +70,7 @@ public class CuentaDao implements ICuentaDao {
             statement = conexion.prepareStatement(UPDATE);
             statement.setInt(1, cuenta.getIdCliente());
             statement.setInt(2, cuenta.getTipo());
-            statement.setDate(3, new java.sql.Date(cuenta.getCreacion().getTime()));
+            statement.setString(3, cuenta.getCreacion());
             statement.setString(4, cuenta.getCbu());
             statement.setFloat(5, cuenta.getSaldo());
             statement.setBoolean(6, cuenta.isActiva());
@@ -138,7 +138,7 @@ public class CuentaDao implements ICuentaDao {
                 Cuenta cuenta = new Cuenta();
                 
                 cuenta.setIdCuenta(resultSet.getInt("id_cuenta"));
-                cuenta.setCreacion(resultSet.getDate("creacion"));
+                cuenta.setCreacion(resultSet.getString("creacion"));
                 cuenta.setTipo(resultSet.getInt("tipo"));
                 cuenta.setCbu(resultSet.getString("cbu"));
                 cuenta.setSaldo(resultSet.getFloat("saldo"));
@@ -166,7 +166,7 @@ public class CuentaDao implements ICuentaDao {
                     resultSet.getInt("id_cuenta"),
                     resultSet.getInt("id_cliente"),
                     resultSet.getInt("tipo"),
-                    resultSet.getDate("creacion"),
+                    resultSet.getString("creacion"),
                     resultSet.getString("cbu"),
                     resultSet.getFloat("saldo"),
                     resultSet.getBoolean("activa")

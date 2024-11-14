@@ -63,9 +63,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="AltaClienteUser.jsp">Dar de alta</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="EliminarCliente.jsp">Eliminar</a>
-                    </li>
+                  
                 </ul>
             </div>
         </li>
@@ -79,7 +77,7 @@
                         <a class="nav-link" href="CuentaServlet">Listado</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="AltaCuenta.jsp">Crear</a>
+                        <a class="nav-link" href="AltaCuentaServlet">Crear</a>
                     </li>
                     
                 </ul>

@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+
     pageEncoding="ISO-8859-1"%>
+    <%@ page import="java.util.List" %>
+<%@ page import="Dominio.Cliente" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,7 +16,8 @@
 label, select, input[type="text"], input[type="date"] {
     display: block;
     margin-top: 10px;
-    width: 100%;}
+    width: 100%;
+}
 
 </style>
 </head>
@@ -24,19 +28,31 @@ label, select, input[type="text"], input[type="date"] {
        	</div>
         <div class="section col-8">
             <h2>Alta de Cuenta</h2>
-            <form action="altaCuentaServlet" method="post">
+            <form action="AltaCuentaServlet" method="POST">
                 
                 <label for="cliente">Seleccionar Cliente:</label>
-                <select id="cliente" name="cliente" required>
-                    <option value="cliente1">Cliente 1</option>
-                    <option value="cliente2">Cliente 2</option>
+                <select id="clientes" name="clientes" required>
+                    <option value="">Seleccione un Cliente</option>
+                    <%-- Itera sobre la lista de clientes activos --%>
+                    <%
+   					 List<Cliente> clientes = (List<Cliente>)request.getAttribute("clientes"); 
+    				if (clientes != null) {
+      				  for (Cliente cliente : clientes) {
+					%>
+   			        <option value="<%= cliente.getId() %>">
+            	    <%= cliente.getDni() + " - " + cliente.getNombre() + " " + cliente.getApellido() %>
+          		  </option>
+					<%
+    				    }
+  				  } 
+					%>
+       				
                 </select>
                 
                 <label for="tipoCuenta">Seleccionar Tipo de Cuenta:</label>
                 <select id="tipoCuenta" name="tipoCuenta" required>
-                    <option value="ahorro">Cuenta de Ahorro</option>
-                    <option value="corriente">Cuenta Corriente</option>
-    
+                    <option value="1">Cuenta Corriente</option>
+                    <option value="2">Cuenta de Ahorro</option>
                 </select>
                 
                 <label for="fechaCreacion">Fecha de Creación:</label>
@@ -50,13 +66,7 @@ label, select, input[type="text"], input[type="date"] {
                 <div style="margin-top: 15px;">
                     <label>Monto Inicial: $10,000</label>
                 </div>
-
-                <div style="margin-top: 15px;">
-                    <label for="activo">
-                        <input type="checkbox" id="activo" name="activo" value="true"> Activo
-                    </label>
-                </div>
-                
+        
                 <div style="margin-top: 15px;">
                     <button type="submit">Aceptar</button>
                 </div>
