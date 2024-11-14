@@ -20,6 +20,7 @@ public class ClienteDao implements IClienteDao{
 	private static final String insert = "insert into cliente(nombre_usuario, dni, cuil, nombre, apellido, sexo, nacionalidad, nacimiento ,domicilio, localidad, id_provincia, email, telefono) VALUES(?, ?, ?,?, ?, ?,?,?, ?, ?,?, ?, ?)";
 	private static final String select = "SELECT * FROM Cliente WHERE Activo = 1";
 	private static final String selectById ="Select * from Cliente where Activo =1 and id_cliente = ?";
+	private static final String delete = "UPDATE cliente SET activo = 0 WHERE id_cliente = ?";
 	
 	public ClienteDao() {}
 	
@@ -201,6 +202,36 @@ public class ClienteDao implements IClienteDao{
         }
         
         return cliente;
+	}
+	
+	
+	public boolean eliminarCliente(int idCliente) {
+	    PreparedStatement statement;
+	    Connection conexion = Conexion.getConexion().getSQLConexion();
+	    boolean isDeleteExitoso = false;
+
+	    try {
+	        statement = conexion.prepareStatement(delete);
+	        statement.setInt(1, idCliente);
+	        
+	        int rowsUpdated = statement.executeUpdate();
+	        
+	        if (rowsUpdated > 0) {
+	            conexion.commit();
+	            isDeleteExitoso = true;
+	        } else {
+	            conexion.rollback();
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        try {
+	            conexion.rollback();
+	        } catch (SQLException rollbackEx) {
+	            rollbackEx.printStackTrace();
+	        }
+	    }
+
+	    return isDeleteExitoso;
 	}
 	
 }

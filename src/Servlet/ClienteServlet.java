@@ -39,7 +39,18 @@ public class ClienteServlet extends HttpServlet {
         	request.setAttribute("Cliente", clienteModify);
         	request.getRequestDispatcher("ModificarClienteUser.jsp").forward(request, response);
         }
+        
+        
+        //ActualizarLista(request, response);
+        
+        if(request.getParameter("IdClienteEliminar") != null) {
+            int idCliente = Integer.parseInt(request.getParameter("IdClienteEliminar"));
+            	//Cliente clienteEliminar = clienteDao.getClienteById(idCliente);
+            	clienteDao.eliminarCliente(idCliente);
+
+            }
         ActualizarLista(request, response);
+        
     }
   
     
