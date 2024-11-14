@@ -60,7 +60,7 @@
                         <td><%= cliente.getTelefono() %></td>
                         <td><%= cliente.getLocalidad() %></td>
                         <td>
-                            <a href="ClienteServlet?accion=editar&dni=<%= cliente.getDni() %>" class="btn btn-warning btn-sm">Editar</a>
+                            <a href="ClienteServlet?IdCliente=<%= cliente.getId()  %>" class="btn btn-warning btn-sm">Editar</a>
                             <a href="ClienteServlet?accion=eliminar&dni=<%= cliente.getDni() %>" class="btn btn-danger btn-sm">Eliminar</a>
                         </td>
                     </tr>

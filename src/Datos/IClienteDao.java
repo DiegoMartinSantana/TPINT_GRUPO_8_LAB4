@@ -12,4 +12,6 @@ public interface IClienteDao {
 	
 	public List<Cliente> listar();
 	
+	public Cliente Modificar(Cliente cliente);
+	public Cliente getClienteById(int Id);
 }
