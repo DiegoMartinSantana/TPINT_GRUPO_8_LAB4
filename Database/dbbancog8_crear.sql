@@ -50,8 +50,8 @@ create table cuenta (
   id_cuenta int auto_increment,
   id_cliente int not null,
   tipo int not null,
-  creacion date not null,
-  cbu varchar(22) not null,
+  creacion varchar(15) not null,
+  cbu varchar(15) not null unique,
   saldo float default 0,
   activa bit default 1,
   primary key (id_cuenta),
@@ -64,7 +64,7 @@ create table movimiento (
   id_movimiento int not null auto_increment,
   id_cuenta int not null,
   id_tipo_movimiento int not null,
-  fecha date not null,
+  fecha varchar(15) not null,
   detalle varchar(200) not null,
   importe float not null,
   primary key (id_movimiento),
@@ -89,7 +89,7 @@ create table cuota (
   id_prestamo int not null,
   numero_cuota int,
   importe float not null,
-  vencimiento date not null,
+  vencimiento varchar(15) not null,
   estado int DEFAULT 2,		-- 1. Pagada, 2. Pendiente, 3. Pago parcial
   primary key (id_prestamo, numero_cuota),
   foreign key (id_prestamo) references prestamo (id_prestamo)

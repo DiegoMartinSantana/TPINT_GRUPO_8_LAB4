@@ -37,48 +37,46 @@ public class ClienteServlet extends HttpServlet {
         	clienteModify.getApellido();
         	//redirect a modificar con Cliente entero como parametro
         	request.setAttribute("Cliente", clienteModify);
-        	request.getRequestDispatcher("ModificarClienteUser.jsp").forward(request, response);
+        	request.getRequestDispatcher("ModificarClienteUser.jsp").forward(request, response);	
+        	
         }
-        
-        
-        //ActualizarLista(request, response);
-        
-        if(request.getParameter("IdClienteEliminar") != null) {
-            int idCliente = Integer.parseInt(request.getParameter("IdClienteEliminar"));
-            	//Cliente clienteEliminar = clienteDao.getClienteById(idCliente);
-            	clienteDao.eliminarCliente(idCliente);
-
-            }
         ActualizarLista(request, response);
-        
     }
   
     
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	
     	Cliente cliente = new Cliente();
-
+    	
         cliente.setDni(Integer.parseInt(request.getParameter("dni")));
+      
+       
+                
+        //falta provincia
+        //falta nacimiento
+        
         cliente.setNombre(request.getParameter("nombre"));
+        cliente.setCuil(request.getParameter("cuil"));
         cliente.setApellido(request.getParameter("apellido"));
         cliente.setSexo(request.getParameter("sexo").equals("Masculino") ? 1 : (request.getParameter("sexo").equals("Femenino") ? 2 : 3));
         cliente.setNacionalidad(request.getParameter("nacionalidad"));
         cliente.setDomicilio(request.getParameter("direccion"));
         cliente.setLocalidad(request.getParameter("localidad"));
         //falta provincia
-        cliente.setEmail(request.getParameter("correo"));
+        cliente.setEmail(request.getParameter("email"));
         cliente.setTelefono(request.getParameter("telefono"));
-        cliente.setNombreUsuario(request.getParameter("usuario"));
-   
+
+        cliente.setId(Integer.parseInt(request.getParameter("id")));
+        
         Cliente resultado = clienteDao.Modificar(cliente);
 
         if (resultado != null) {
-            response.getWriter().write("Cliente modificado exitosamente");
+          
             ActualizarLista(request, response);
+            request.getRequestDispatcher("ListarBanco.jsp").forward(request, response);	
             
         } else {
         	
-            response.getWriter().write("Error al modificar el cliente");
         }
 			
 	}

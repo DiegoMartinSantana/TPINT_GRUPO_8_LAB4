@@ -1,5 +1,8 @@
  @charset "ISO-8859-1"
- body { font-family: Arial, sans-serif; }
+ 
+ body { 
+ font-family: Arial, sans-serif;
+  }
         .section { margin-bottom: 20px; margin-top: 60px; }
         h2 { color: #333; }
         button {
@@ -14,3 +17,4 @@
         table { width: 100%; margin-top: 10px; border-collapse: collapse; }
         th, td { padding: 8px; border: 1px solid #ddd; text-align: center; }
         select, input { padding: 8px; width: 100%; margin-top: 5px; border-radius: 10px;}
+        
