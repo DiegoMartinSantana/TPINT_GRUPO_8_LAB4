@@ -13,7 +13,7 @@ create table provincia (
 
 drop table if exists usuario;
 create table usuario (
-  nombre_usuario varchar(20) not null,
+  nombre_usuario varchar(30) not null,
   pass varchar(35) not null,
   tipo int not null,				-- 1: Administrador; 2: Cliente
   activo bit default 1,
@@ -29,12 +29,12 @@ create table cliente (
   nombre varchar(60) not null,
   apellido varchar(60) not null,
   sexo int not null,				-- 1: masculino; 2: femenino; 3: otro
-  nacionalidad varchar(25) not null,
-  nacimiento varchar(15) not null,
+  nacionalidad varchar(60) not null,
+  nacimiento varchar(50) not null,
   domicilio varchar(60) not null,
   localidad varchar(60) not null,
   id_provincia int not null,
-  email varchar(45) not null,
+  email varchar(100) not null,
   telefono varchar(40) not null,
   activo bit not null default 1,
   primary key (id_cliente),
@@ -50,8 +50,8 @@ create table cuenta (
   id_cuenta int auto_increment,
   id_cliente int not null,
   tipo int not null,
-  creacion varchar(15) not null,
-  cbu varchar(15) not null unique,
+  creacion varchar(100) not null,
+  cbu varchar(100) not null unique,
   saldo float default 0,
   activa bit default 1,
   primary key (id_cuenta),
@@ -64,7 +64,7 @@ create table movimiento (
   id_movimiento int not null auto_increment,
   id_cuenta int not null,
   id_tipo_movimiento int not null,
-  fecha varchar(15) not null,
+  fecha varchar(40) not null,
   detalle varchar(200) not null,
   importe float not null,
   primary key (id_movimiento),
@@ -89,7 +89,7 @@ create table cuota (
   id_prestamo int not null,
   numero_cuota int,
   importe float not null,
-  vencimiento varchar(15) not null,
+  vencimiento varchar(90) not null,
   estado int DEFAULT 2,		-- 1. Pagada, 2. Pendiente, 3. Pago parcial
   primary key (id_prestamo, numero_cuota),
   foreign key (id_prestamo) references prestamo (id_prestamo)

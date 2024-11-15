@@ -61,7 +61,7 @@
                         <a class="nav-link" href="ClienteServlet">Listado</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="AltaClienteUser.jsp">Dar de alta</a>
+                        <a class="nav-link" href="ClienteServlet?Alta=<%=1%>">Dar de alta</a>
                     </li>
                   
                 </ul>

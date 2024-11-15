@@ -1,3 +1,5 @@
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="Dominio.Provincia" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -58,12 +60,28 @@ label, select, input[type="text"], input[type="date"] {
             <label for="domicilio">Domicilio:</label>
             <input type="text" id="domicilio" name="domicilio" required>
 
-            <label for="localidad">Localidad:</label>
+             <label for="localidad">Localidad:</label>
             <input type="text" id="localidad" name="localidad" required>
+            
+			<label for="provincia">Provincia:</label>
+			<select id="DdlProvincia" name="DdlProvincia" required>
+		                <option value="">Seleccione...</option>
+			<%
+                        ArrayList<Provincia> provincias = (ArrayList<Provincia>) request.getAttribute("Provincias");
+					if(provincias!=null ){
+					for(Provincia provincia : provincias){
+						
+				%>
+				
+				   <option value="<%= provincia.getId_provincia() %>"><%= provincia.getNombre() %></option>
 
-            <label for="provincia">Provincia:</label>
-            <input type="text" id="provincia" name="provincia" required>
+				<%}}else { %>
+				<option value"" >No hay provincias disponibles </option>
+				<%} %>
+				</select>
+				
 
+           
             <label for="correoElectronico">Correo Electronico:</label>
             <input type="email" id="correoElectronico" name="correoElectronico" required>
 

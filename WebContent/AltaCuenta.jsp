@@ -60,9 +60,8 @@ label, select, input[type="text"], input[type="date"] {
                        value="<%= new java.text.SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date()) %>" 
                        readonly>
                 
-                <label for="cbu">CBU:</label>
-                <input type="text" id="cbu" name="cbu" maxlength="22" placeholder="Ingrese el CBU" required>
-                
+                <p>El cbu se generara automaticamente.</p>
+                <br>
                 <div style="margin-top: 15px;">
                     <label>Monto Inicial: $10,000</label>
                 </div>

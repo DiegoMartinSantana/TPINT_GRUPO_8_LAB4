@@ -2,6 +2,7 @@ package Servlet;
 
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -11,8 +12,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import DatosImpl.ClienteDao;
+import DatosImpl.ProvinciaDao;
 import DatosImpl.UsuarioDao;
 import Dominio.Cliente;
+import Dominio.Provincia;
 
 @WebServlet("/ClienteServlet")
 public class ClienteServlet extends HttpServlet {
@@ -32,6 +35,7 @@ public class ClienteServlet extends HttpServlet {
          
         
         if(request.getParameter("IdCliente") != null) {
+        	//va al modificar si es distinto null
         int idCliente = Integer.parseInt(request.getParameter("IdCliente"));
         	Cliente clienteModify = clienteDao.getClienteById(idCliente);
         	clienteModify.getApellido();
@@ -40,10 +44,27 @@ public class ClienteServlet extends HttpServlet {
         	request.getRequestDispatcher("ModificarClienteUser.jsp").forward(request, response);	
         	
         }
+        if(request.getParameter("Alta")!=null){
+        	LlenarDdlProvincias(request,response);
+        	request.getRequestDispatcher("AltaClienteUser.jsp").forward(request, response);	
+        }
+        
         ActualizarLista(request, response);
     }
-  
     
+  
+    private void LlenarDdlProvincias(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+    	ProvinciaDao provDao = new ProvinciaDao();
+		
+		ArrayList<Provincia> provincias = new ArrayList<Provincia>();
+		
+		provincias = provDao.getAll();
+		//redirect to the usuariocliente jsp
+		
+		 request.setAttribute("Provincias", provincias);
+        
+		
+    }
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	
     	Cliente cliente = new Cliente();

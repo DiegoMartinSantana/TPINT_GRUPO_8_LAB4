@@ -2,6 +2,7 @@ package DatosImpl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -28,23 +29,34 @@ public class CuentaDao implements ICuentaDao {
         }
         return instancia;
     }
-
+    
+    private String generarCbu() {
+        Random r = new Random();
+        String cbu = "";
+        cbu += (char) (r.nextInt(9) + '1');
+        for(int i = 1; i < 22; i++) {
+            cbu += (char) (r.nextInt(10) + '0');
+        }
+        return cbu;
+    }
+    
     @Override
     public boolean crearCuenta(Cuenta cuenta) {
         PreparedStatement statement;
         Connection conexion = Conexion.getConexion().getSQLConexion();
         boolean isInsertExitoso = false;
-
+        String cbu = generarCbu();
         try {
             statement = conexion.prepareStatement(INSERT);
             statement.setInt(1, cuenta.getIdCliente());
             statement.setInt(2, cuenta.getTipo());
             statement.setString(3, cuenta.getCreacion());
-            statement.setString(4, cuenta.getCbu());
+            statement.setString(4, cbu);
             statement.setFloat(5, cuenta.getSaldo());
             statement.setBoolean(6, cuenta.isActiva());
-
-            if (statement.executeUpdate() > 0) {
+            	
+            int rows = statement.executeUpdate();
+            if (rows >0) {
                 conexion.commit();
                 isInsertExitoso = true;
             }

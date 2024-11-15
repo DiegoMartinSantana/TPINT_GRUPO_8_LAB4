@@ -116,7 +116,8 @@ public class ClienteDao implements IClienteDao{
             statement.setString(12, email);
             statement.setString(13, telefono);
            
-            if(statement.executeUpdate() > 0)
+            int rows = statement.executeUpdate(); 
+            if(rows>0)
 			{
 				conexion.commit();
 				isInsertExitoso = true;

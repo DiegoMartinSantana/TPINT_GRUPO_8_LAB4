@@ -57,13 +57,14 @@ public class servletUsuario extends HttpServlet {
 		     String localidad = request.getParameter("localidad");
 		     String email = request.getParameter("correoElectronico");
 		     String telefono = request.getParameter("telefono");
+		     int IdProv =Integer.parseInt(request.getParameter("DdlProvincia"));
 		     
 			 
 		     UsuarioDao udao= new UsuarioDao();
 		     udao.Insertar(nombreUsuario,tipoUsuario,contrasena);
 		     
 		     ClienteDao cdao =new ClienteDao();
-		     cdao.insert(nombreUsuario, dni, cuil, nombre, apellido, sexo, nacionalidad,nacimiento, domicilio, localidad, 1, email, telefono);
+		     cdao.insert(nombreUsuario, dni, cuil, nombre, apellido, sexo, nacionalidad,nacimiento, domicilio, localidad, IdProv, email, telefono);
 		     
 		     
 			 

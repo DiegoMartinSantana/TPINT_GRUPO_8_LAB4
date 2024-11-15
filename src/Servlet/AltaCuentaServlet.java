@@ -49,7 +49,7 @@ public class AltaCuentaServlet extends HttpServlet {
   
         int idCliente = Integer.parseInt(request.getParameter("clientes")); 
         int tipoCuenta = Integer.parseInt(request.getParameter("tipoCuenta"));
-        String cbu = request.getParameter("cbu"); 
+      
         String fechaCreacion = request.getParameter("fechaCreacion");
         float saldoInicial = 10000; 
         boolean activa = true; 
@@ -58,7 +58,7 @@ public class AltaCuentaServlet extends HttpServlet {
         nuevaCuenta.setIdCliente(idCliente);
         nuevaCuenta.setTipo(tipoCuenta);
         nuevaCuenta.setCreacion(fechaCreacion);
-        nuevaCuenta.setCbu(cbu);
+        
         nuevaCuenta.setSaldo(saldoInicial);
         nuevaCuenta.setActiva(activa);
 

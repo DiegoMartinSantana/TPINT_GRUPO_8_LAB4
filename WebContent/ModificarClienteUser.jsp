@@ -63,6 +63,7 @@
 
     <label for="direccion">Domicilio:</label>
     <input type="text" id="direccion" name="direccion" value="<%= cliente.getDomicilio() %>" required>
+	
 
     <label for="localidad">Localidad:</label>
     <input type="text" id="localidad" name="localidad" value="<%= cliente.getLocalidad() %>" required>

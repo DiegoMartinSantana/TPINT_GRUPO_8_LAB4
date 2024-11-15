@@ -51,6 +51,8 @@ public class LoginServlet extends HttpServlet {
 	}
     
 	if(usuarioLogin.isActivo()) {
+		request.getSession().setAttribute("UsuarioNombre", usuarioLogin.getNombre_usuario());
+		request.getSession().setAttribute("Usuario", usuarioLogin);
 		//Si es admin va hacia posible home admin
 		if(usuarioLogin.getTipo().codigo== 1) {
 			 RequestDispatcher rd = request.getRequestDispatcher("ClienteServlet");
@@ -60,8 +62,7 @@ public class LoginServlet extends HttpServlet {
 		        rd.forward(request, response);
 		}
 		
-		request.getSession().setAttribute("UsuarioNombre", usuarioLogin.getNombre_usuario());
-		request.getSession().setAttribute("Usuario", usuarioLogin);
+	
 
 		}else {
 		request.setAttribute("UsuarioInactivo", true);
