@@ -30,6 +30,13 @@ public class AltaCuentaServlet extends HttpServlet {
         cuentaDao = CuentaDao.obtenerInstancia();
     }
 
+    private void ActualizarLista(HttpServletRequest request, HttpServletResponse response)    throws ServletException, IOException {
+      	 List<Cuenta> listaCuentas = cuentaDao.listarCuentas();
+           request.setAttribute("cuentas", listaCuentas);
+           request.getRequestDispatcher("ListarCuenta.jsp").forward(request, response);
+      }
+    
+    
     public AltaCuentaServlet() {
         super();
     }
@@ -64,11 +71,13 @@ public class AltaCuentaServlet extends HttpServlet {
 
         boolean exito = cuentaDao.crearCuenta(nuevaCuenta);
 
-        if (exito) {
-        	 response.getWriter().write("Cuenta creada exitosamente");
-        } else {
-        	response.getWriter().write("Error al crear la cuenta");
+        if (exito != false) {
+            
+            ActualizarLista(request, response);
+            request.getRequestDispatcher("ListarBanco.jsp").forward(request, response);	
+            
         }
+        
     }
 }
 

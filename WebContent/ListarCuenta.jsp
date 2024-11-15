@@ -58,9 +58,9 @@
     					</td>
     					<td><%= cuenta.getSaldo() %></td>
 
-						<td><a
+						<td><!-- <a
 							href="CuentaServlet?EditarIdCuenta=<%=cuenta.getIdCuenta()%>"
-							class="btn btn-warning btn-sm">Editar</a> <a
+							class="btn btn-warning btn-sm">Editar</a> --> <a
 							href="CuentaServlet?EliminarIdCuenta=<%=cuenta.getIdCuenta()%>"
 							class="btn btn-danger btn-sm">Eliminar</a></td>
 					</tr>
