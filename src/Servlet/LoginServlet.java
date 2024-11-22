@@ -42,7 +42,6 @@ public class LoginServlet extends HttpServlet {
 	    Usuario usuarioLogin = usuarioNegocio.login(nombreUsuario,password);
 	    
 		
-	
  
     if(usuarioLogin == null){
 		request.setAttribute("UsuarioNulo", false);
