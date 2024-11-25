@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Pedido de Préstamo</title>
 <style>
-<%@include file="Styles/StyleCliente.css" %>
+<%@include file="../Styles/StyleCliente.css" %>
 
 </style>
 </head>

@@ -20,7 +20,8 @@ public class ClienteDao implements IClienteDao{
 	private static final String insert = "insert into cliente(nombre_usuario, dni, cuil, nombre, apellido, sexo, nacionalidad, nacimiento ,domicilio, localidad, id_provincia, email, telefono) VALUES(?, ?, ?,?, ?, ?,?,?, ?, ?,?, ?, ?)";
 	private static final String select = "SELECT * FROM Cliente WHERE Activo = 1";
 	private static final String selectById ="Select * from Cliente where Activo =1 and id_cliente = ?";
-	private static final String selectByDni ="Select * from Cliente where Activo =1 and dni= ?";
+	private static final String selectByDni ="Select * from Cliente where Activo =1 and dni = ?";
+	private static final String selectByNombreUser ="Select * from Cliente where Activo = 1 and nombre_usuario = ?";
 	private static final String delete = "UPDATE cliente SET activo = 0 WHERE id_cliente = ?";
 	private static final String Update= "UPDATE cliente SET nombre = ?, " +
             "apellido = ?, " +
@@ -46,14 +47,11 @@ public class ClienteDao implements IClienteDao{
 	    PreparedStatement statement;
 	    Connection conexion = Conexion.getConexion().getSQLConexion();
 	    boolean isUpdateExitoso = false;
-
-	    
+    
 
 	    try {
 	        statement = conexion.prepareStatement(Update);
-	       
-	        
-	        	//falta prov y nacimiento ( problemas a resolver con date)
+	     	//falta prov y nacimiento ( problemas a resolver con date)
 	        statement.setString(1, cliente.getNombre());
 	        statement.setString(2, cliente.getApellido());
 	        statement.setInt(3, cliente.getSexo());
@@ -277,6 +275,42 @@ public class ClienteDao implements IClienteDao{
 	    }
 
 	    return isDeleteExitoso;
+	}
+
+	public Cliente getClienteByNombreUsuaro(String nombre_usuario) {
+		PreparedStatement statement;
+        ResultSet resultSet;
+       
+        
+        Connection conexion = Conexion.getConexion().getSQLConexion();
+        Cliente cliente = new Cliente();
+        try {
+            statement = conexion.prepareStatement(selectByNombreUser);
+            statement.setString(1,nombre_usuario);
+            resultSet = statement.executeQuery();
+           
+            if(resultSet.next() ) {
+                cliente.setNombreUsuario(resultSet.getString("nombre_usuario"));
+                cliente.setDni(resultSet.getInt("dni"));
+                cliente.setCuil(resultSet.getString("cuil"));
+         
+                cliente.setNombre(resultSet.getString("nombre"));
+                cliente.setApellido(resultSet.getString("apellido"));
+                cliente.setSexo(resultSet.getInt("sexo"));
+                cliente.setNacionalidad(resultSet.getString("nacionalidad"));
+                cliente.setDomicilio(resultSet.getString("domicilio"));
+                cliente.setLocalidad(resultSet.getString("localidad"));
+                cliente.setEmail(resultSet.getString("email"));
+                cliente.setTelefono(resultSet.getString("telefono"));
+                cliente.setActivo(resultSet.getBoolean("activo"));
+                cliente.setId(resultSet.getInt("id_cliente"));
+            }
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return cliente;
 	}
 	
 }

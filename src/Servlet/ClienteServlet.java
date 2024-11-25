@@ -16,17 +16,16 @@ import DatosImpl.ProvinciaDao;
 import DatosImpl.UsuarioDao;
 import Dominio.Cliente;
 import Dominio.Provincia;
+import NegocioImpl.ClienteNegocio;
 
 @WebServlet("/ClienteServlet")
 public class ClienteServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
-    private ClienteDao clienteDao;
-    
-    public void init() {
-        clienteDao = ClienteDao.ObtenerInstancia();
-    }
+   
+    private ClienteNegocio clienteNegocio =  new ClienteNegocio();
+   
     private void ActualizarLista(HttpServletRequest request, HttpServletResponse response)    throws ServletException, IOException {
-   	 List<Cliente> listaClientes = clienteDao.listar();
+   	 List<Cliente> listaClientes = clienteNegocio.listar();
         request.setAttribute("clientes", listaClientes);
         request.getRequestDispatcher("ListarBanco.jsp").forward(request, response);
    }
@@ -35,11 +34,11 @@ public class ClienteServlet extends HttpServlet {
          
         
         if(request.getParameter("IdCliente") != null) {
-        	//va al modificar si es distinto null
+        	
         int idCliente = Integer.parseInt(request.getParameter("IdCliente"));
-        	Cliente clienteModify = clienteDao.getClienteById(idCliente);
+        	Cliente clienteModify = clienteNegocio.getClienteById(idCliente);
         	clienteModify.getApellido();
-        	//redirect a modificar con Cliente entero como parametro
+        	
         	request.setAttribute("Cliente", clienteModify);
         	request.getRequestDispatcher("ModificarClienteUser.jsp").forward(request, response);	
         	
@@ -70,9 +69,7 @@ public class ClienteServlet extends HttpServlet {
     	Cliente cliente = new Cliente();
     	
         cliente.setDni(Integer.parseInt(request.getParameter("dni")));
-      
-       
-                
+        
         //falta provincia
         //falta nacimiento
         
@@ -89,7 +86,7 @@ public class ClienteServlet extends HttpServlet {
 
         cliente.setId(Integer.parseInt(request.getParameter("id")));
         
-        Cliente resultado = clienteDao.Modificar(cliente);
+        Cliente resultado = clienteNegocio.Modificar(cliente);
 
         if (resultado != null) {
           

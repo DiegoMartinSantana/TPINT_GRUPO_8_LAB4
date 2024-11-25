@@ -52,9 +52,7 @@ public class CuentaServlet extends HttpServlet {
 	        	
 	        }
 	        actualizarCuenta (request, response);
-	        
-	        
-	        
+        
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

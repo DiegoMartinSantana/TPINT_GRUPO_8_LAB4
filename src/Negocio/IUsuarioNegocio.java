@@ -6,7 +6,7 @@ import Dominio.Usuario;
 public interface IUsuarioNegocio {
 	
 	Usuario login(String nombre_usuario, String pass);
-	Usuario insert(String nombre_usuario, TipoUsuario tipo, String pass);
+	boolean insert(String nombre_usuario, int tipoUsuario, String pass);
 	Usuario read(String nombre_usuario);
 	boolean remove(Usuario usuario);
 	boolean updateActivo(Usuario usuario);

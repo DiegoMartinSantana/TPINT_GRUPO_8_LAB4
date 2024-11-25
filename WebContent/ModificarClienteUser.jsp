@@ -10,7 +10,7 @@
 <title>Modificar Cliente</title>
 <style>
 
-<%@include file="Styles/StyleCliente.css" %>
+<%@include file="../Styles/StyleCliente.css" %>
 </style>
 </head>
 <body>

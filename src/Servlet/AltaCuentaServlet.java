@@ -14,6 +14,8 @@ import DatosImpl.ClienteDao;
 import DatosImpl.CuentaDao;
 import Dominio.Cliente;
 import Dominio.Cuenta;
+import NegocioImpl.ClienteNegocio;
+import NegocioImpl.CuentaNegocio;
 
 /**
  * Servlet implementation class AltaCuentaServlet
@@ -22,16 +24,12 @@ import Dominio.Cuenta;
 public class AltaCuentaServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     
-    private ClienteDao clienteDao;
-    private CuentaDao cuentaDao;
+    private ClienteNegocio clienteNegocio = new ClienteNegocio();
+    private CuentaNegocio cuentaNegocio = new CuentaNegocio();
+  
     
-    public void init() {
-        clienteDao = ClienteDao.ObtenerInstancia();
-        cuentaDao = CuentaDao.obtenerInstancia();
-    }
-
     private void ActualizarLista(HttpServletRequest request, HttpServletResponse response)    throws ServletException, IOException {
-      	 List<Cuenta> listaCuentas = cuentaDao.listarCuentas();
+      	 List<Cuenta> listaCuentas = cuentaNegocio.obtenerCuentas();
            request.setAttribute("cuentas", listaCuentas);
            request.getRequestDispatcher("ListarCuenta.jsp").forward(request, response);
       }
@@ -43,13 +41,13 @@ public class AltaCuentaServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
      
-        List<Cliente> clientesActivos = clienteDao.listar();
+        List<Cliente> clientesActivos = clienteNegocio.listar();
         
      
         request.setAttribute("clientes", clientesActivos);
         
    
-        request.getRequestDispatcher("/AltaCuenta.jsp").forward(request, response);
+        request.getRequestDispatcher("AltaCuenta.jsp").forward(request, response);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -69,7 +67,7 @@ public class AltaCuentaServlet extends HttpServlet {
         nuevaCuenta.setSaldo(saldoInicial);
         nuevaCuenta.setActiva(activa);
 
-        boolean exito = cuentaDao.crearCuenta(nuevaCuenta);
+        boolean exito = cuentaNegocio.agregarCuenta(nuevaCuenta);
 
         if (exito != false) {
             

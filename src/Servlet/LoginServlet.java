@@ -52,7 +52,7 @@ public class LoginServlet extends HttpServlet {
 	if(usuarioLogin.isActivo()) {
 		request.getSession().setAttribute("UsuarioNombre", usuarioLogin.getNombre_usuario());
 		request.getSession().setAttribute("Usuario", usuarioLogin);
-		//Si es admin va hacia posible home admin
+		
 		if(usuarioLogin.getTipo().codigo== 1) {
 			 RequestDispatcher rd = request.getRequestDispatcher("ClienteServlet");
 		        rd.forward(request, response);
@@ -60,8 +60,6 @@ public class LoginServlet extends HttpServlet {
 			 RequestDispatcher rd = request.getRequestDispatcher("Home.jsp");
 		        rd.forward(request, response);
 		}
-		
-	
 
 		}else {
 		request.setAttribute("UsuarioInactivo", true);
@@ -74,13 +72,10 @@ public class LoginServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
 
 		request.getSession().removeAttribute("UsuarioNombre");
 		request.getSession().removeAttribute("Usuario");
-		RequestDispatcher rd = request.getRequestDispatcher("Login.jsp");
-		
-		
+		RequestDispatcher rd = request.getRequestDispatcher("Login.jsp");	
 	}
 
 	

@@ -29,10 +29,8 @@ public class UsuarioNegocio implements IUsuarioNegocio {
 	}
 
 	@Override
-	public Usuario insert(String nombre_usuario, TipoUsuario tipo, String pass) {
-		Usuario usuario = null;
-	
-		return usuario;
+	public boolean insert(String nombre_usuario, int tipoUsuario, String pass) {
+	     return usuarioDao.Insertar(nombre_usuario,tipoUsuario,pass);
 	}
 
 	@Override

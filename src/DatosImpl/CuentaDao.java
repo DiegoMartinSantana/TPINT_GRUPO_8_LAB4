@@ -15,7 +15,7 @@ public class CuentaDao implements ICuentaDao {
 	
 	private static CuentaDao instancia = null;
 
-    private static final String INSERT = "INSERT INTO cuenta(id_cliente, tipo, creacion, cbu, saldo, activa) VALUES (?, ?, ?, ?, ?, ?)";
+    private static final String INSERT = "INSERT INTO cuenta (id_cliente, tipo, creacion, cbu, saldo, activa) VALUES (?, ?, ?, ?, ?, ?)";
     private static final String UPDATE = "UPDATE cuenta SET id_cliente = ?, tipo = ?, creacion = ?, cbu = ?, saldo = ?, activa = ? WHERE id_cuenta = ?";
     private static final String DELETE = "DELETE FROM cuenta WHERE id_cuenta = ?";
     private static final String SELECT_ALL = "SELECT id_cuenta, nombre, apellido, dni, creacion, tipo, cbu, saldo FROM cuenta c INNER JOIN cliente cl on cl.id_cliente = c.id_cliente";

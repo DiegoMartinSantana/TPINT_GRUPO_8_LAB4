@@ -9,7 +9,7 @@
 <title>Baja Cliente</title>
 
 <style>
-<%@include file="Styles/StyleCliente.css" %>
+<%@include file="../Styles/StyleCliente.css" %>
 
 label, select, input[type="text"], input[type="date"] {
     display: block;
