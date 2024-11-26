@@ -16,10 +16,10 @@ public class CuentaNegocio implements ICuentaNegocio {
 
     @Override
     public boolean agregarCuenta(Cuenta cuenta) {
-        if (cuenta.getCbu().length() != 22) {
-            System.out.println("CBU debe tener 22 dígitos.");
-            return false;
-        }
+       // if (cuenta.getCbu().length() != 22) {
+           // System.out.println("CBU debe tener 22 dígitos.");
+            //return false;
+        //}
         return cuentaDao.crearCuenta(cuenta);
     }
 

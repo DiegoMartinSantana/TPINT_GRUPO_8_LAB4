@@ -13,6 +13,13 @@
 </head>
 <body>
   <%@include file="NavegacionComponenteUsuario.jsp" %>
+  
+   <!-- Barra de navegación -->
+  
+  
+  
+  
+  
 
 <div class="container">
 

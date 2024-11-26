@@ -21,6 +21,7 @@
 <body>
 
 	<div class="row">
+	
 		<div class="col-2">
 			<%@include file="NavegacionComponente.jsp"%>
 		</div>
