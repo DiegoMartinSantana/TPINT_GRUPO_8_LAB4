@@ -19,25 +19,29 @@ public class DatosPersonalesServlet extends HttpServlet {
     ClienteNegocio clienteNegocio = new ClienteNegocio();
     
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-       
-      
-        Usuario user = (Usuario) request.getSession().getAttribute("Usuario");
-        
-        Cliente cliente = clienteNegocio.getClienteByNombreUsuario(user.getNombre_usuario());
-       
-           
-            if (cliente != null) {
-                request.setAttribute("cliente", cliente);
-                request.getRequestDispatcher("DatosPersonales.jsp").forward(request, response);
-             
-            } else {
 
-           response.sendRedirect("Login.jsp");
-            }
+        Usuario user = (Usuario) request.getSession().getAttribute("Usuario");
+
+
+        if (user == null) {
+            response.sendRedirect("Login.jsp");
+            return;
+        }
+
+
+        Cliente cliente = clienteNegocio.getClienteByNombreUsuario(user.getNombre_usuario());
+
+        if (cliente != null) {
+            request.setAttribute("cliente", cliente);
+            request.getRequestDispatcher("DatosPersonales.jsp").forward(request, response);
+        } else {
+            response.sendRedirect("Login.jsp");
+        }
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request, response);
+        
     }
 
 	 
