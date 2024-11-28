@@ -76,6 +76,12 @@ public class LoginServlet extends HttpServlet {
 		request.getSession().removeAttribute("UsuarioNombre");
 		request.getSession().removeAttribute("Usuario");
 		RequestDispatcher rd = request.getRequestDispatcher("Login.jsp");	
+		
+		if (request.getSession(false) != null) {
+	        request.getSession().invalidate(); //
+	    }
+	    
+	    response.sendRedirect("Login.jsp");
 	}
 
 	

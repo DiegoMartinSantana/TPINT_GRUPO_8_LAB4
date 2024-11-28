@@ -14,8 +14,10 @@ import DatosImpl.ClienteDao;
 import DatosImpl.CuentaDao;
 import Dominio.Cliente;
 import Dominio.Cuenta;
+import Dominio.Movimiento;
 import NegocioImpl.ClienteNegocio;
 import NegocioImpl.CuentaNegocio;
+import NegocioImpl.MovimientoNegocio;
 
 /**
  * Servlet implementation class AltaCuentaServlet
@@ -26,6 +28,7 @@ public class AltaCuentaServlet extends HttpServlet {
     
     private ClienteNegocio clienteNegocio = new ClienteNegocio();
     private CuentaNegocio cuentaNegocio = new CuentaNegocio();
+    private MovimientoNegocio movimientoNegocio = new MovimientoNegocio();
   
     
     private void ActualizarLista(HttpServletRequest request, HttpServletResponse response)    throws ServletException, IOException {
@@ -52,7 +55,9 @@ public class AltaCuentaServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
   
-        int idCliente = Integer.parseInt(request.getParameter("clientes")); 
+        
+    	
+    	int idCliente = Integer.parseInt(request.getParameter("clientes")); 
         int tipoCuenta = Integer.parseInt(request.getParameter("tipoCuenta"));
       
         String fechaCreacion = request.getParameter("fechaCreacion");
@@ -66,15 +71,35 @@ public class AltaCuentaServlet extends HttpServlet {
         
         nuevaCuenta.setSaldo(saldoInicial);
         nuevaCuenta.setActiva(activa);
-
+        
         boolean exito = cuentaNegocio.agregarCuenta(nuevaCuenta);
+        
+        
+        Movimiento nuevoMovimiento = new Movimiento();
+    	nuevoMovimiento.setId_cuenta(nuevaCuenta.getIdCuenta());
+    	nuevoMovimiento.setTipo(1);
+    	nuevoMovimiento.setDetalle("Alta cuenta");
+    	nuevoMovimiento.setImporte(saldoInicial);
+    	nuevoMovimiento.setFecha(fechaCreacion);
+    	nuevoMovimiento.setId_destino(nuevaCuenta.getIdCuenta());
+    	
+    	boolean exito_mov = movimientoNegocio.crearMovimiento(nuevoMovimiento);
 
-        if (exito != false) {
+     
+        
+       
+        movimientoNegocio.crearMovimiento(nuevoMovimiento);
+
+        if (exito != false && exito_mov !=false) {
+        	
+        	
+        	ActualizarLista(request, response);
             
-            ActualizarLista(request, response);
             request.getRequestDispatcher("ListarBanco.jsp").forward(request, response);	
             
+            
         }
+        
         
     }
 }

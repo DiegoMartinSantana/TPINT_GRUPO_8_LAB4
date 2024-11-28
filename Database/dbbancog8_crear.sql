@@ -67,6 +67,7 @@ create table movimiento (
   fecha varchar(40) not null,
   detalle varchar(200) not null,
   importe float not null,
+  id_destino int not null,
   primary key (id_movimiento),
   foreign key (id_cuenta) references cuenta (id_cuenta)
 );
@@ -86,12 +87,13 @@ create table prestamo (
 
 drop table if exists cuota;
 create table cuota (
+  id_cuota int auto_increment,
   id_prestamo int not null,
-  numero_cuota int,
+  numero_cuota int not null,
   importe float not null,
   vencimiento varchar(90) not null,
   estado int DEFAULT 2,		-- 1. Pagada, 2. Pendiente, 3. Pago parcial
-  primary key (id_prestamo, numero_cuota),
+  primary key (id_cuota),
   foreign key (id_prestamo) references prestamo (id_prestamo)
 );
 
@@ -99,11 +101,11 @@ drop table if exists pago;
 create table pago (
   id_pago int not null auto_increment,
   id_prestamo int not null,
-  numero_cuota int,
+  id_cuota int not null,
   id_movimiento int not null,
   estado int not null,		-- 1. Total, 2. Parcial
   primary key (id_pago),
-  foreign key (id_prestamo, numero_cuota) references cuota (id_prestamo, numero_cuota),
+  foreign key (id_prestamo, id_cuota) references cuota (id_prestamo, id_cuota),
   foreign key (id_movimiento) references movimiento (id_movimiento)
 );
 
