@@ -52,4 +52,9 @@ public class CuentaNegocio implements ICuentaNegocio {
     public Cuenta obtenerCuentaPorId(int idCuenta) {
         return cuentaDao.obtenerCuentaPorId(idCuenta);
     }
+    
+    @Override
+	public int obtenerUltimoIDCuenta() {
+		return this.cuentaDao.obtenerUltimoIDCuenta();
+	}
 }

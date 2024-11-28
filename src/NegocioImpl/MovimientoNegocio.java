@@ -33,12 +33,6 @@ public class MovimientoNegocio implements IMovimientoNegocio  {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-
-	@Override
-	public int obtenerUltimoIDMovimiento() {
-		return this.movimientoDao.obtenerUltimoIDMovimiento();
-	}
 	
 
 }

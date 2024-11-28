@@ -64,7 +64,7 @@ public class AltaCuentaServlet extends HttpServlet {
         float saldoInicial = 10000; 
         boolean activa = true; 
         
-        int UltimoIDCuenta = movimientoNegocio.obtenerUltimoIDMovimiento();
+        int UltimoIDCuenta = cuentaNegocio.obtenerUltimoIDCuenta();
         
         Movimiento nuevoMovimiento = new Movimiento();
         Cuenta nuevaCuenta = new Cuenta();

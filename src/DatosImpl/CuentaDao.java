@@ -20,6 +20,7 @@ public class CuentaDao implements ICuentaDao {
     private static final String DELETE = "DELETE FROM cuenta WHERE id_cuenta = ?";
     private static final String SELECT_ALL = "SELECT id_cuenta, nombre, apellido, dni, creacion, tipo, cbu, saldo FROM cuenta c INNER JOIN cliente cl on cl.id_cliente = c.id_cliente";
     private static final String SELECT_BY_ID = "SELECT * FROM cuenta WHERE id_cuenta = ?";
+    private static final String traerUltimoIDMovimiento ="SELECT IFNULL(MAX(id_cuenta), 0) + 1 AS next_id FROM cuenta";
 
     private CuentaDao() { }
 
@@ -190,5 +191,27 @@ public class CuentaDao implements ICuentaDao {
         }
         return cuenta;
     }
+    
+    @Override
+	public int obtenerUltimoIDCuenta() {
+		  PreparedStatement statement;
+		    ResultSet resultSet;
+		    
+		    Connection conexion = Conexion.getConexion().getSQLConexion();
+		    int ultimoIDMovimiento = -1;
+		    
+		    try {
+		        statement = conexion.prepareStatement(traerUltimoIDMovimiento);
+		        resultSet = statement.executeQuery();
+		        
+		        if (resultSet.next()) {
+		            ultimoIDMovimiento = resultSet.getInt("next_id");
+		        }
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    }
+		    
+		    return ultimoIDMovimiento;
 
+}
 }

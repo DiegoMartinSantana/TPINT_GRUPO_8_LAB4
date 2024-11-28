@@ -10,4 +10,6 @@ public interface ICuentaDao {
 	boolean eliminarCuenta(int idCuenta);
     List<Cuenta> listarCuentas();
     Cuenta obtenerCuentaPorId(int idCuenta);
+    int obtenerUltimoIDCuenta();
+
 }

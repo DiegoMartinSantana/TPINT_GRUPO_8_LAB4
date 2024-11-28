@@ -10,4 +10,5 @@ public interface ICuentaNegocio {
     boolean eliminarCuenta(int idCuenta);
     List<Cuenta> obtenerCuentas();
     Cuenta obtenerCuentaPorId(int idCuenta);
+    int obtenerUltimoIDCuenta();
 }
