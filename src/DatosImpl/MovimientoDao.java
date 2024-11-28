@@ -14,6 +14,7 @@ public class MovimientoDao implements IMovimientoDao {
 	
 	private static MovimientoDao instancia = null;
 	private static final String insertarMovimiento = "INSERT INTO movimiento(id_cuenta,id_tipo_movimiento, fecha, detalle, importe,id_destino) VALUES (?,?,?,?,?,?)";
+	private static final String traerUltimoIDMovimiento ="SELECT IFNULL(MAX(id_cuenta), 0) + 1 AS next_id FROM cuenta";
 	
 	
 	public static MovimientoDao obtenerInstancia() {
@@ -62,10 +63,34 @@ public class MovimientoDao implements IMovimientoDao {
 		return null;
 	}
 
+	
+	
 	@Override
 	public Movimiento obtenerMovimientoPorId(int idMovimiento) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public int obtenerUltimoIDMovimiento() {
+		  PreparedStatement statement;
+		    ResultSet resultSet;
+		    
+		    Connection conexion = Conexion.getConexion().getSQLConexion();
+		    int ultimoIDMovimiento = -1;
+		    
+		    try {
+		        statement = conexion.prepareStatement(traerUltimoIDMovimiento);
+		        resultSet = statement.executeQuery();
+		        
+		        if (resultSet.next()) {
+		            ultimoIDMovimiento = resultSet.getInt("next_id");
+		        }
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    }
+		    
+		    return ultimoIDMovimiento;
 	}
     
 	

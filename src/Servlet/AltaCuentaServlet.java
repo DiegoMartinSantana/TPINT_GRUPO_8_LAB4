@@ -63,8 +63,12 @@ public class AltaCuentaServlet extends HttpServlet {
         String fechaCreacion = request.getParameter("fechaCreacion");
         float saldoInicial = 10000; 
         boolean activa = true; 
-
+        
+        int UltimoIDCuenta = movimientoNegocio.obtenerUltimoIDMovimiento();
+        
+        Movimiento nuevoMovimiento = new Movimiento();
         Cuenta nuevaCuenta = new Cuenta();
+        
         nuevaCuenta.setIdCliente(idCliente);
         nuevaCuenta.setTipo(tipoCuenta);
         nuevaCuenta.setCreacion(fechaCreacion);
@@ -72,23 +76,15 @@ public class AltaCuentaServlet extends HttpServlet {
         nuevaCuenta.setSaldo(saldoInicial);
         nuevaCuenta.setActiva(activa);
         
+        nuevoMovimiento.setId_cuenta(UltimoIDCuenta);
+        nuevoMovimiento.setTipo(1);
+        nuevoMovimiento.setDetalle("Alta cuenta");
+        nuevoMovimiento.setImporte(saldoInicial);
+        nuevoMovimiento.setFecha(fechaCreacion);
+        nuevoMovimiento.setId_destino(UltimoIDCuenta);
+        
         boolean exito = cuentaNegocio.agregarCuenta(nuevaCuenta);
-        
-        
-        Movimiento nuevoMovimiento = new Movimiento();
-    	nuevoMovimiento.setId_cuenta(nuevaCuenta.getIdCuenta());
-    	nuevoMovimiento.setTipo(1);
-    	nuevoMovimiento.setDetalle("Alta cuenta");
-    	nuevoMovimiento.setImporte(saldoInicial);
-    	nuevoMovimiento.setFecha(fechaCreacion);
-    	nuevoMovimiento.setId_destino(nuevaCuenta.getIdCuenta());
-    	
     	boolean exito_mov = movimientoNegocio.crearMovimiento(nuevoMovimiento);
-
-     
-        
-       
-        movimientoNegocio.crearMovimiento(nuevoMovimiento);
 
         if (exito != false && exito_mov !=false) {
         	
@@ -99,8 +95,6 @@ public class AltaCuentaServlet extends HttpServlet {
             
             
         }
-        
-        
     }
 }
 
