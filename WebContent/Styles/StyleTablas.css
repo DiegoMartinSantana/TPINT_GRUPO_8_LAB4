@@ -1,0 +1,129 @@
+.table {
+    width: 100%;
+    margin-bottom: 20px;
+    border-collapse: collapse;
+    border-radius: 16px;
+}
+
+.table thead {
+    background-color: #007bff;
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 14px;
+    text-align: center;
+}
+
+.table thead th {
+    padding: 16px;
+    font-weight: bold;
+}
+
+.table tbody tr {
+    transition: all 0.2s ease-in-out;
+}
+
+.table tbody tr:hover {
+    background-color: #f1f1f1;
+    transform: scale(1.01);
+}
+
+.table tbody td {
+    font-size: 14px;
+    color: #333;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.table-responsive {
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn {
+    font-size: 14px;
+    padding: 8px 14px;
+    border-radius: 8px;
+    transition: all 0.2s ease-in-out;
+    margin: 5px;
+}
+.btn-primary {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: #fff;
+    border: none;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+.btn-success {
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+}
+
+.btn-success:hover {
+    background-color: #218838;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+}
+
+.btn-danger:hover {
+    background-color: #a71d2a;
+}
+
+.btn-warning {
+    background-color: #ffc107;
+    color: #212529;
+    border: none;
+}
+
+.btn-warning:hover {
+    background-color: #e0a800;
+}
+
+.btn-info {
+    background-color: #17a2b8;
+    color: #fff;
+    border: none;
+}
+
+.btn-info:hover {
+    background-color: #117a8b;
+}
+
+.btn-light {
+    background-color: #f8f9fa;
+    color: #212529;
+    border: none;
+}
+
+.btn-light:hover {
+    background-color: #e2e6ea;
+}
+
+.btn-dark {
+    background-color: #343a40;
+    color: #fff;
+    border: none;
+}
+
+.btn-dark:hover {
+    background-color: #1d2124;
+}
+

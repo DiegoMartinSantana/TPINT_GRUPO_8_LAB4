@@ -1,6 +1,7 @@
 package Servlet;
 
 import java.io.IOException;
+import java.time.LocalDate;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -52,7 +53,7 @@ public class servletUsuario extends HttpServlet {
 		     String apellido = request.getParameter("apellido");
 		     int sexo = Integer.parseInt(request.getParameter("sexo"));
 		     String nacionalidad = request.getParameter("nacionalidad");
-		     String nacimiento = request.getParameter("fechaNacimiento");
+		     LocalDate nacimiento = LocalDate.parse(request.getParameter("fechaNacimiento"));
 		     String domicilio = request.getParameter("domicilio");
 		     String localidad = request.getParameter("localidad");
 		     String email = request.getParameter("correoElectronico");

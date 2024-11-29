@@ -1,5 +1,6 @@
 package Dominio;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,11 +14,11 @@ public class Cliente {
 	private String apellido;
 	private  int sexo;
 	private String nacionalidad;
-	//private Calendar nacimiento;
+	private LocalDate nacimiento;
 	private String domicilio;
 	private List<Cuenta> cuentasCliente;
 	private String localidad;
-	//Provincia provincia;
+	private Provincia provincia;
 	private String email;
 	private String telefono;
 	private boolean activo;
@@ -28,7 +29,7 @@ public class Cliente {
 
 	
 	public Cliente(String nombreUsuario, int id, int dni, String cuil, String nombre, String apellido, int sexo,
-			String nacionalidad, String domicilio, String localidad, String email, String telefono, boolean activo) {
+			String nacionalidad , String domicilio, String localidad, String email, String telefono, boolean activo,Provincia provincia,LocalDate nacimiento) {
 		this.nombreUsuario = nombreUsuario;
 		this.id = id;
 		this.dni = dni;
@@ -43,7 +44,39 @@ public class Cliente {
 		this.telefono = telefono;
 		this.activo = activo;
 		this.cuentasCliente = new ArrayList<>();
+		this.nacimiento= nacimiento;
+		this.provincia=provincia;
 	}
+
+	public LocalDate getNacimiento() {
+		return nacimiento;
+	}
+
+
+	public void setNacimiento(LocalDate nacimiento) {
+		this.nacimiento = nacimiento;
+	}
+
+
+	public List<Cuenta> getCuentasCliente() {
+		return cuentasCliente;
+	}
+
+
+	public void setCuentasCliente(List<Cuenta> cuentasCliente) {
+		this.cuentasCliente = cuentasCliente;
+	}
+
+
+	public Provincia getProvincia() {
+		return provincia;
+	}
+
+
+	public void setProvincia(Provincia provincia) {
+		this.provincia = provincia;
+	}
+
 
 	public void agregarCuenta(Cuenta cuenta) {
 		this.cuentasCliente.add(cuenta);

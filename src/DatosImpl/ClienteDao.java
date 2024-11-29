@@ -4,11 +4,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import Datos.IClienteDao;
 import Dominio.Cliente;
+import Dominio.Provincia;
 
 
 
@@ -31,6 +33,8 @@ public class ClienteDao implements IClienteDao{
             "localidad = ?, " +
             "email = ?, " +
             "telefono = ? " +
+            "nacimiento = ?"+
+            "id_provincia = ?"+
             "WHERE id_cliente = ? AND activo = 1;";
 	
 	public ClienteDao() {}
@@ -51,7 +55,8 @@ public class ClienteDao implements IClienteDao{
 
 	    try {
 	        statement = conexion.prepareStatement(Update);
-	     	//falta prov y nacimiento ( problemas a resolver con date)
+	     
+	        
 	        statement.setString(1, cliente.getNombre());
 	        statement.setString(2, cliente.getApellido());
 	        statement.setInt(3, cliente.getSexo());
@@ -61,7 +66,8 @@ public class ClienteDao implements IClienteDao{
 	        statement.setString(7, cliente.getEmail());
 	        statement.setString(8, cliente.getTelefono());
 	        statement.setInt(9, cliente.getId());
-
+	        statement.setDate(10, java.sql.Date.valueOf(cliente.getNacimiento())); 
+	        statement.setInt(11, cliente.getProvincia().getId_provincia());
 	        
 	        int rowsUpdated = statement.executeUpdate();
 	        if (rowsUpdated > 0) {
@@ -89,7 +95,7 @@ public class ClienteDao implements IClienteDao{
 
 	@Override
 	public boolean insert(String nombre_usuario, int dni, String cuil, String nombre, String apellido, int sexo,
-			String nacionalidad, String nacimiento, String domicilio, String localidad, int id_provincia, String email,
+			String nacionalidad, LocalDate nacimiento, String domicilio, String localidad, int id_provincia, String email,
 			String telefono) 
 	{
 		
@@ -107,7 +113,7 @@ public class ClienteDao implements IClienteDao{
             statement.setString(5, apellido);
             statement.setInt(6, sexo);
             statement.setString(7, nacionalidad);
-            statement.setString(8, nacimiento);
+	        statement.setDate(8, java.sql.Date.valueOf(nacimiento)); //local date a DATE 
             statement.setString(9, domicilio);
             statement.setString(10, localidad);
             statement.setInt(11, id_provincia);
@@ -155,11 +161,13 @@ public class ClienteDao implements IClienteDao{
                 cliente.setNombreUsuario(resultSet.getString("nombre_usuario"));
                 cliente.setDni(resultSet.getInt("dni"));
                 cliente.setCuil(resultSet.getString("cuil"));
-             
+                
                 cliente.setNombre(resultSet.getString("nombre"));
                 cliente.setApellido(resultSet.getString("apellido"));
                 cliente.setSexo(resultSet.getInt("sexo"));
                 cliente.setNacionalidad(resultSet.getString("nacionalidad"));
+                Provincia prov = new Provincia(resultSet.getInt("id_provincia"),"");
+                cliente.setProvincia(prov);
                 cliente.setDomicilio(resultSet.getString("domicilio"));
                 cliente.setLocalidad(resultSet.getString("localidad"));
                 cliente.setEmail(resultSet.getString("email"));
@@ -192,7 +200,8 @@ public class ClienteDao implements IClienteDao{
                 cliente.setNombreUsuario(resultSet.getString("nombre_usuario"));
                 cliente.setDni(resultSet.getInt("dni"));
                 cliente.setCuil(resultSet.getString("cuil"));
-         
+                Provincia prov = new Provincia(resultSet.getInt("id_provincia"),"");
+                cliente.setProvincia(prov);
                 cliente.setNombre(resultSet.getString("nombre"));
                 cliente.setApellido(resultSet.getString("apellido"));
                 cliente.setSexo(resultSet.getInt("sexo"));
@@ -228,7 +237,8 @@ public class ClienteDao implements IClienteDao{
                 cliente.setNombreUsuario(resultSet.getString("nombre_usuario"));
                 cliente.setDni(resultSet.getInt("dni"));
                 cliente.setCuil(resultSet.getString("cuil"));
-         
+                Provincia prov = new Provincia(resultSet.getInt("id_provincia"),"");
+                cliente.setProvincia(prov);
                 cliente.setNombre(resultSet.getString("nombre"));
                 cliente.setApellido(resultSet.getString("apellido"));
                 cliente.setSexo(resultSet.getInt("sexo"));
@@ -277,7 +287,7 @@ public class ClienteDao implements IClienteDao{
 	    return isDeleteExitoso;
 	}
 
-	public Cliente getClienteByNombreUsuaro(String nombre_usuario) {
+	public Cliente getClienteByNombreUsuario(String nombre_usuario) {
 		PreparedStatement statement;
         ResultSet resultSet;
        
@@ -293,7 +303,8 @@ public class ClienteDao implements IClienteDao{
                 cliente.setNombreUsuario(resultSet.getString("nombre_usuario"));
                 cliente.setDni(resultSet.getInt("dni"));
                 cliente.setCuil(resultSet.getString("cuil"));
-         
+                Provincia prov = new Provincia(resultSet.getInt("id_provincia"),"");
+                cliente.setProvincia(prov);
                 cliente.setNombre(resultSet.getString("nombre"));
                 cliente.setApellido(resultSet.getString("apellido"));
                 cliente.setSexo(resultSet.getInt("sexo"));

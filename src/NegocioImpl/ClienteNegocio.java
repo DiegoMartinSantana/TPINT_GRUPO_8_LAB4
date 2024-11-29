@@ -1,5 +1,6 @@
 package NegocioImpl;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import DatosImpl.ClienteDao;
@@ -14,7 +15,7 @@ public class ClienteNegocio implements IClienteNegocio{
 	 private ClienteDao clienteDao = new ClienteDao();
 	@Override
 	public boolean insert(String nombre_usuario, int dni, String cuil, String nombre, String apellido, int sexo,
-			String nacionalidad, String nacimiento, String domicilio, String localidad, int id_provincia, String email,
+			String nacionalidad, LocalDate nacimiento, String domicilio, String localidad, int id_provincia, String email,
 			String telefono) {
 		return clienteDao.insert(nombre_usuario, dni, cuil, nombre, apellido, sexo, nacionalidad, nacimiento, domicilio, localidad, id_provincia, email, telefono);
 
@@ -34,7 +35,7 @@ public class ClienteNegocio implements IClienteNegocio{
 		return clienteDao.getClienteById(Id);
 	}
 	public Cliente getClienteByNombreUsuario(String nombre_usuario) {
-		return clienteDao.getClienteByNombreUsuaro(nombre_usuario);
+		return clienteDao.getClienteByNombreUsuario(nombre_usuario);
 	}
 	
 }

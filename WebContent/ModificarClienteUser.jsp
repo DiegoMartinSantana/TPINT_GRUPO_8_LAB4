@@ -1,3 +1,5 @@
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="Dominio.Provincia" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
     <%@ page import="Dominio.Cliente" %>
@@ -55,12 +57,26 @@
         <option value="3" <%= cliente.getSexo() == 3 ? "selected" : "" %>>Otro</option>
     </select>
 
+    <label for="fechaNacimiento">Fecha de Nacimiento:</label>
+    <input type="date" id="fechaNacimiento" name="fechaNacimiento" value="<%=cliente.getNacimiento() %>" required>
     <label for="nacionalidad">Nacionalidad:</label>
     <input type="text" id="nacionalidad" name="nacionalidad" value="<%= cliente.getNacionalidad() %>" required>
 
-    <label for="fechaNacimiento">Fecha de Nacimiento:</label>
-    <input type="date" id="fechaNacimiento" name="fechaNacimiento" value="" required>
+<label for="provincia">Provincia:</label>
+			<select id="DdlProvincia" name="DdlProvincia" required>
+		                <option value="">Seleccione...</option>
+			<%
+                        ArrayList<Provincia> provincias = (ArrayList<Provincia>) request.getAttribute("Provincias");
+					if(provincias!=null ){
+					for(Provincia provincia : provincias){
+						
+				%>
+		 <option value="<%= provincia.getId_provincia() %>" <%= cliente.getProvincia().getId_provincia() == provincia.getId_provincia() ? "selected" : "" %>> <%= provincia.getNombre() %> </option>
 
+				<%}}else { %>
+				<option value"" >No hay provincias disponibles </option>
+				<%} %>
+				</select>
     <label for="direccion">Domicilio:</label>
     <input type="text" id="direccion" name="direccion" value="<%= cliente.getDomicilio() %>" required>
 	

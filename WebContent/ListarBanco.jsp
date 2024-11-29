@@ -14,97 +14,96 @@
 
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css" />
 
-<title>Listado de Clientes</title>
+<title>Clientes</title>
 <style>
-    table {
-        width: 100%;
-        border-collapse: collapse;
-    }
-    th, td {
-        border: 1px solid black;
-        padding: 8px;
-        text-align: left;
-    }
-    th {
-        background-color: #f2f2f2;
-    }
+
+<%@include file="../Styles/StyleTablas.css" %>
 </style>
 
 </head>
 <body>
 
-<script type="text/javascript">
-        $(document).ready(function() {
-            $('#table_id').DataTable({
-                "paging": true,
-                "lengthMenu": [5, 10, 25, 50],
-                "pageLength": 5,
-                "searching": true,
-                "ordering": true,
-                "language": {
-                    "lengthMenu": "Mostrar _MENU_ registros por página",
-                    "zeroRecords": "No se encontraron registros",
-                    "info": "Mostrando página _PAGE_ de _PAGES_",
-                    "infoEmpty": "No hay registros disponibles",
-                    "infoFiltered": "(filtrado de _MAX_ registros totales)",
-                    "search": "Buscar:",
-                    "paginate": {
-                        "first": "Primero",
-                        "last": "Último",
-                        "next": "Siguiente",
-                        "previous": "Anterior"
-                    }
-                }
-            });
-        });
-    </script>
+
 
 <div class="row">
        <div class="col-2"> 
        <%@include file="NavegacionComponente.jsp" %>
        	</div>
-        <div class="section col-9">
-            <h2>Listado de Clientes</h2>
-            
-            <table id="table_id" class="display">
-				<thead>
-                <tr>
-                    <th>DNI</th>
-                    <th>CUIL</th>
-                    <th>Nombre</th>
-                    <th>Apellido</th>
-                    <th>Email</th>
-                    <th>Teléfono</th>
-                    <th>Localidad</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                 <%                    
-                List<Cliente> clientes = (List<Cliente>)request.getAttribute("clientes");
-                if(clientes != null && !clientes.isEmpty()) {
-                    for(Cliente cliente : clientes) {
-                %>
-                    <tr>
-                        <td><%= cliente.getDni() %></td>
-                        <td><%= cliente.getCuil() %></td>
-                        <td><%= cliente.getNombre() %></td>
-                        <td><%= cliente.getApellido() %></td>
-                        <td><%= cliente.getEmail() %></td>
-                        <td><%= cliente.getTelefono() %></td>
-                        <td><%= cliente.getLocalidad() %></td>
-                        <td>
-                            <a href="ClienteServlet?IdCliente=<%= cliente.getId()  %>" class="btn btn-warning btn-sm">Editar</a>
-                            <a href="ClienteServlet?IdClienteEliminar=<%= cliente.getId() %>" class="btn btn-danger btn-sm">Eliminar</a>
-                        </td>
-                    </tr>
-                <%
-                    }
-                }
-                %>
-            </tbody>
-            </table>
+ <div class="col-9" style="margin-top:50px">
+    <div class="container-fluid">
+        <div class="row justify-content-center mb-4">
+            <div class="col-12 text-center">
+                <h2 style="font-size: 36px; font-weight: bold; color: #333;"> Clientes Registrados</h2>
+                
+            </div>
         </div>
+        <div class="row">
+            <div class="col-12">
+                <div >
+                    <table class="table table-hover align-middle" style="border-radius: 16px; overflow: hidden; background: #fff; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                        <thead style="background: #007bff; color: #fff; text-align: center;">
+                            <tr>
+                            <th>Usuario</th>
+                                <th>DNI</th>
+                                <th>CUIL</th>
+                               
+                                <th>Nombre</th>
+                                 <th>Sexo</th>
+                                <th>Email</th>
+                                <th>Teléfono</th>
+                                <th>Dirección</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <%                    
+                            List<Cliente> clientes = (List<Cliente>)request.getAttribute("clientes");
+                            if(clientes != null && !clientes.isEmpty()) {
+                                for(Cliente cliente : clientes) {
+                            %>
+                            <tr style="border-bottom: 1px solid #e0e0e0;">
+                            <td style="text-align: center;"><%= cliente.getNombreUsuario() %></td>
+                                <td style="text-align: center;"><%= cliente.getDni() %></td>
+                                <td style="text-align: center;"><%= cliente.getCuil() %></td>
+                                
+                                <td style="text-align: center;"><%= cliente.getNombre() %> <%= cliente.getApellido() %></td>
+                                <% if(cliente.getSexo() == 1) { %>
+                                    <td style="text-align: center;">Masculino</td>
+                                <% } else if(cliente.getSexo() == 2) { %>
+                                    <td style="text-align: center;">Femenino</td>
+                                <% } else { %>
+                                    <td style="text-align: center;">Otro</td>
+                                <% } %>
+                                <td style="text-align: center;"><%= cliente.getEmail() %></td>
+                                <td style="text-align: center;"><%= cliente.getTelefono() %></td>
+                                <td>
+                                    <div style="font-size: 14px; text-align: center; ;">
+                                        <%= cliente.getNacionalidad() %>, 
+                                        <%= cliente.getProvincia().getNombre() %>, 
+                                        <%= cliente.getLocalidad() %>, 
+                                        <%= cliente.getDomicilio() %>
+                                    </div>
+                                </td>
+                                <td style="text-align: center;">
+                                    <a href="ClienteServlet?IdCliente=<%= cliente.getId() %>" class="btn btn-primary btn-sm me-2">
+                                        <i class="bi bi-pencil-fill"></i> Editar
+                                    </a>
+                                    <a href="ClienteServlet?IdClienteEliminar=<%= cliente.getId() %>" class="btn btn-danger btn-sm">
+                                        <i class="bi bi-trash-fill"></i> Eliminar
+                                    </a>
+                                </td>
+                            </tr>
+                            <% 
+                                }
+                            }
+                            %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
     </div>
 

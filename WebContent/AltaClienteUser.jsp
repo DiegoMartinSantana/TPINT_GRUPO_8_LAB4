@@ -57,11 +57,7 @@ label, select, input[type="text"], input[type="date"] {
             <label for="fechaNacimiento">Fecha de Nacimiento:</label>
             <input type="date" id="fechaNacimiento" name="fechaNacimiento" required>
 
-            <label for="domicilio">Domicilio:</label>
-            <input type="text" id="domicilio" name="domicilio" required>
-
-             <label for="localidad">Localidad:</label>
-            <input type="text" id="localidad" name="localidad" required>
+           
             
 			<label for="provincia">Provincia:</label>
 			<select id="DdlProvincia" name="DdlProvincia" required>
@@ -80,12 +76,17 @@ label, select, input[type="text"], input[type="date"] {
 				<%} %>
 				</select>
 				
+             <label for="localidad">Localidad:</label>
+            <input type="text" id="localidad" name="localidad" required>
+				
+ 			<label for="domicilio">Domicilio:</label>
+            <input type="text" id="domicilio" name="domicilio" required>
 
            
             <label for="correoElectronico">Correo Electronico:</label>
             <input type="email" id="correoElectronico" name="correoElectronico" required>
 
-            <label for="telefono">Telofono:</label>
+            <label for="telefono">Telefono:</label>
             <input type="tel" id="telefono" name="telefono" required>
 
             <label for="usuario">Usuario:</label>
