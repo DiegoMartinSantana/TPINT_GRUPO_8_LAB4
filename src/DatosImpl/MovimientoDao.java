@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import Datos.IMovimientoDao;
+import Dominio.Cuenta;
 import Dominio.Movimiento;
 
 public class MovimientoDao implements IMovimientoDao {
@@ -14,7 +15,10 @@ public class MovimientoDao implements IMovimientoDao {
 	
 	private static MovimientoDao instancia = null;
 	private static final String insertarMovimiento = "INSERT INTO movimiento(id_cuenta,id_tipo_movimiento, fecha, detalle, importe,id_destino) VALUES (?,?,?,?,?,?)";
-	
+	private static final String SELECT_CUENTA = "SELECT c." + 
+    		"FROM cuenta " + 
+    		"INNER JOIN movimiento m" + 
+    		"ON c.id_cuenta = m.id_cuenta where c.id_cuenta = ?";
 	
 	public static MovimientoDao obtenerInstancia() {
         if (instancia == null) {
@@ -23,6 +27,32 @@ public class MovimientoDao implements IMovimientoDao {
         return instancia;
     }
 
+	  
+    @Override
+    public Cuenta obtenerCuentaPorId(int idCuenta) {
+        Cuenta cuenta = null;
+        try (Connection conexion = Conexion.getConexion().getSQLConexion();
+             PreparedStatement statement = conexion.prepareStatement(SELECT_CUENTA)) {
+            statement.setInt(1, idCuenta);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                cuenta = new Cuenta(
+                    resultSet.getInt("id_cuenta"),
+                    resultSet.getInt("id_cliente"),
+                    resultSet.getInt("tipo"),
+                    resultSet.getString("creacion"),
+                    resultSet.getString("cbu"),
+                    resultSet.getFloat("saldo"),
+                    resultSet.getBoolean("activa")
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return cuenta;
+    }
+    
 	@Override
 	public boolean crearMovimiento(Movimiento movimiento) {
 		PreparedStatement statement;

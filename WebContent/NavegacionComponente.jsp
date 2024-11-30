@@ -50,7 +50,7 @@
 <aside class="sidebar">
   <h5><%=session.getAttribute("UsuarioNombre") %></h5>
     <ul class="nav flex-column">
-        <!-- Menú "Clientes" con submenú colapsable -->
+     
         <li class="nav-item">
             <a class="nav-link"  data-toggle="collapse" data-target="#clientesSubmenu" aria-expanded="false" aria-controls="clientesSubmenu">
                 Clientes
@@ -85,10 +85,10 @@
         </li>
         
         <li class="nav-item">
-            <a class="nav-link" href="AutorizacionPrestamo.jsp">Préstamos</a>
+            <a class="nav-link" href="PrestamosServlet">Préstamos</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="Informes.jsp">Informes</a>
+            <a class="nav-link" href="InformesServlet">Informes</a>
         </li>
        
     </ul>

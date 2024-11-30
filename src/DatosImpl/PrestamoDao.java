@@ -5,67 +5,104 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import Datos.IPrestamoDao;
+import Dominio.Dto.PrestamoDto;
 
-import Dominio.Prestamo;
+public class PrestamoDao implements IPrestamoDao {
+	
+	private static final String selectAll = "SELECT p.importe_pagar, p.importe_solicitado,"
+			+ " p.monto_cuota, p.interes, p.plazo_cuotas,p.id_prestamo, p.fecha, p.estado, cl.nombre, "
+			+ "cl.apellido, cl.nombre_usuario, c.cbu AS cbu_cuenta ,cl.cuil FROM PRESTAMO p"
+			+ " INNER JOIN MOVIMIENTO m ON p.id_movimiento = m.id_movimiento INNER JOIN CUENTA c"
+			+ " ON c.id_cuenta = m.id_cuenta INNER JOIN CLIENTE cl ON cl.id_cliente = c.id_cliente "
+			+ "ORDER BY p.fecha";
+	private static final String update = "UPDATE PRESTAMO SET ESTADO = ? WHERE id_prestamo = ?";
 
-public class PrestamoDao {
-	
-	
-	private static final String selectAll="SELECT * FROM prestamo";
-	
 
-
-	/*
-public int updatePrestamo(Prestamo prestamo) {
-	
-	PreparedStatement statement;
-    Connection conexion = Conexion.getConexion().getSQLConexion();
-    int filas = 0;
-    try {
-        statement = conexion.prepareStatement(update);
-        statement.setString(1, String.valueOf(prestamo.getAutorizado()));
-        statement.setInt(2, prestamo.getIdPrestamo());
-        filas = statement.executeUpdate();
-        if (filas > 0) {
-            conexion.commit();
-        }
-    } catch (SQLException e) {
-        e.printStackTrace();
-        try {
-            conexion.rollback();
-        } catch (SQLException e1) {
-            e1.printStackTrace();
-        }
-    }
-    return filas;
-}
-*/
-public ArrayList<Prestamo> listarPrestamos(){
+public ArrayList<PrestamoDto> listarPrestamos(){
     PreparedStatement statement;
     Connection conexion = Conexion.getConexion().getSQLConexion();
-    ArrayList<Prestamo> prestamos=new ArrayList<Prestamo>();
+    ArrayList<PrestamoDto> prestamos=new ArrayList<PrestamoDto>();
     try {
-    	System.out.println("listar");
         statement = conexion.prepareStatement(selectAll);
         ResultSet resultSet = statement.executeQuery();
         while (resultSet.next()) {
-        	Prestamo prestamo= new Prestamo();
-        	prestamo.setIdPrestamo(resultSet.getInt("id_prestamo"));
-        	prestamo.setIdMovimiento(resultSet.getInt("id_movimiento"));
-        	prestamo.setMontoCuota(resultSet.getFloat("monto_Cuota"));
-        	prestamo.setFechaPrestamo(resultSet.getDate("fecha").toLocalDate());
-        	prestamo.setImportePagar(resultSet.getFloat("importe_pagar"));
-        	prestamo.setImporteSolicitado(resultSet.getFloat("importe_solicitado"));
-        	prestamo.setPlazoCuotas(resultSet.getInt("plazo_coutas"));
-        	prestamo.setInteres(resultSet.getFloat("interes"));
-        	prestamo.setEstado(resultSet.getInt("estado"));
-        	prestamos.add(prestamo);
+        	
+        	PrestamoDto prestamoDto = new PrestamoDto();
+        	prestamoDto.idPrestamo=resultSet.getInt("id_prestamo");
+        	prestamoDto.cbu=(resultSet.getString("cbu_cuenta"));
+        	prestamoDto.cuil=(resultSet.getString("cuil"));
+        	prestamoDto.importePagar = resultSet.getFloat("importe_pagar");
+            prestamoDto.importeSolicitado = resultSet.getFloat("importe_solicitado");
+            prestamoDto.montoCuota = resultSet.getFloat("monto_cuota");
+            prestamoDto.interes = resultSet.getFloat("interes");
+            prestamoDto.plazoCuotas = resultSet.getInt("plazo_cuotas");
+            prestamoDto.fechaPrestamo = resultSet.getDate("fecha").toLocalDate();
+            prestamoDto.estado = resultSet.getInt("estado");
+            String nombre = resultSet.getString("nombre");
+            String apellido  = resultSet.getString("apellido");
+            prestamoDto.nombre = nombre + " " + apellido;
+
+            
+        	prestamos.add(prestamoDto);
         }
     } catch (SQLException e) {
         e.printStackTrace();
     }
     return prestamos;
 }
+	@Override
+public int  SetEstado(int idPrestamo, int set) {
+
+	PreparedStatement statement;
+	Connection conexion = Conexion.getConexion().getSQLConexion();
+	int filas = 0;
+	try {
+	    statement = conexion.prepareStatement(update);
+	   
+	    statement.setInt(1,set);
+	    statement.setInt(2,idPrestamo);
+	   
+	    filas = statement.executeUpdate();
+	    if (filas > 0) {
+	        conexion.commit();
+	    }
+	} catch (SQLException e) {
+	    e.printStackTrace();
+	    try {
+	        conexion.rollback();
+	    } catch (SQLException e1) {
+	        e1.printStackTrace();
+	    }
+	}
+	return filas;
+}
+
+/*
+public int updatePrestamo(Prestamo prestamo) {
+
+PreparedStatement statement;
+Connection conexion = Conexion.getConexion().getSQLConexion();
+int filas = 0;
+try {
+    statement = conexion.prepareStatement(update);
+    statement.setString(1, String.valueOf(prestamo.getAutorizado()));
+    statement.setInt(2, prestamo.getIdPrestamo());
+    filas = statement.executeUpdate();
+    if (filas > 0) {
+        conexion.commit();
+    }
+} catch (SQLException e) {
+    e.printStackTrace();
+    try {
+        conexion.rollback();
+    } catch (SQLException e1) {
+        e1.printStackTrace();
+    }
+}
+return filas;
+}
+*/
 /*
 public int agregarPrestamo(Prestamo prestamo) {
 	
