@@ -1,7 +1,7 @@
 drop database if exists SistemaBancario;
-create database SistemBancario;
+create database SistemaBancario;
 
-use SistemBank;
+use SistemBancario;
 
 drop table if exists provincia;
 create table provincia (
