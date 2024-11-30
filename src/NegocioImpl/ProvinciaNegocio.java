@@ -4,8 +4,9 @@ import java.util.ArrayList;
 
 import DatosImpl.ProvinciaDao;
 import Dominio.Provincia;
+import Negocio.IProvinciaNegocio;
 
-public class ProvinciaNegocio {
+public class ProvinciaNegocio  implements IProvinciaNegocio{
 
 	ProvinciaDao provDao = new ProvinciaDao();
 	

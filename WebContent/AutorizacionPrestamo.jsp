@@ -10,18 +10,52 @@
 <style>
 <%@include file="../Styles/StyleCliente.css" %>
 <%@include file="../Styles/StyleTablas.css" %>
-.btnAceptar {
-	background-color: #51bb55;
-	color: white;
-	border: 1px solid #51bb55;
-}
-        
-.btnRechazar {
-	background-color: #FF0000;
-	color: white;
-	border: 1px solid #FF0000;
-}
-    
+
+      table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        button {
+            margin: 2px;
+            padding: 8px 12px;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .btn-aceptar {
+            background-color: #28a745;
+        }
+        .btn-aceptar:hover {
+            background-color: #218838;
+        }
+        .btn-rechazar {
+            background-color: #dc3545;
+        }
+        .btn-rechazar:hover {
+            background-color: #c82333;
+        }
+        .btn-filtrar {
+            margin: 10px 5px;
+            padding: 10px 15px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .btn-filtrar:hover {
+            background-color: #0056b3;
+        }
 </style>
 </head>
 
@@ -31,67 +65,78 @@
        <%@include file="NavegacionComponente.jsp" %>
        	</div>
   <div class="col-9 section">
-    <h2 class="text-center mb-4">Autorización de préstamos</h2>
+    <h2 class="text-center mb-4">Prestamos</h2>
+<div>
+        <button class="btn-filtrar" onclick="filtrarEstado(1)">Autorizados</button>
+        <button class="btn-filtrar" onclick="filtrarEstado(2)">Denegados</button>
+        <button class="btn-filtrar" onclick="filtrarEstado(3)">Pendientes</button>
+    </div>
+    
+    <%
+        // Obtén la lista de préstamos de la sesión
+        ArrayList<Prestamo> prestamos = (ArrayList<Prestamo>) session.getAttribute("prestamos");
 
-    <div>
-        <table class="table table-hover align-middle" style="border-radius: 16px; overflow: hidden; background: #fff; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-            <thead style="background: #007bff; color: #fff; text-align: center;">
+        if (prestamos == null || prestamos.isEmpty()) {
+    %>
+        <p>No hay préstamos disponibles.</p>
+    <%
+        } else {
+    %>
+        <table>
+            <thead>
                 <tr>
-                    <th>DNI</th>
-                    <th>CUIL</th>
-                    <th>Nombre</th>
-                    <th>Apellido</th>
-                    <th>Préstamo pedido</th>
-                    <th>Cuotas</th>
-                    <th>CBU depósito</th>
-                    <th>Acciones</th>
+                    <th>ID Préstamo</th>
+                    <th>ID Movimiento</th>
+                    <th>Monto Cuota</th>
+                    <th>Importe Solicitado</th>
+                    <th>Plazo Cuotas</th>
+                    <th>Interés (%)</th>
+                    <th>Importe a Pagar</th>
+                    <th>Estado</th>
+                    <th>Fecha del Préstamo</th>
+                    <th>Acción</th>
                 </tr>
             </thead>
             <tbody>
-                <tr style="border-bottom: 1px solid #e0e0e0;">
-                    <td style="text-align: center;">12345678</td>
-                    <td style="text-align: center;">20-12345678-9</td>
-                    <td style="text-align: center;">Juan</td>
-                    <td style="text-align: center;">Pérez</td>
-                    <td style="text-align: center;">$1.500.000 ARS</td>
-                    <td style="text-align: center;">6</td>
+                <%
+                    // Formato para la fecha
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+                    for (Prestamo prestamo : prestamos) {
+                %>
+                <tr>
+                    <td><%= prestamo.getIdPrestamo() %></td>
+                    <td><%= prestamo.getIdMovimiento() %></td>
+                    <td><%= prestamo.getMontoCuota() %></td>
+                    <td><%= prestamo.getImporteSolicitado() %></td>
+                    <td><%= prestamo.getPlazoCuotas() %></td>
+                    <td><%= prestamo.getInteres() %></td>
+                    <td><%= prestamo.getImportePagar() %></td>
                     <td>
-                        <ul style="font-size: 14px; list-style: none; padding: 0; margin: 0;">
-                            <li>Tipo: Ahorro, CBU: 1234567890123456789012, Saldo: $10,000</li>
-                            <li>Tipo: Corriente, CBU: 2345678901234567890123, Saldo: $15,000</li>
-                        </ul>
+                        <%
+                            switch (prestamo.getEstado()) {
+                                case 1: out.print("Autorizado"); break;
+                                case 2: out.print("Denegado"); break;
+                                case 3: out.print("Pendiente"); break;
+                                default: out.print("Desconocido");
+                            }
+                        %>
                     </td>
-                    <td style="text-align: center;">
-                        <form action="procesarPrestamo" method="post" style="display: inline-block;">
-                            <input type="hidden" name="dni" value="12345678"/>
-                            <button type="submit" name="accion" value="aceptar" class="btn btn-success btn-sm me-2">Aceptar</button>
-                            <button type="submit" name="accion" value="rechazar" class="btn btn-danger btn-sm">Rechazar</button>
-                        </form>
+                    <td><%= prestamo.getFechaPrestamo().format(formatter) %></td>
+                    <td>
+                        <button class="btn-aceptar" onclick="accionPrestamo(<%= prestamo.getIdPrestamo() %>, 'aceptar')">Aceptar</button>
+                        <button class="btn-rechazar" onclick="accionPrestamo(<%= prestamo.getIdPrestamo() %>, 'rechazar')">Rechazar</button>
                     </td>
                 </tr>
-                <tr style="border-bottom: 1px solid #e0e0e0;">
-                    <td style="text-align: center;">87654321</td>
-                    <td style="text-align: center;">20-87654321-9</td>
-                    <td style="text-align: center;">Maria</td>
-                    <td style="text-align: center;">González</td>
-                    <td style="text-align: center;">$3.750.000 ARS</td>
-                    <td style="text-align: center;">12</td>
-                    <td>
-                        <ul style="font-size: 14px; list-style: none; padding: 0; margin: 0;">
-                            <li>Tipo: Ahorro, CBU: 3456789012345678901234, Saldo: $10,000</li>
-                        </ul>
-                    </td>
-                    <td style="text-align: center;">
-                        <form action="procesarPrestamo" method="post" style="display: inline-block;">
-                            <input type="hidden" name="dni" value="87654321"/>
-                            <button type="submit" name="accion" value="aceptar" class="btn btn-success btn-sm me-2">Aceptar</button>
-                            <button type="submit" name="accion" value="rechazar" class="btn btn-danger btn-sm">Rechazar</button>
-                        </form>
-                    </td>
-                </tr>
+                <%
+                    }
+                %>
             </tbody>
         </table>
-    </div>
+    <%
+        }
+    %>
+
 </div>
    
 

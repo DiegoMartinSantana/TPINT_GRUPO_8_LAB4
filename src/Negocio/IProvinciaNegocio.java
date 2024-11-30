@@ -1,5 +1,9 @@
 package Negocio;
 
-public interface IProvinciaNegocio {
+import java.util.ArrayList;
 
+import Dominio.Provincia;
+
+public interface IProvinciaNegocio {
+	ArrayList<Provincia> getAll();
 }
