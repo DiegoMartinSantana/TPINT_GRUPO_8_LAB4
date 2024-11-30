@@ -1,5 +1,5 @@
-drop database if exists SistemBank;
-create database SistemBank;
+drop database if exists SistemaBancario;
+create database SistemBancario;
 
 use SistemBank;
 
