@@ -57,7 +57,7 @@ public class LoginServlet extends HttpServlet {
 			 RequestDispatcher rd = request.getRequestDispatcher("ClienteServlet");
 		        rd.forward(request, response);
 		}else if(usuarioLogin.getTipo().codigo==2) {
-			 RequestDispatcher rd = request.getRequestDispatcher("Home.jsp");
+			 RequestDispatcher rd = request.getRequestDispatcher("HomeServlet");
 		        rd.forward(request, response);
 		}
 

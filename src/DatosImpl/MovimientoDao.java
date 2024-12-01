@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import Datos.IMovimientoDao;
@@ -12,8 +13,25 @@ import Dominio.Movimiento;
 
 public class MovimientoDao implements IMovimientoDao {
 	
+	private static int LIMIT = 4; 
 	
 	private static MovimientoDao instancia = null;
+	private static final String obtenerTransferenciaByCuenta ="SELECT " +
+            "id_movimiento, " +
+            "id_cuenta, " +
+            "id_tipo_movimiento, " +
+            "importe, " +
+            "detalle, " +
+            "id_destino, " +
+            "fecha " +
+            "FROM " +
+            "movimiento " +
+            "WHERE " +
+            "id_tipo_movimiento = 4 AND id_cuenta = ? " +
+            "ORDER BY " +
+            "fecha DESC " +
+            "LIMIT " + LIMIT;
+
 	private static final String insertarMovimiento = "INSERT INTO movimiento(id_cuenta,id_tipo_movimiento, fecha, detalle, importe,id_destino) VALUES (?,?,?,?,?,?)";
 	private static final String SELECT_CUENTA = "SELECT c." + 
     		"FROM cuenta " + 
@@ -28,6 +46,37 @@ public class MovimientoDao implements IMovimientoDao {
     }
 
 	  
+	public ArrayList<Movimiento> obtenerUltimasTransferencias(int idCuenta) {
+	    PreparedStatement statement;
+	    ResultSet resultSet;
+	    Connection conexion = Conexion.getConexion().getSQLConexion();
+	    ArrayList<Movimiento> transferencias = new ArrayList<>();
+
+	    
+	    try {
+	        statement = conexion.prepareStatement(obtenerTransferenciaByCuenta);
+	        statement.setInt(1, idCuenta);
+	        resultSet = statement.executeQuery();
+	        	
+	        while (resultSet.next()) {
+	            Movimiento movimiento = new Movimiento();
+	            movimiento.setId(resultSet.getInt("id"));
+	            movimiento.setId_cuenta(resultSet.getInt("id_cuenta"));
+	            movimiento.setTipo(resultSet.getInt("tipo"));
+	            movimiento.setImporte(resultSet.getFloat("importe"));
+	            movimiento.setDetalle(resultSet.getString("detalle"));
+	            movimiento.setId_destino(resultSet.getInt("id_destino"));
+	            movimiento.setFecha(resultSet.getString("fecha"));
+	            transferencias.add(movimiento);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    
+	    return transferencias;
+	}
+
+	
     @Override
     public Cuenta obtenerCuentaPorId(int idCuenta) {
         Cuenta cuenta = null;

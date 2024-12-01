@@ -1,5 +1,6 @@
 package Datos;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import Dominio.Cuenta;
@@ -13,5 +14,5 @@ public interface IMovimientoDao {
     List<Movimiento> listarMovimiento();
     Movimiento obtenerMovimientoPorId(int idMovimiento);
 	Cuenta obtenerCuentaPorId(int idCuenta);
-
+	ArrayList<Movimiento> obtenerUltimasTransferencias(int idCuenta);
 }

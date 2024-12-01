@@ -4,10 +4,10 @@
 
 <style>
     .nav-icon {
-        font-size: 3rem; /* Tamaño grande para los iconos */
+        font-size: 3rem; 
     }
     .nav-link {
-        margin-right: 20px; /* Espaciado entre los enlaces */
+        margin-right: 20px;
     }
 </style>
 
@@ -16,12 +16,12 @@
         <div class="container-fluid">
           
 
-            <!-- Botón para colapsar en pantallas pequeñas -->
+          
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <!-- Opciones del menú -->
+           
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item me-3">
@@ -38,10 +38,12 @@
                     </li>
                 </ul>
             </div>
+            <%String usuario = (String)session.getAttribute("UsuarioNombre");
+            usuario = usuario.toUpperCase();%>
+  <h5 style="margin-right:10px;margin-top:5px"><%=usuario %></h5>
 
-            <!-- Icono de usuario (parte derecha de la barra) -->
             <a class="nav-link ms-auto" href="DatosPersonalesServlet">
-                <i class="bi-person-circle fs-3"></i>
+                <i class="bi-person-circle "></i>
             </a>
         </div>
     </nav>

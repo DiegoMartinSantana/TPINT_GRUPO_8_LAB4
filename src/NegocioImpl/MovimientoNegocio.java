@@ -1,5 +1,6 @@
 package NegocioImpl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -18,20 +19,27 @@ public class MovimientoNegocio implements IMovimientoNegocio  {
 
 	@Override
 	public boolean crearMovimiento(Movimiento movimiento) {
-		// TODO Auto-generated method stub
+		
 		return movimientoDao.crearMovimiento(movimiento);
 	}
 
 	@Override
 	public List<Movimiento> listarMovimiento() {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
 	@Override
 	public Movimiento obtenerMovimientoPorId(int idMovimiento) {
-		// TODO Auto-generated method stub
+		
 		return null;
+	}
+
+
+	@Override
+	public ArrayList<Movimiento> obtenerUltimasTransferencias(int idCuenta) {
+		
+		return movimientoDao.obtenerUltimasTransferencias(idCuenta);
 	}
 	
 
