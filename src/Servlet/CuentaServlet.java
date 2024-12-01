@@ -51,6 +51,9 @@ public class CuentaServlet extends HttpServlet {
 	        	    
 	        	
 	        }
+	        
+	        
+	        
 	        actualizarCuenta (request, response);
         
 	}

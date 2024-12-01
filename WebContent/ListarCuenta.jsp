@@ -20,6 +20,8 @@
 		<%@include file="../Styles/StyleTablas.css" %>
 	</style>
 <title>Cuentas</title>
+
+
 </head>
 <body>
 
