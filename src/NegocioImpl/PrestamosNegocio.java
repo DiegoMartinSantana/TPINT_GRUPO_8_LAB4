@@ -21,6 +21,13 @@ public class PrestamosNegocio  implements IPrestamoNegocio{
 		prestamoDao.SetEstado(idPrestamo, set);
 		
 	}
+
+	@Override
+	
+	public PrestamoDto obtenerPrestamoPorId(int idPrestamo) {
+		
+		return  prestamoDao.obtenerPrestamoPorId(idPrestamo);
+	}
 		
 
 }

@@ -13,4 +13,5 @@ public interface ICuentaDao {
     Cuenta obtenerCuentaPorId(int idCuenta);
     int obtenerUltimoIDCuenta();
     ArrayList<Cuenta> listarCuentasxCliente(int idCliente);
+    boolean actualizarSaldo(Cuenta cuenta);
 }

@@ -1,20 +1,20 @@
 package Dominio;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 public class Cuenta {
 	private int idCuenta;
     private int idCliente;
     private int tipo;
-    private String creacion;
+    private LocalDate creacion;
     private String cbu;
     private float saldo;
     private Cliente cliente;
     private boolean activa;
-   
+    
     public Cuenta() {}
 
-    public Cuenta(int idCuenta, int idCliente, int tipo, String creacion, String cbu, float saldo, boolean activa) {
+    public Cuenta(int idCuenta, int idCliente, int tipo, LocalDate creacion, String cbu, float saldo, boolean activa) {
         this.idCuenta = idCuenta;
         this.idCliente = idCliente;
         this.tipo = tipo;
@@ -48,11 +48,11 @@ public class Cuenta {
         this.tipo = tipo;
     }
 
-    public String getCreacion() {
+    public LocalDate getCreacion() {
         return creacion;
     }
 
-    public void setCreacion(String creacion) {
+    public void setCreacion(LocalDate creacion) {
         this.creacion = creacion;
     }
 

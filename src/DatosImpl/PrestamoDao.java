@@ -10,21 +10,28 @@ import Datos.IPrestamoDao;
 import Dominio.Dto.PrestamoDto;
 
 public class PrestamoDao implements IPrestamoDao {
-	private static final String selectById ="SELECT " +
-	        "p.id_prestamo, " +
-	        "c.cbu AS cbu_cuenta, " +
-	        "cl.cuil, " +
-	        "p.importe_pagar, " +
-	        "p.importe_solicitado, " +
-	        "p.monto_cuota, " +
-	        "p.interes, " +
-	        "p.plazo_cuotas, " +
-	        "p.fecha, " +
-	        "p.estado, " +  "prestamo p " +
-	        "INNER JOIN movimiento m ON p.id_movimiento = m.id_movimiento " +
-	        "INNER JOIN cuenta c ON m.id_cuenta = c.id_cuenta " +
-	        "INNER JOIN cliente cl ON c.id_cliente = cl.id_cliente " +
-	        "WHERE p.id_prestamo = ?";
+	private static final String selectById ="SELECT" + 
+			"            p.id_prestamo, " + 
+			" 			m.id_movimiento, "+
+			"           c.id_cuenta, " +
+			"            c.cbu AS cbu_cuenta, " + 
+			"            cl.cuil, " + 
+			"            cl.nombre, "  + 
+			"			 cl.apellido, " +
+			"            p.importe_pagar, " + 
+			"            p.importe_solicitado, " + 
+			"            p.monto_cuota, " + 
+			"            p.interes, " + 
+			"            p.plazo_cuotas, " + 
+			"            p.fecha, " + 
+			"            p.estado from prestamo p " +
+			"            INNER JOIN movimiento m ON p.id_movimiento = m.id_movimiento " + 
+			"            INNER JOIN cuenta c ON m.id_cuenta = c.id_cuenta " + 
+			"            INNER JOIN cliente cl ON c.id_cliente = cl.id_cliente " + 
+			"		     WHERE p.id_prestamo = ?;";
+	
+	
+	
 	
 	private static final String selectAll = "SELECT p.importe_pagar, p.importe_solicitado,"
 			+ " p.monto_cuota, p.interes, p.plazo_cuotas,p.id_prestamo, p.fecha, p.estado, cl.nombre, "
@@ -58,6 +65,9 @@ public class PrestamoDao implements IPrestamoDao {
 	            prestamoDto.plazoCuotas = resultSet.getInt("plazo_cuotas");
 	            prestamoDto.fechaPrestamo = resultSet.getDate("fecha").toLocalDate();
 	            prestamoDto.estado = resultSet.getInt("estado");
+	            prestamoDto.idCuenta = resultSet.getInt("id_cuenta");
+	            prestamoDto.idMovimiento = resultSet.getInt("id_movimiento");
+	            
 	            String nombre = resultSet.getString("nombre");
 	            String apellido = resultSet.getString("apellido");
 	            prestamoDto.nombre = nombre + " " + apellido;
@@ -126,64 +136,4 @@ public int  SetEstado(int idPrestamo, int set) {
 	}
 	return filas;
 }
-
-/*
-public int updatePrestamo(Prestamo prestamo) {
-
-PreparedStatement statement;
-Connection conexion = Conexion.getConexion().getSQLConexion();
-int filas = 0;
-try {
-    statement = conexion.prepareStatement(update);
-    statement.setString(1, String.valueOf(prestamo.getAutorizado()));
-    statement.setInt(2, prestamo.getIdPrestamo());
-    filas = statement.executeUpdate();
-    if (filas > 0) {
-        conexion.commit();
-    }
-} catch (SQLException e) {
-    e.printStackTrace();
-    try {
-        conexion.rollback();
-    } catch (SQLException e1) {
-        e1.printStackTrace();
-    }
-}
-return filas;
-}
-*/
-/*
-public int agregarPrestamo(Prestamo prestamo) {
-	
-	PreparedStatement statement;
-    Connection conexion = Conexion.getConexion().getSQLConexion();
-    int filas = 0;
-    try {
-        statement = conexion.prepareStatement(insert);
-        statement.setInt(1, prestamo.getIdcliente());
-        statement.setInt(2, prestamo.getIdcuenta());
-        statement.setDate(3, java.sql.Date.valueOf(prestamo.getFechaPrestamo()));
-        statement.setBigDecimal(4, prestamo.getImporteAPagar());
-        statement.setBigDecimal(5, prestamo.getImporteSolicitado());
-        statement.setInt(6, prestamo.getPlazoEnCuotas());
-        statement.setBigDecimal(7, prestamo.getMontoPorCuota());
-        statement.setString(8, String.valueOf(prestamo.getAutorizado()));
-       
-        
-        filas = statement.executeUpdate();
-        if (filas > 0) {
-            conexion.commit();
-        }
-    } catch (SQLException e) {
-        e.printStackTrace();
-        try {
-            conexion.rollback();
-        } catch (SQLException e1) {
-            e1.printStackTrace();
-        }
-    }
-    return filas;
-	
-}
-*/
 }

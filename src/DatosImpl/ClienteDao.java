@@ -173,6 +173,7 @@ public class ClienteDao implements IClienteDao{
                 cliente.setEmail(resultSet.getString("email"));
                 cliente.setTelefono(resultSet.getString("telefono"));
                 cliente.setActivo(resultSet.getBoolean("activo"));
+                cliente.setNacimiento(resultSet.getDate("nacimiento").toLocalDate());
                 cliente.setId(resultSet.getInt("id_cliente"));
                 
                 clientes.add(cliente);
@@ -210,6 +211,7 @@ public class ClienteDao implements IClienteDao{
                 cliente.setLocalidad(resultSet.getString("localidad"));
                 cliente.setEmail(resultSet.getString("email"));
                 cliente.setTelefono(resultSet.getString("telefono"));
+                cliente.setNacimiento(resultSet.getDate("nacimiento").toLocalDate());
                 cliente.setActivo(resultSet.getBoolean("activo"));
                 cliente.setId(Id);
             }
@@ -247,6 +249,7 @@ public class ClienteDao implements IClienteDao{
                 cliente.setLocalidad(resultSet.getString("localidad"));
                 cliente.setEmail(resultSet.getString("email"));
                 cliente.setTelefono(resultSet.getString("telefono"));
+                cliente.setNacimiento(resultSet.getDate("nacimiento").toLocalDate());
                 cliente.setActivo(resultSet.getBoolean("activo"));
                 
             }

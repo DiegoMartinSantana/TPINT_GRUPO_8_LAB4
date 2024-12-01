@@ -69,4 +69,9 @@ public class CuentaNegocio implements ICuentaNegocio {
 	public List<Cuenta> obtenerCuentasPorCliente(int idCliente) {
 	return cuentaDao.listarCuentasxCliente(idCliente);
 	}
+
+	@Override
+	public boolean actualizarSaldo(Cuenta cuenta) {
+		return cuentaDao.actualizarSaldo(cuenta);
+	}
 }

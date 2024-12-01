@@ -24,6 +24,7 @@ public class CuentaDao implements ICuentaDao {
     private static final String traerUltimoIDMovimiento ="SELECT IFNULL(MAX(id_cuenta), 0) + 1 AS next_id FROM cuenta";
     private static final String SELECT_CUENTAS_BY_CLIENTE = "SELECT id_cuenta, nombre, apellido, dni, creacion, tipo, cbu, saldo " + 
     														"FROM cuenta c INNER JOIN cliente cl on cl.id_cliente = c.id_cliente where c.id_cliente=?";
+    private static final String UPDATE_SALDO = "UPDATE cuenta SET saldo = ? WHERE id_cuenta = ?";
     private CuentaDao() { }
 
     public static CuentaDao obtenerInstancia() {
@@ -62,7 +63,7 @@ public class CuentaDao implements ICuentaDao {
                 Cuenta cuenta = new Cuenta();
                 
                 cuenta.setIdCuenta(resultSet.getInt("id_cuenta"));
-                cuenta.setCreacion(resultSet.getString("creacion"));
+                cuenta.setCreacion(resultSet.getDate("creacion").toLocalDate());
                 cuenta.setTipo(resultSet.getInt("tipo"));
                 cuenta.setCbu(resultSet.getString("cbu"));
                 cuenta.setSaldo(resultSet.getFloat("saldo"));
@@ -87,7 +88,7 @@ public class CuentaDao implements ICuentaDao {
             statement = conexion.prepareStatement(INSERT);
             statement.setInt(1, cuenta.getIdCliente());
             statement.setInt(2, cuenta.getTipo());
-            statement.setString(3, cuenta.getCreacion());
+            statement.setDate(3, java.sql.Date.valueOf(cuenta.getCreacion()));
             statement.setString(4, cbu);
             statement.setFloat(5, cuenta.getSaldo());
             statement.setBoolean(6, cuenta.isActiva());
@@ -119,11 +120,38 @@ public class CuentaDao implements ICuentaDao {
             statement = conexion.prepareStatement(UPDATE);
             statement.setInt(1, cuenta.getIdCliente());
             statement.setInt(2, cuenta.getTipo());
-            statement.setString(3, cuenta.getCreacion());
+            statement.setDate(3, java.sql.Date.valueOf(cuenta.getCreacion()));
             statement.setString(4, cuenta.getCbu());
             statement.setFloat(5, cuenta.getSaldo());
             statement.setBoolean(6, cuenta.isActiva());
             statement.setInt(7, cuenta.getIdCuenta());
+
+            if (statement.executeUpdate() > 0) {
+                conexion.commit();
+                isUpdateExitoso = true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            try {
+                conexion.rollback();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+        }
+
+        return isUpdateExitoso;
+    }
+
+    @Override
+    public boolean actualizarSaldo(Cuenta cuenta) {
+        PreparedStatement statement;
+        Connection conexion = Conexion.getConexion().getSQLConexion();
+        boolean isUpdateExitoso = false;
+
+        try {
+            statement = conexion.prepareStatement(UPDATE_SALDO);
+            statement.setFloat(1, cuenta.getSaldo());
+
 
             if (statement.executeUpdate() > 0) {
                 conexion.commit();
@@ -187,7 +215,7 @@ public class CuentaDao implements ICuentaDao {
                 Cuenta cuenta = new Cuenta();
                 
                 cuenta.setIdCuenta(resultSet.getInt("id_cuenta"));
-                cuenta.setCreacion(resultSet.getString("creacion"));
+                cuenta.setCreacion(resultSet.getDate("creacion").toLocalDate());
                 cuenta.setTipo(resultSet.getInt("tipo"));
                 cuenta.setCbu(resultSet.getString("cbu"));
                 cuenta.setSaldo(resultSet.getFloat("saldo"));
@@ -215,7 +243,7 @@ public class CuentaDao implements ICuentaDao {
                     resultSet.getInt("id_cuenta"),
                     resultSet.getInt("id_cliente"),
                     resultSet.getInt("tipo"),
-                    resultSet.getString("creacion"),
+                    resultSet.getDate("creacion").toLocalDate(),
                     resultSet.getString("cbu"),
                     resultSet.getFloat("saldo"),
                     resultSet.getBoolean("activa")

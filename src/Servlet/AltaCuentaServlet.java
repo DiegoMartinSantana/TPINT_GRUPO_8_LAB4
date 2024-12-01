@@ -2,6 +2,8 @@ package Servlet;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -53,14 +55,14 @@ public class AltaCuentaServlet extends HttpServlet {
         request.getRequestDispatcher("AltaCuenta.jsp").forward(request, response);
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
   
         
     	
     	int idCliente = Integer.parseInt(request.getParameter("clientes")); 
         int tipoCuenta = Integer.parseInt(request.getParameter("tipoCuenta"));
       
-        String fechaCreacion = request.getParameter("fechaCreacion");
+        LocalDate fechaCreacion = LocalDate.parse(request.getParameter("fechaCreacion"));
         float saldoInicial = 10000; 
         boolean activa = true; 
         

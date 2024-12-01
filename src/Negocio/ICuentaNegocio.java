@@ -12,4 +12,5 @@ public interface ICuentaNegocio {
     Cuenta obtenerCuentaPorId(int idCuenta);
     int obtenerUltimoIDCuenta();
     List<Cuenta> obtenerCuentasPorCliente(int idCliente);
+    boolean actualizarSaldo(Cuenta cuenta);
 }

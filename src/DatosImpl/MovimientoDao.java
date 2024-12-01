@@ -66,7 +66,7 @@ public class MovimientoDao implements IMovimientoDao {
 	            movimiento.setImporte(resultSet.getFloat("importe"));
 	            movimiento.setDetalle(resultSet.getString("detalle"));
 	            movimiento.setId_destino(resultSet.getInt("id_destino"));
-	            movimiento.setFecha(resultSet.getString("fecha"));
+	            movimiento.setFecha(resultSet.getDate("fecha").toLocalDate());
 	            transferencias.add(movimiento);
 	        }
 	    } catch (SQLException e) {
@@ -90,7 +90,7 @@ public class MovimientoDao implements IMovimientoDao {
                     resultSet.getInt("id_cuenta"),
                     resultSet.getInt("id_cliente"),
                     resultSet.getInt("tipo"),
-                    resultSet.getString("creacion"),
+                    resultSet.getDate("creacion").toLocalDate(),
                     resultSet.getString("cbu"),
                     resultSet.getFloat("saldo"),
                     resultSet.getBoolean("activa")
@@ -113,7 +113,7 @@ public class MovimientoDao implements IMovimientoDao {
         	statement = conexion.prepareStatement(insertarMovimiento);
 	        statement.setInt(1, movimiento.getId_cuenta());
 	        statement.setInt(2, movimiento.getTipo());
-	        statement.setString(3,movimiento.getFecha());
+	        statement.setDate(3, java.sql.Date.valueOf(movimiento.getFecha()));
 	        statement.setString(4, movimiento.getDetalle());
 	        statement.setFloat(5, movimiento.getImporte());
 	        statement.setInt(6, movimiento.getId_destino());
@@ -134,6 +134,8 @@ public class MovimientoDao implements IMovimientoDao {
 
         return isInsertExitoso;
 	}
+
+
 
 	@Override
 	public List<Movimiento> listarMovimiento() {

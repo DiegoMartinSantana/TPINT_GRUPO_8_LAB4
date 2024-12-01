@@ -1,5 +1,6 @@
 package NegocioImpl;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class MovimientoNegocio implements IMovimientoNegocio  {
 
 
 	@Override
-	public boolean crearMovimiento(Movimiento movimiento) {
+	public boolean crearMovimiento(Movimiento movimiento){
 		
 		return movimientoDao.crearMovimiento(movimiento);
 	}

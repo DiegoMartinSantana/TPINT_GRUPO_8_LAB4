@@ -1,5 +1,7 @@
 package Dominio;
 
+import java.time.LocalDate;
+
 public class Movimiento {
 	
 	private int id;
@@ -8,15 +10,15 @@ public class Movimiento {
 	private float importe;
 	private String detalle; 
 	private int id_destino;
-	private String fecha;
-	 public String Destino ;
+	private LocalDate fecha;
+	
 	
 	public Movimiento () {
 		
 	}
 	
 	
-	public Movimiento(int id, int id_cuenta, int tipo, float importe, String detalle, int id_destino, String fecha) {
+	public Movimiento(int id, int id_cuenta, int tipo, float importe, String detalle, int id_destino, LocalDate fecha) {
 		super();
 		this.id = id;
 		this.id_cuenta = id_cuenta;
@@ -62,16 +64,10 @@ public class Movimiento {
 	public void setId_destino(int id_destino) {
 		this.id_destino = id_destino;
 	}
-	public String getFecha() {
+	public LocalDate getFecha() {
 		return fecha;
 	}
-	public void setFecha(String fecha) {
+	public void setFecha(LocalDate fecha) {
 		this.fecha = fecha;
 	}
-	
-	
-	
-	
-	
-
 }

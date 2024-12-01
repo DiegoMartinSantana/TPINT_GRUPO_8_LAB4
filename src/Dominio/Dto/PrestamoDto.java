@@ -15,4 +15,16 @@ public class PrestamoDto  {
     public String nombre;
     public String cuil;
     public int idPrestamo;
+    public int idCuenta;
+    public int idMovimiento;
+
+    public int getIdCuenta() {
+                return idCuenta;
+            }
+
+    public void setIdCuenta(int idCuenta) {
+                this.idCuenta = idCuenta;
+            }
+    
 }
+
