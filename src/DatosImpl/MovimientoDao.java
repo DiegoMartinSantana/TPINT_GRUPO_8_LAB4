@@ -27,7 +27,7 @@ public class MovimientoDao implements IMovimientoDao {
             "FROM " +
             "movimiento " +
             "WHERE " +
-            "id_tipo_movimiento = 4 AND id_cuenta = ? " +
+            "id_cuenta = ? " +
             "ORDER BY " +
             "fecha DESC " +
             "LIMIT " + LIMIT;
@@ -60,9 +60,9 @@ public class MovimientoDao implements IMovimientoDao {
 	        	
 	        while (resultSet.next()) {
 	            Movimiento movimiento = new Movimiento();
-	            movimiento.setId(resultSet.getInt("id"));
+	            movimiento.setId(resultSet.getInt("id_movimiento"));
 	            movimiento.setId_cuenta(resultSet.getInt("id_cuenta"));
-	            movimiento.setTipo(resultSet.getInt("tipo"));
+	            movimiento.setTipo(resultSet.getInt("id_tipo_movimiento"));
 	            movimiento.setImporte(resultSet.getFloat("importe"));
 	            movimiento.setDetalle(resultSet.getString("detalle"));
 	            movimiento.setId_destino(resultSet.getInt("id_destino"));

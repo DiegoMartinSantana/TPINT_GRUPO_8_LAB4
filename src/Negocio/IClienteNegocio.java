@@ -1,9 +1,11 @@
 package Negocio;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import Dominio.Cliente;
+import Dominio.Cuenta;
 
 public interface IClienteNegocio {
 
@@ -15,4 +17,5 @@ public interface IClienteNegocio {
 	Cliente Modificar(Cliente cliente) ;
 	public List<Cliente> listar();
 	public Cliente getClienteById(int Id);
+	
 }

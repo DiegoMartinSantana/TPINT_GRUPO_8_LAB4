@@ -1,5 +1,6 @@
 package NegocioImpl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import DatosImpl.CuentaDao;
@@ -21,6 +22,12 @@ public class CuentaNegocio implements ICuentaNegocio {
             //return false;
         //}
         return cuentaDao.crearCuenta(cuenta);
+    }
+    public ArrayList<Cuenta> listarCuentasxCliente(int idCliente) {
+    	ArrayList<Cuenta> cuentas = cuentaDao.listarCuentasxCliente(idCliente);
+    	
+    	
+    	return cuentas;
     }
 
     @Override
@@ -57,10 +64,9 @@ public class CuentaNegocio implements ICuentaNegocio {
 	public int obtenerUltimoIDCuenta() {
 		return this.cuentaDao.obtenerUltimoIDCuenta();
 	}
-    
-    @Override
-    public List<Cuenta> obtenerCuentasPorCliente(int idCliente) {
-        return cuentaDao.listarCuentasPorCliente(idCliente);
-    }
-}
 
+	@Override
+	public List<Cuenta> obtenerCuentasPorCliente(int idCliente) {
+	return cuentaDao.listarCuentasxCliente(idCliente);
+	}
+}

@@ -1,5 +1,6 @@
 package Datos;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import Dominio.Cuenta;
@@ -11,5 +12,5 @@ public interface ICuentaDao {
     List<Cuenta> listarCuentas();
     Cuenta obtenerCuentaPorId(int idCuenta);
     int obtenerUltimoIDCuenta();
-
+    ArrayList<Cuenta> listarCuentasxCliente(int idCliente);
 }

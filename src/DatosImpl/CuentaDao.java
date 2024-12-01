@@ -1,3 +1,4 @@
+
 package DatosImpl;
 
 import java.util.ArrayList;
@@ -21,7 +22,8 @@ public class CuentaDao implements ICuentaDao {
     private static final String SELECT_ALL = "SELECT id_cuenta, nombre, apellido, dni, creacion, tipo, cbu, saldo FROM cuenta c INNER JOIN cliente cl on cl.id_cliente = c.id_cliente";
     private static final String SELECT_BY_ID = "SELECT * FROM cuenta WHERE id_cuenta = ?";
     private static final String traerUltimoIDMovimiento ="SELECT IFNULL(MAX(id_cuenta), 0) + 1 AS next_id FROM cuenta";
-
+    private static final String SELECT_CUENTAS_BY_CLIENTE = "SELECT id_cuenta, nombre, apellido, dni, creacion, tipo, cbu, saldo " + 
+    														"FROM cuenta c INNER JOIN cliente cl on cl.id_cliente = c.id_cliente where c.id_cliente=?";
     private CuentaDao() { }
 
     public static CuentaDao obtenerInstancia() {
@@ -40,7 +42,40 @@ public class CuentaDao implements ICuentaDao {
         }
         return cbu;
     }
+    public ArrayList<Cuenta> listarCuentasxCliente(int idCliente) {
+        PreparedStatement statement;
+        ResultSet resultSet;
+        ArrayList<Cuenta> cuentas = new ArrayList<>();
+        Connection conexion = Conexion.getConexion().getSQLConexion();
 
+        try {
+            statement = conexion.prepareStatement(SELECT_CUENTAS_BY_CLIENTE);
+            statement.setInt(1, idCliente);
+            resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+            	Cliente cliente = new Cliente();
+                cliente.setNombre(resultSet.getString("nombre"));
+                cliente.setApellido(resultSet.getString("apellido"));
+                cliente.setDni(resultSet.getInt("dni"));
+               cliente.setId(idCliente);
+                Cuenta cuenta = new Cuenta();
+                
+                cuenta.setIdCuenta(resultSet.getInt("id_cuenta"));
+                cuenta.setCreacion(resultSet.getString("creacion"));
+                cuenta.setTipo(resultSet.getInt("tipo"));
+                cuenta.setCbu(resultSet.getString("cbu"));
+                cuenta.setSaldo(resultSet.getFloat("saldo"));
+                
+                cuenta.setCliente(cliente);
+                cuentas.add(cuenta);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return cuentas;
+    }
     
     @Override
     public boolean crearCuenta(Cuenta cuenta) {
@@ -214,43 +249,4 @@ public class CuentaDao implements ICuentaDao {
 		    return ultimoIDMovimiento;
 
 }
-    
-    public List<Cuenta> listarCuentasPorCliente(int idCliente) {
-        PreparedStatement statement;
-        ResultSet resultSet;
-        ArrayList<Cuenta> cuentas = new ArrayList<>();
-        Connection conexion = Conexion.getConexion().getSQLConexion();
-
-        try {
-            String query = "SELECT c.id_cuenta, c.creacion, c.tipo, c.cbu, c.saldo, "
-                         + "cl.nombre, cl.apellido, cl.dni "
-                         + "FROM cuentas c "
-                         + "INNER JOIN clientes cl ON c.id_cliente = cl.id_cliente "
-                         + "WHERE cl.id_cliente = ?";
-            statement = conexion.prepareStatement(query);
-            statement.setInt(1, idCliente);
-            resultSet = statement.executeQuery();
-
-            while (resultSet.next()) {
-                Cliente cliente = new Cliente();
-                cliente.setNombre(resultSet.getString("nombre"));
-                cliente.setApellido(resultSet.getString("apellido"));
-                cliente.setDni(resultSet.getInt("dni"));
-
-                Cuenta cuenta = new Cuenta();
-                cuenta.setIdCuenta(resultSet.getInt("id_cuenta"));
-                cuenta.setCreacion(resultSet.getString("creacion"));
-                cuenta.setTipo(resultSet.getInt("tipo"));
-                cuenta.setCbu(resultSet.getString("cbu"));
-                cuenta.setSaldo(resultSet.getFloat("saldo"));
-
-                cuenta.setCliente(cliente);
-                cuentas.add(cuenta);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return cuentas;
-    }
 }

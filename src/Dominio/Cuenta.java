@@ -11,7 +11,7 @@ public class Cuenta {
     private float saldo;
     private Cliente cliente;
     private boolean activa;
-    
+   
     public Cuenta() {}
 
     public Cuenta(int idCuenta, int idCliente, int tipo, String creacion, String cbu, float saldo, boolean activa) {
@@ -89,3 +89,5 @@ public class Cuenta {
     }
     
 }
+
+

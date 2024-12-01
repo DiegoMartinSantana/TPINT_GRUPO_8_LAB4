@@ -1,10 +1,12 @@
 package NegocioImpl;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import DatosImpl.ClienteDao;
 import Dominio.Cliente;
+import Dominio.Cuenta;
 import Negocio.IClienteNegocio;
 
 public class ClienteNegocio implements IClienteNegocio{
@@ -37,5 +39,5 @@ public class ClienteNegocio implements IClienteNegocio{
 	public Cliente getClienteByNombreUsuario(String nombre_usuario) {
 		return clienteDao.getClienteByNombreUsuario(nombre_usuario);
 	}
-	
+
 }

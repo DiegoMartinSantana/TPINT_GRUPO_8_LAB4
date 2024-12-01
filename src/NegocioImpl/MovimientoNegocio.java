@@ -3,17 +3,20 @@ package NegocioImpl;
 import java.util.ArrayList;
 import java.util.List;
 
-
+import DatosImpl.CuentaDao;
 import DatosImpl.MovimientoDao;
+import DatosImpl.PrestamoDao;
 import Dominio.Movimiento;
 import Negocio.IMovimientoNegocio;
 
 public class MovimientoNegocio implements IMovimientoNegocio  {
 	
 	private MovimientoDao movimientoDao;
-	
+	private CuentaDao cuentaDao ;
+	private PrestamoDao prestamoDao = new PrestamoDao();
 	public MovimientoNegocio() {
         this.movimientoDao = MovimientoDao.obtenerInstancia();
+        this.cuentaDao = CuentaDao.obtenerInstancia();
     }
 
 
@@ -39,7 +42,23 @@ public class MovimientoNegocio implements IMovimientoNegocio  {
 	@Override
 	public ArrayList<Movimiento> obtenerUltimasTransferencias(int idCuenta) {
 		
-		return movimientoDao.obtenerUltimasTransferencias(idCuenta);
+		ArrayList<Movimiento> movimientos =  movimientoDao.obtenerUltimasTransferencias(idCuenta);
+		/*
+		for(Movimiento mov : movimientos) {
+	
+			if(mov.getTipo()==3) {
+				mov.Destino= "Pago Prestamo";
+			
+			}else if(mov.getTipo()== 4) {
+				
+				//si el tipo de destino es una transferencia, entonces el id de destino tiene que ser un id cuenta
+				mov.Destino= ""
+			}
+		*/	
+		
+		
+		
+		return movimientos;
 	}
 	
 

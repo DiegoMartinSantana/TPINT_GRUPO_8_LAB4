@@ -9,7 +9,7 @@ public class Movimiento {
 	private String detalle; 
 	private int id_destino;
 	private String fecha;
-	
+	 public String Destino ;
 	
 	public Movimiento () {
 		
