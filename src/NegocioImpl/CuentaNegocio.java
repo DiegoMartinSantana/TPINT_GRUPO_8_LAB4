@@ -57,4 +57,10 @@ public class CuentaNegocio implements ICuentaNegocio {
 	public int obtenerUltimoIDCuenta() {
 		return this.cuentaDao.obtenerUltimoIDCuenta();
 	}
+    
+    @Override
+    public List<Cuenta> obtenerCuentasPorCliente(int idCliente) {
+        return cuentaDao.listarCuentasPorCliente(idCliente);
+    }
 }
+

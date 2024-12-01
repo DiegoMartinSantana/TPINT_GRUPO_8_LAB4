@@ -214,4 +214,43 @@ public class CuentaDao implements ICuentaDao {
 		    return ultimoIDMovimiento;
 
 }
+    
+    public List<Cuenta> listarCuentasPorCliente(int idCliente) {
+        PreparedStatement statement;
+        ResultSet resultSet;
+        ArrayList<Cuenta> cuentas = new ArrayList<>();
+        Connection conexion = Conexion.getConexion().getSQLConexion();
+
+        try {
+            String query = "SELECT c.id_cuenta, c.creacion, c.tipo, c.cbu, c.saldo, "
+                         + "cl.nombre, cl.apellido, cl.dni "
+                         + "FROM cuentas c "
+                         + "INNER JOIN clientes cl ON c.id_cliente = cl.id_cliente "
+                         + "WHERE cl.id_cliente = ?";
+            statement = conexion.prepareStatement(query);
+            statement.setInt(1, idCliente);
+            resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                Cliente cliente = new Cliente();
+                cliente.setNombre(resultSet.getString("nombre"));
+                cliente.setApellido(resultSet.getString("apellido"));
+                cliente.setDni(resultSet.getInt("dni"));
+
+                Cuenta cuenta = new Cuenta();
+                cuenta.setIdCuenta(resultSet.getInt("id_cuenta"));
+                cuenta.setCreacion(resultSet.getString("creacion"));
+                cuenta.setTipo(resultSet.getInt("tipo"));
+                cuenta.setCbu(resultSet.getString("cbu"));
+                cuenta.setSaldo(resultSet.getFloat("saldo"));
+
+                cuenta.setCliente(cliente);
+                cuentas.add(cuenta);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return cuentas;
+    }
 }
