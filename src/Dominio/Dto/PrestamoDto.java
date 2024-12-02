@@ -16,7 +16,6 @@ public class PrestamoDto  {
     public String cuil;
     public int idPrestamo;
     public int idCuenta;
-    public int idMovimiento;
 
     public int getIdCuenta() {
                 return idCuenta;

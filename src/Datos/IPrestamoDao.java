@@ -8,4 +8,5 @@ public interface IPrestamoDao {
 
 	ArrayList<PrestamoDto> listarPrestamos();
 	int  SetEstado(int idPrestamo, int set);
+    boolean rechazarPrestamo(int idPrestamoSolicitado);
 }

@@ -3,7 +3,7 @@ package NegocioImpl;
 import java.util.ArrayList;
 
 import DatosImpl.PrestamoDao;
-
+import Dominio.PrestamoSolicitado;
 import Dominio.Dto.PrestamoDto;
 import Negocio.IPrestamoNegocio;
 
@@ -27,6 +27,11 @@ public class PrestamosNegocio  implements IPrestamoNegocio{
 	public PrestamoDto obtenerPrestamoPorId(int idPrestamo) {
 		
 		return  prestamoDao.obtenerPrestamoPorId(idPrestamo);
+	}
+	
+	public boolean rechazarPrestamo(int idPrestamoSolicitado) {
+		return prestamoDao.rechazarPrestamo(idPrestamoSolicitado);
+		
 	}
 		
 

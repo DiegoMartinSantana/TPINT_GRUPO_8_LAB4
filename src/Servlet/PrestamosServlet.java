@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import DatosImpl.CuentaDao;
+import DatosImpl.PrestamoDao;
 import Dominio.Cuenta;
 import Dominio.Movimiento;
 import Dominio.Dto.PrestamoDto;
@@ -33,6 +35,8 @@ public class PrestamosServlet extends HttpServlet {
         
         
     }
+    
+    private PrestamoDao prestamoDao;
     
     private void actualizarListado (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	prestamos = new ArrayList<PrestamoDto>();
@@ -90,10 +94,23 @@ public class PrestamosServlet extends HttpServlet {
 			prestamosNegocio.SetEstado(idPrestamo,2);
 		actualizarListado(request, response);
 			
+		
+
 			}
-		}		
+		}	
+		
+		if(request.getParameter("idPrestamo") != null ) {
+			
+			int prestamo = Integer.parseInt(request.getParameter("idPrestamo"));
+        	
+        	prestamosNegocio.rechazarPrestamo(prestamo);
+
+        	actualizarListado(request, response);
+		}
+		
 		
 		doGet(request, response);
+	
 	}
 
 }

@@ -31,14 +31,14 @@ public class PrestamoDao implements IPrestamoDao {
 			"		     WHERE p.id_prestamo = ?;";
 	
 	
-	
+	private static final String Rechazar = "UPDATE prestamo_solicitado SET estado = 2 WHERE id_prestamo_solicitado = ?";
 	
 	private static final String selectAll = "SELECT p.importe_pagar, p.importe_solicitado,"
-			+ " p.monto_cuota, p.interes, p.plazo_cuotas,p.id_prestamo, p.fecha, p.estado, cl.nombre, "
-			+ "cl.apellido, cl.nombre_usuario, c.cbu AS cbu_cuenta ,cl.cuil FROM PRESTAMO p"
-			+ " INNER JOIN MOVIMIENTO m ON p.id_movimiento = m.id_movimiento INNER JOIN CUENTA c"
-			+ " ON c.id_cuenta = m.id_cuenta INNER JOIN CLIENTE cl ON cl.id_cliente = c.id_cliente "
-			+ "ORDER BY p.fecha";
+			+ "			p.monto_cuota, p.interes, p.plazo_cuotas,p.id_prestamo_solicitado, p.fecha, p.estado, cl.nombre, "
+			+ "			cl.apellido, cl.nombre_usuario, c.cbu AS cbu_cuenta ,cl.cuil FROM prestamo_solicitado p"
+			+ "			INNER JOIN CUENTA c ON c.id_cuenta = p.id_cuenta"
+			+ "			INNER JOIN CLIENTE cl ON cl.id_cliente = c.id_cliente";
+	
 	private static final String update = "UPDATE PRESTAMO SET ESTADO = ? WHERE id_prestamo = ?";
 
 	public PrestamoDto obtenerPrestamoPorId(int idPrestamo) {
@@ -66,7 +66,6 @@ public class PrestamoDao implements IPrestamoDao {
 	            prestamoDto.fechaPrestamo = resultSet.getDate("fecha").toLocalDate();
 	            prestamoDto.estado = resultSet.getInt("estado");
 	            prestamoDto.idCuenta = resultSet.getInt("id_cuenta");
-	            prestamoDto.idMovimiento = resultSet.getInt("id_movimiento");
 	            
 	            String nombre = resultSet.getString("nombre");
 	            String apellido = resultSet.getString("apellido");
@@ -88,7 +87,7 @@ public ArrayList<PrestamoDto> listarPrestamos(){
         while (resultSet.next()) {
         	
         	PrestamoDto prestamoDto = new PrestamoDto();
-        	prestamoDto.idPrestamo=resultSet.getInt("id_prestamo");
+        	prestamoDto.idPrestamo=resultSet.getInt("id_prestamo_solicitado");
         	prestamoDto.cbu=(resultSet.getString("cbu_cuenta"));
         	prestamoDto.cuil=(resultSet.getString("cuil"));
         	prestamoDto.importePagar = resultSet.getFloat("importe_pagar");
@@ -136,4 +135,33 @@ public int  SetEstado(int idPrestamo, int set) {
 	}
 	return filas;
 }
+	@Override
+	public boolean rechazarPrestamo(int idPrestamoSolicitado) {
+		
+		
+		PreparedStatement statement;
+        Connection conexion = Conexion.getConexion().getSQLConexion();
+        boolean isDeleteExitoso = false;
+
+        try {
+            statement = conexion.prepareStatement(Rechazar);
+            statement.setInt(1, idPrestamoSolicitado);
+
+            if (statement.executeUpdate() > 0) {
+                conexion.commit();
+                isDeleteExitoso = true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            try {
+                conexion.rollback();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+        }
+
+        return isDeleteExitoso;
+	}
+
+	
 }

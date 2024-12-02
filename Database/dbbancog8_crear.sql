@@ -72,20 +72,36 @@ create table movimiento (
   foreign key (id_cuenta) references cuenta (id_cuenta)
 );
 
-drop table if exists prestamo;
-create table prestamo (
-  id_prestamo int not null auto_increment,
-  id_movimiento int not null,
-  monto_cuota float ,
+drop table if exists prestamo_solicitado;
+create table prestamo_solicitado (
+  id_prestamo_solicitado int not null auto_increment,
+  id_cuenta int not null,
+  monto_cuota float,
   interes float NOT NULL,
   importe_solicitado float not null,
   fecha date not null,
   importe_pagar float not null,
   plazo_cuotas int not null,
   estado int DEFAULT 3,		-- 1. Autorizado, 2. Denegado, 3. Pendiente
+  primary key (id_prestamo_solicitado),
+  foreign key (id_cuenta) references cuenta (id_cuenta)
+);
+
+drop table if exists prestamo;
+create table prestamo (
+  id_prestamo int not null auto_increment,
+  id_prestamo_solicitado int not null,
+  id_movimiento int null,
+  monto_cuota float ,
+  interes float NOT NULL,
+  importe_solicitado float not null,
+  fecha date not null,
+  importe_pagar float not null,
+  plazo_cuotas int not null,
+  estado int DEFAULT 1,		-- 1. Pendiente de Pago , 2. Finalizado
   primary key (id_prestamo),
-  unique key (id_movimiento),
-  foreign key (id_movimiento) references movimiento (id_movimiento)
+  foreign key (id_movimiento) references movimiento (id_movimiento),
+  foreign key (id_prestamo_solicitado) references prestamo_solicitado (id_prestamo_solicitado)
 );
 
 drop table if exists cuota;
@@ -206,24 +222,35 @@ INSERT INTO movimiento (id_cuenta, id_tipo_movimiento, fecha, detalle, importe, 
 (5, 3, '2024-03-12', 'Pago de suscripción', 1200, 0),
 (3, 1, '2024-04-05', 'Depósito adicional', 7000, 0);
 
+INSERT INTO prestamo_solicitado (id_cuenta, monto_cuota, interes, importe_solicitado, fecha, importe_pagar, plazo_cuotas, estado) VALUES
+(2,  1000, 5, 10000, '2023-01-10', 10500, 10, 3),
+(2, 800, 4, 8000, '2023-02-15', 8320, 10, 3),
+(3,  1200, 6, 12000, '2023-03-12', 12720, 10, 3),
+(4, 500, 3, 5000, '2023-04-18', 5150, 10, 3),
+(5,  900, 4.5, 9000, '2023-05-05', 9360, 10, 3),
+(6,  1500, 5, 15000, '2023-06-21', 15750, 10, 3),
+(7,  700, 3.5, 7000, '2023-07-01', 7245, 10, 3),
+(8,  2000, 6, 20000, '2023-08-10', 21200, 10, 3),
+(9, 1100, 4.2, 11000, '2023-09-14', 11462, 10, 3),
+(10,  950, 3.8, 9500, '2023-10-25', 9861, 10, 3),
+(11,  3000, 7, 30000, '2023-11-30', 32100, 10, 3),
+(10,  750, 3.6, 7500, '2023-12-11', 7770, 10, 3),
+(4, 500, 3, 5000, '2024-01-20', 5150, 10, 3),
+(2,  1000, 5, 10000, '2024-02-15', 10500, 10, 3),
+(3, 1800, 6.2, 18000, '2024-03-12', 19116, 10, 3);
 
+INSERT INTO prestamo (id_prestamo_solicitado, id_movimiento, monto_cuota, interes, importe_solicitado, fecha, importe_pagar, plazo_cuotas, estado) VALUES
+(1, 1, 1000, 5, 10000, '2023-01-10', 10500, 10, 1),
+(2, 2, 800, 4, 8000, '2023-02-15', 8320, 10, 2),
+(3, 3, 1200, 6, 12000, '2023-03-12', 12720, 10, 1),
+(4, 4, 500, 3, 5000, '2023-04-18', 5150, 10, 2),
+(5, 5, 900, 4.5, 9000, '2023-05-05', 9360, 10, 1),
+(6, 6, 1500, 5, 15000, '2023-06-21', 15750, 10, 2),
+(7, 7, 700, 3.5, 7000, '2023-07-01', 7245, 10, 1),
+(8, 8, 2000, 6, 20000, '2023-08-10', 21200, 10, 1),
+(9, 9, 1100, 4.2, 11000, '2023-09-14', 11462, 10, 1),
+(10, 10, 950, 3.8, 9500, '2023-10-25', 9861, 10, 1);
 
-INSERT INTO prestamo (id_movimiento, monto_cuota, interes, importe_solicitado, fecha, importe_pagar, plazo_cuotas, estado) VALUES
-(1, 1000, 5, 10000, '2023-01-10', 10500, 10, 1),
-(2, 800, 4, 8000, '2023-02-15', 8320, 10, 2),
-(3, 1200, 6, 12000, '2023-03-12', 12720, 10, 3),
-(4, 500, 3, 5000, '2023-04-18', 5150, 10, 2),
-(5, 900, 4.5, 9000, '2023-05-05', 9360, 10, 3),
-(6, 1500, 5, 15000, '2023-06-21', 15750, 10, 2),
-(7, 700, 3.5, 7000, '2023-07-01', 7245, 10, 1),
-(8, 2000, 6, 20000, '2023-08-10', 21200, 10, 1),
-(9, 1100, 4.2, 11000, '2023-09-14', 11462, 10, 1),
-(10, 950, 3.8, 9500, '2023-10-25', 9861, 10, 1),
-(11, 3000, 7, 30000, '2023-11-30', 32100, 10, 2),
-(12, 750, 3.6, 7500, '2023-12-11', 7770, 10, 1),
-(13, 500, 3, 5000, '2024-01-20', 5150, 10, 1),
-(14, 1000, 5, 10000, '2024-02-15', 10500, 10, 1),
-(15, 1800, 6.2, 18000, '2024-03-12', 19116, 10, 1);
 
 INSERT INTO cuota (id_prestamo, numero_cuota, importe, fecha_pago, vencimiento) VALUES
 (1, 1, 1050, '2023-02-10', '2023-02-15'),
@@ -238,9 +265,9 @@ INSERT INTO cuota (id_prestamo, numero_cuota, importe, fecha_pago, vencimiento) 
 (7, 1, 724.5, NULL, '2023-11-15'),
 (8, 1, 2120, '2023-12-10', '2023-12-15'),
 (9, 1, 1146.2, NULL, '2024-01-15'),
-(10, 1, 986.1, '2024-02-10', '2024-02-15'),
-(11, 1, 3210, '2024-03-10', '2024-03-15'),
-(12, 1, 777, NULL, '2024-04-15');
+(6, 1, 986.1, '2024-02-10', '2024-02-15'),
+(8, 1, 3210, '2024-03-10', '2024-03-15'),
+(9, 1, 777, NULL, '2024-04-15');
 
 
 INSERT INTO pago (id_prestamo, id_cuota, id_movimiento, fecha, estado) VALUES
