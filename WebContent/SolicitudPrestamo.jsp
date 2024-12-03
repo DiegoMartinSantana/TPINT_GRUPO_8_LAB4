@@ -82,15 +82,13 @@
         
        .field input[type="date"],
        .field input[type="text"] {
-        width: 100%; /* Ambos campos ocuparán el mismo ancho */
-        padding: 12px; /* Mismo relleno para ambos */
+        width: 100%; 
+        padding: 12px; 
         border: 1px solid #ddd;
         border-radius: 4px;
         font-size: 14px;
-        box-sizing: border-box; /* Asegura que el padding no afecte el ancho */
+        box-sizing: border-box; 
     }
-        
-        
 
     </style>
 
@@ -103,15 +101,32 @@
 			return;
 		}
 
-		// Calcula el monto total a pagar incluyendo el interés
+		
 		var montoTotal = montoSolicitado * (1 + interes / 100);
 
-		// Muestra el monto total en el campo correspondiente
+		
 		document.getElementById("importe_pagar").value = montoTotal.toFixed(2);
 	}
+	 
+   function actualizarInteres(){
+	   const interesMap = {
+		         3: 2,
+		         6: 5,
+		         12: 7,
+		         24: 10
+		     };
+   
+		     const cuotasSelect = document.getElementById('cuotas');
+		     const interesInput = document.getElementById('interes');
+
+		         const selectedCuotas = parseInt(cuotasSelect.value);
+		         const nuevoInteres = interesMap[selectedCuotas] || 0; 
+		         interesInput.value = nuevoInteres;
+		     
+ 	  }
+    
+ 
 </script>
-
-
 
 
 </head>
@@ -119,22 +134,23 @@
 
   <%@include file="NavegacionComponenteUsuario.jsp" %>
 
-<div class="container">
+<div class="container" style="margin-top:50px">
    
     <div class="section">
         <h2>Solicitud de Préstamo</h2>
         <%  
+        	float interes = 2;
             List<Cuenta> cuentas = (List<Cuenta>)request.getSession().getAttribute("Cuentas");
             if (cuentas != null && !cuentas.isEmpty()) {
         %>
         
-        <!-- Formulario para solicitar un préstamo -->
+      
         <form action="servletSolicitatPrestamo" method="post">
             
-            <!-- Monto del préstamo -->
+      
             <div class="field">
                 <label for="monto">Monto del Préstamo:</label> 
-                <select id="monto" name="monto" required>
+                <select id="monto" name="monto" required onchange="actualizarInteres() ; calcularMontoAPagar()">
                     <option value="1000000">1.000.000</option>
                     <option value="5000000">5.000.000</option>
                     <option value="10000000">10.000.000</option>
@@ -142,10 +158,10 @@
                 </select>
             </div>
 
-            <!-- Cantidad de cuotas -->
+           
             <div class="field">
                 <label for="cuotas">Cantidad de Cuotas:</label>
-                <select id="cuotas" name="cuotas" required>
+                <select id="cuotas" name="cuotas" required onchange="actualizarInteres();calcularMontoAPagar()">
                     <option value="3">3 cuotas</option>
                     <option value="6">6 cuotas</option>
                     <option value="12">12 cuotas</option>
@@ -153,18 +169,21 @@
                 </select>
             </div>
             
-            <!-- Interés -->
+            
             <div class="field">
-                <label for="interes">Interés (%):</label>
+       		 <label for="interes">Interés (%):</label>
+      		  <input type="text" id="interes" name="interes" value="2" readonly >
+   		 </div>
+                <!--  
                 <select id="interes" name="interes" required onchange="calcularMontoAPagar()">
                     <option value="2">2%</option>
                     <option value="5">5%</option>
                     <option value="7">7%</option>
                     <option value="10">10%</option>
                 </select>
-            </div>
+                -->
+
             
-            <!-- Fecha del préstamo -->
             <div class="field">
                 <label for="fecha">Fecha del Préstamo:</label>
                 <input type="date" id="fechaCreacion" name="fechaCreacion" 
@@ -172,14 +191,14 @@
                        readonly>
             </div>
 
-            <!-- Monto a pagar -->
+           
 			<div class="field">
 				<label for="monto_a_pagar">Monto Total a Pagar:</label> 
-				<input type="text" id="importe_pagar" name="importe_pagar" readonly>
+				<input type="text" id="importe_pagar" name="importe_pagar" value="1020000"readonly>
 			</div>
 
 
-				<!-- Seleccionar cuenta de destino -->
+			
             <div class="field">
                 <label for="cuenta">Seleccionar Cuenta de Depósito:</label>
                 <select id="cuenta" name="cuenta" required>
@@ -191,7 +210,6 @@
                 </select>
             </div>
 
-            <!-- Botón para solicitar el préstamo -->
             <button type="submit">Solicitar Préstamo</button>
         </form>
         

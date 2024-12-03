@@ -43,18 +43,18 @@
         margin-top: 5px;
         color: #212529;
         font-weight: 600;
-    }
+    }a
 </style>
 
 <div class="row">
     <nav class="navbar navbar-expand-lg">
         <div class="container-fluid">
-            <!-- Toggle Button for Mobile View -->
+            
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <!-- Navbar Links -->
+           
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
@@ -66,17 +66,25 @@
                     <li class="nav-item">
                         <a class="nav-link" href="Transferencias.jsp">Transferencias</a>
                     </li>
+             
+        
                     <li class="nav-item">
-                        <a class="nav-link" href="SolicitudPrestamo.jsp">Préstamos</a>
+                    
+                        <a class="nav-link" href="PrestamosUsuario">Préstamos</a>
                     </li>
                 </ul>
             </div>
 
-            <!-- User Information -->
             <% String usuario = (String) session.getAttribute("UsuarioNombre");
                usuario = usuario.toUpperCase(); %>
+               
+             
             <div class="d-flex align-items-center">
+            
                 <h5><%= usuario %></h5>
+                <form action="LoginServlet" method="post">
+             <button type="submit" class="btn btn-danger">Logout</button>
+   			 </form>
                 <a class="nav-icon ms-3" href="DatosPersonalesServlet">
                     <i class="bi bi-person-circle"></i>
                 </a>

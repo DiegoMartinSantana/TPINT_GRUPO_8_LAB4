@@ -95,6 +95,6 @@
     <form action="LoginServlet" method="post">
              <button type="submit" class="btn btn-danger">Logout</button>
     </form>
-     <!--  <button class="btn btn-danger" >Logout</button> -->
+    
     
 </aside>

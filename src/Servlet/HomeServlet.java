@@ -29,11 +29,14 @@ public class HomeServlet extends HttpServlet {
         super();
     }
 	
-	private void ObtenerCliente(String nombreUsuario) {
+	private void ObtenerCliente(String nombreUsuario,HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Cliente cliente = clienteNegocio.getClienteByNombreUsuario(nombreUsuario);
 		
 		cuentas = cuentaNegocio.listarCuentasxCliente(cliente.getId());		
-		
+		if(cuentas.size()==0) {
+			RequestDispatcher rd = request.getRequestDispatcher("Home.jsp");
+	        rd.forward(request, response);
+		}
 	}
 	
 
@@ -42,7 +45,7 @@ public class HomeServlet extends HttpServlet {
 		String IdCuenta = request.getParameter("cuentaId");
 		String nombreUser= (String) request.getSession().getAttribute("UsuarioNombre");
 		
-		ObtenerCliente(nombreUser);
+		ObtenerCliente(nombreUser,request,response);
 		
 	
 	     ArrayList<Movimiento> Transferencias = new ArrayList<Movimiento>();

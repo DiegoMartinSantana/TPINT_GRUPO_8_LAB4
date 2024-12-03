@@ -17,8 +17,8 @@ import NegocioImpl.PrestamosNegocio;
 /**
  * Servlet implementation class servletSolicitatPrestamo
  */
-@WebServlet("/servletSolicitatPrestamo")
-public class servletSolicitatPrestamo extends HttpServlet {
+@WebServlet("/servletSolicitarPrestamo")
+public class servletSolicitarPrestamo extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	 private PrestamosNegocio prestamoNegocio = new PrestamosNegocio();
@@ -26,7 +26,7 @@ public class servletSolicitatPrestamo extends HttpServlet {
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public servletSolicitatPrestamo() {
+    public servletSolicitarPrestamo() {
         super();
         // TODO Auto-generated constructor stub
     }
