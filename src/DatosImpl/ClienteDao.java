@@ -10,6 +10,7 @@ import java.util.List;
 
 import Datos.IClienteDao;
 import Dominio.Cliente;
+import Dominio.Cuenta;
 import Dominio.Provincia;
 
 
@@ -36,6 +37,10 @@ public class ClienteDao implements IClienteDao{
             "nacimiento = ?"+
             "id_provincia = ?"+
             "WHERE id_cliente = ? AND activo = 1;";
+	
+	private static final String selectByCuentaCliente="SELECT c.id_cuenta, c.tipo AS tipo_cuenta, c.creacion AS fecha_creacion, c.cbu, c.saldo, c.activa, cl.id_cliente, cl.nombre, cl.apellido, cl.email, cl.telefono" + 
+			                                          "FROM cuenta c INNER JOIN cliente cl ON c.id_cliente = cl.id_cliente" + 
+			                                           "WHERE cl.id_cliente=?";
 	
 	public ClienteDao() {}
 	
@@ -326,5 +331,9 @@ public class ClienteDao implements IClienteDao{
         
         return cliente;
 	}
+	
+	
+	
+	
 	
 }

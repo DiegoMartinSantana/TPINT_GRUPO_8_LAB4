@@ -39,5 +39,7 @@ public class ClienteNegocio implements IClienteNegocio{
 	public Cliente getClienteByNombreUsuario(String nombre_usuario) {
 		return clienteDao.getClienteByNombreUsuario(nombre_usuario);
 	}
+	
+	
 
 }

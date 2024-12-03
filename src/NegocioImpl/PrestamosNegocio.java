@@ -33,6 +33,11 @@ public class PrestamosNegocio  implements IPrestamoNegocio{
 		return prestamoDao.rechazarPrestamo(idPrestamoSolicitado);
 		
 	}
+	@Override
+	public boolean crearPrestamoSolicitado(PrestamoSolicitado prestamoSolicitado) {
+		// TODO Auto-generated method stub
+		return prestamoDao.crearPrestamoSolicitado(prestamoSolicitado);
+	}
 		
 
 }

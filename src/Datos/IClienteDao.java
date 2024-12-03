@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import Dominio.Cliente;
+import Dominio.Cuenta;
 
 public interface IClienteDao {
 	
@@ -18,4 +19,5 @@ public interface IClienteDao {
 	
 	public boolean eliminarCliente(int idCliente);
 	public Cliente getClienteByDni(int dni) ;
+	
 }

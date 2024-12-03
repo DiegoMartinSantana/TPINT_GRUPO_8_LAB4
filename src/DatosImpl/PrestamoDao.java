@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import Datos.IPrestamoDao;
+import Dominio.PrestamoSolicitado;
 import Dominio.Dto.PrestamoDto;
 
 public class PrestamoDao implements IPrestamoDao {
@@ -40,6 +41,14 @@ public class PrestamoDao implements IPrestamoDao {
 			+ "			INNER JOIN CLIENTE cl ON cl.id_cliente = c.id_cliente";
 	
 	private static final String update = "UPDATE PRESTAMO SET ESTADO = ? WHERE id_prestamo = ?";
+	
+	
+	private static final String insertPrestamosSolicitado = 
+	        "INSERT INTO prestamo_solicitado (" +
+	        "id_cuenta, monto_cuota, interes, importe_solicitado, fecha, importe_pagar, plazo_cuotas" +
+	        ") VALUES (?, ?, ?, ?, ?, ?, ?)";
+	
+	
 
 	public PrestamoDto obtenerPrestamoPorId(int idPrestamo) {
 	    PreparedStatement statement;
@@ -161,6 +170,38 @@ public int  SetEstado(int idPrestamo, int set) {
         }
 
         return isDeleteExitoso;
+	}
+	@Override
+	public boolean crearPrestamoSolicitado(PrestamoSolicitado prestamoSolicitado) {
+		PreparedStatement statement;
+        Connection conexion = Conexion.getConexion().getSQLConexion();
+        boolean isInsertExitoso = false;
+ 
+        try {
+            statement = conexion.prepareStatement(insertPrestamosSolicitado);
+            statement.setInt(1, prestamoSolicitado.getIdCuenta());
+            statement.setFloat(2, prestamoSolicitado.getMontoCuota());
+            statement.setFloat(3, prestamoSolicitado.getInteres());
+            statement.setFloat(4, prestamoSolicitado.getImporteSolicitado());
+            statement.setDate(5, java.sql.Date.valueOf(prestamoSolicitado.getFechaPrestamo()));
+            statement.setFloat(6, prestamoSolicitado.getImportePagar());
+            statement.setInt(7, prestamoSolicitado.getPlazoCuotas());
+            	
+            int rows = statement.executeUpdate();
+            if (rows >0) {
+                conexion.commit();
+                isInsertExitoso = true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            try {
+                conexion.rollback();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+        }
+
+        return isInsertExitoso;
 	}
 
 	

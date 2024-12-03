@@ -1,13 +1,17 @@
 package Servlet;
 
+import java.util.List;
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import DatosImpl.ClienteDao;
+
 import Dominio.Cliente;
+import Dominio.Cuenta;
 import Dominio.Usuario;
 import NegocioImpl.ClienteNegocio;
 
@@ -30,13 +34,21 @@ public class DatosPersonalesServlet extends HttpServlet {
 
 
         Cliente cliente = clienteNegocio.getClienteByNombreUsuario(user.getNombre_usuario());
-
         if (cliente != null) {
+       
             request.setAttribute("cliente", cliente);
             request.getRequestDispatcher("DatosPersonales.jsp").forward(request, response);
         } else {
             response.sendRedirect("Login.jsp");
         }
+        
+       
+        
+        
+       
+            
+      
+        
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
