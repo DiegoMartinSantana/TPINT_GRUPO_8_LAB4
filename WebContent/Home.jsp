@@ -91,7 +91,12 @@ body {
 <%
 	ArrayList<Cuenta> Cuentas = (ArrayList<Cuenta> )  request.getSession().getAttribute("Cuentas") ;
 	ArrayList<Movimiento> Transferencias = (ArrayList<Movimiento> )  request.getSession().getAttribute("Transferencias") ;
-
+    if (Cuentas == null) {
+        Cuentas = new ArrayList<>();
+    }
+    if (Transferencias == null) {
+        Transferencias = new ArrayList<>();
+    }
 %>
     <%@include file="NavegacionComponenteUsuario.jsp" %>
     
