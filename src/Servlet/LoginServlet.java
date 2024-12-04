@@ -44,7 +44,7 @@ public class LoginServlet extends HttpServlet {
 		
  
     if(usuarioLogin == null){
-		request.setAttribute("UsuarioNulo", "Usuario o clave incorrectos.");
+		request.setAttribute("UsuarioNulo", false);
 		 RequestDispatcher rd = request.getRequestDispatcher("Login.jsp");
 	        rd.forward(request, response);
 	}
