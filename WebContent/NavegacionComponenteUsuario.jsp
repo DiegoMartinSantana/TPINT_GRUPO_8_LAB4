@@ -43,7 +43,7 @@
         margin-top: 5px;
         color: #212529;
         font-weight: 600;
-    }a
+    }
 </style>
 
 <div class="row">

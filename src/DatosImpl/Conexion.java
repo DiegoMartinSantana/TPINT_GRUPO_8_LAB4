@@ -11,7 +11,7 @@ public class Conexion {
     private Conexion() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            this.connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/sistemabancario","root","root");
+            this.connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/SistemaBancario","root","root");
             this.connection.setAutoCommit(false);
         } catch (Exception e) {
             e.printStackTrace();

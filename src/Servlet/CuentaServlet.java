@@ -11,17 +11,17 @@ import javax.servlet.http.HttpServletResponse;
 
 import DatosImpl.CuentaDao;
 import Dominio.Cuenta;
+import NegocioImpl.CuentaNegocio;
 
 
 @WebServlet("/CuentaServlet")
 public class CuentaServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	private CuentaDao cuentaDao;
+	private CuentaNegocio cuentaNegocio = new  CuentaNegocio();
        
     public void init() {
-        cuentaDao = CuentaDao.obtenerInstancia();
-        
+    
     }
 	
     public CuentaServlet() {
@@ -29,7 +29,7 @@ public class CuentaServlet extends HttpServlet {
     }
 
     public void actualizarCuenta (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	List<Cuenta> listaCuenta = cuentaDao.listarCuentas();
+    	List<Cuenta> listaCuenta = cuentaNegocio.obtenerCuentas();
         request.setAttribute("cuentas", listaCuenta);
         request.getRequestDispatcher("ListarCuenta.jsp").forward(request, response);
         
@@ -40,20 +40,15 @@ public class CuentaServlet extends HttpServlet {
 	       // request.setAttribute("cuentas", listaCuenta);
 	       // request.getRequestDispatcher("ListarCuenta.jsp").forward(request, response);
 	             
-	        
-		
-	        //eliminar cuenta
+
 	        if(request.getParameter("EliminarIdCuenta")!=null) {
 	        	
 	        	int idCuenta = Integer.parseInt(request.getParameter("EliminarIdCuenta"));
 	        	
-	        	cuentaDao.eliminarCuenta(idCuenta);
-	        	    
-	        	
+	        	cuentaNegocio.eliminarCuenta(idCuenta);
+       	
 	        }
-	        
-	        
-	        
+	                
 	        actualizarCuenta (request, response);
         
 	}

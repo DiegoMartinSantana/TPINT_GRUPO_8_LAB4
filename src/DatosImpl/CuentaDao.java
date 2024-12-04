@@ -22,7 +22,7 @@ public class CuentaDao implements ICuentaDao {
     private static final String SELECT_ALL = "SELECT id_cuenta, nombre, apellido, dni, creacion, tipo, cbu, saldo FROM cuenta c INNER JOIN cliente cl on cl.id_cliente = c.id_cliente WHERE activa = 1 ORDER BY creacion";
     private static final String SELECT_BY_ID = "SELECT * FROM cuenta WHERE id_cuenta = ?";
     private static final String traerUltimoIDMovimiento ="SELECT IFNULL(MAX(id_cuenta), 0) + 1 AS next_id FROM cuenta";
-    private static final String SELECT_CUENTAS_BY_CLIENTE = "SELECT id_cuenta, nombre, apellido, dni, creacion, tipo, cbu, saldo , c.activa" + 
+    private static final String SELECT_CUENTAS_BY_CLIENTE = "SELECT id_cuenta, c.activa, nombre, apellido, dni, creacion, tipo, cbu, saldo " + 
     														"FROM cuenta c INNER JOIN cliente cl on cl.id_cliente = c.id_cliente where c.id_cliente=?";
     private static final String UPDATE_SALDO = "UPDATE cuenta SET saldo = ? WHERE id_cuenta = ?";
     private CuentaDao() { }
@@ -61,13 +61,13 @@ public class CuentaDao implements ICuentaDao {
                 cliente.setDni(resultSet.getInt("dni"));
                cliente.setId(idCliente);
                 Cuenta cuenta = new Cuenta();
-                
+                cuenta.setActiva(resultSet.getBoolean("activa"));
                 cuenta.setIdCuenta(resultSet.getInt("id_cuenta"));
                 cuenta.setCreacion(resultSet.getDate("creacion").toLocalDate());
                 cuenta.setTipo(resultSet.getInt("tipo"));
                 cuenta.setCbu(resultSet.getString("cbu"));
                 cuenta.setSaldo(resultSet.getFloat("saldo"));
-                cuenta.setActiva(resultSet.getBoolean("activa"));
+             
                 
                 cuenta.setCliente(cliente);
                 cuentas.add(cuenta);

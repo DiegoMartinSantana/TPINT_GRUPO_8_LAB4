@@ -22,7 +22,7 @@
     %>
     <div class="container mt-5">
     
-        <h1 class="mb-4">Loans Overview</h1>
+        <h3 class="mb-4">Prestamos </h3>
 
      	<% if(prestamos != null){ %>
         <div class="row">
@@ -46,7 +46,7 @@
                         
                             <tr>
                             <%for(PrestamoDto prestamo : prestamos ){ %>
-                                <td><%=prestamo.idPrestamo %>}</td>
+                                <td><%=prestamo.idPrestamo %></td>
                                 <td><%=prestamo.idCuenta %></td>
                                 <td><%=prestamo.montoCuota %></td>
                                 <td><%=prestamo.importeSolicitado %></td>
@@ -66,7 +66,7 @@
         
         <div class="row mt-5">
             <div class="col-12">
-                <h3>Requested Loans</h3>
+                <h3>Prestamos pendientes</h3>
                 <table class="table table-bordered table-hover">
                     <thead class="table">
                         <tr>

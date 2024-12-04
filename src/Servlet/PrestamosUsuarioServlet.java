@@ -37,8 +37,8 @@ public class PrestamosUsuarioServlet extends HttpServlet {
     private ClienteNegocio clienteNegocio  = new ClienteNegocio();
     private ArrayList<PrestamoDto> prestamosAceptados;
     
-   
-    
+	private ArrayList<PrestamoDto> prestamosFiltrados = new ArrayList<PrestamoDto>();
+	
     private void actualizarListado (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	Usuario usuarioLogin = (Usuario) request.getSession().getAttribute("Usuario");
 	  
@@ -48,16 +48,17 @@ public class PrestamosUsuarioServlet extends HttpServlet {
 	     
 	    ArrayList<Cuenta> cuentas = cuentaNegocio.listarCuentasxCliente(cliente.getId());
 	    
-	    obtenerPrestamos(cuentas,request,response);
+	    obtenerPrestamos(cuentas);
 
-	    
+	    /*
     	 prestamosAceptados = new ArrayList<PrestamoDto>();
     	 prestamosAceptados = prestamosNegocio.GetAll();
-    	 
+    	 */
     	
-    	request.getSession().setAttribute("prestamosAceptados",prestamosAceptados);
+	    //
+    	request.getSession().setAttribute("AllPrestamos",prestamosFiltrados);
     	
-		RequestDispatcher rd = request.getRequestDispatcher("ListarPrestamos.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("ListarPrestamosUser.jsp");
         rd.forward(request, response);
 		
     }
@@ -70,34 +71,27 @@ public class PrestamosUsuarioServlet extends HttpServlet {
 		
 	}
 
-	 private void obtenerPrestamos (ArrayList<Cuenta> cuentas ,HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	 private void obtenerPrestamos (ArrayList<Cuenta> cuentas ) {
 	    	
 		 int x =0;
 		 ArrayList<PrestamoDto> prestamos = new ArrayList<PrestamoDto>();
 		 ArrayList<PrestamoDto> allPrestamos = new ArrayList<PrestamoDto>();
+		 prestamos = prestamosNegocio.GetAll();
 			 for (Cuenta cuenta : cuentas) {
 				x++; 
 
-				
-				prestamos = prestamosNegocio.GetAll();
 
-				ArrayList<PrestamoDto> prestamosFiltrados = (ArrayList<PrestamoDto>) prestamos.stream()
+				 prestamosFiltrados = (ArrayList<PrestamoDto>) prestamos.stream()
 		           .filter(prestamo -> prestamo.getIdCuenta() == cuenta.getIdCuenta())
 		        .collect(Collectors.toList());
 				
 				 allPrestamos.addAll(prestamosFiltrados);
 
 		        }
-			 request.getSession().setAttribute("AllPrestamos", allPrestamos);
-			 RequestDispatcher rd = request.getRequestDispatcher("ListarPrestamos.jsp");
-		        rd.forward(request, response); 
-		        
-		        
-		        
+     
 	 }
 	 
-	 
-	 
+ 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		

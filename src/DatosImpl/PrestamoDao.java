@@ -35,7 +35,7 @@ public class PrestamoDao implements IPrestamoDao {
 	private static final String Rechazar = "UPDATE prestamo_solicitado SET estado = 2 WHERE id_prestamo_solicitado = ?";
 	
 	private static final String selectAll = "SELECT p.importe_pagar, p.importe_solicitado,"
-			+ "			p.monto_cuota, p.interes, p.plazo_cuotas,p.id_prestamo_solicitado, p.fecha, p.estado, cl.nombre, "
+			+ "			p.monto_cuota, p.interes, p.plazo_cuotas,p.id_prestamo_solicitado, p.fecha, p.estado, cl.nombre,p.id_cuenta, "
 			+ "			cl.apellido, cl.nombre_usuario, c.cbu AS cbu_cuenta ,cl.cuil FROM prestamo_solicitado p"
 			+ "			INNER JOIN CUENTA c ON c.id_cuenta = p.id_cuenta"
 			+ "			INNER JOIN CLIENTE cl ON cl.id_cliente = c.id_cliente";
@@ -109,6 +109,7 @@ public ArrayList<PrestamoDto> listarPrestamos(){
             String nombre = resultSet.getString("nombre");
             String apellido  = resultSet.getString("apellido");
             prestamoDto.nombre = nombre + " " + apellido;
+            prestamoDto.idCuenta=resultSet.getInt("id_cuenta");
 
             
         	prestamos.add(prestamoDto);

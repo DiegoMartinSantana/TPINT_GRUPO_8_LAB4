@@ -7,6 +7,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"></style>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
@@ -100,18 +102,25 @@ body {
     <h4 class="section-title mb-4"><i class="fas fa-wallet"></i> Tus Cuentas</h4>
     <div class="row">
         <% for (Cuenta cuenta : Cuentas) { %>
-            <div class="col-lg-4 col-md-6 mb-4">
-                <div class="card cuenta-card shadow-sm">
-                    <div class="card-body">
-                        <h6 class="text-primary fw-bold">CBU: <%= cuenta.getCbu() %></h6>
-                        <p class="text-muted mb-1">Saldo Disponible:</p>
-                        <h5 class="saldo ">$<%= cuenta.getSaldo() %></h5>
-                        <a href="HomeServlet?cuentaId=<%= cuenta.getIdCuenta() %>" class="btn btn-outline-primary btn-block mt-3">
-                            Ultimas Transferencias  <i class="fas fa-chevron-right"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
+          <div class="col-lg-4 col-md-6 mb-4">
+    <div class="card cuenta-card shadow-sm">
+        <div class="card-body">
+            <h6 class="text-primary fw-bold">CBU: <%= cuenta.getCbu() %></h6>
+            <p class="text-muted mb-1">Saldo Disponible:</p>
+            <h5 class="saldo">$<%= cuenta.getSaldo() %></h5>
+            <a href="HomeServlet?cuentaId=<%= cuenta.getIdCuenta() %>" class="btn btn-outline-primary btn-block mt-3">
+                Últimas Transferencias <i class="fas fa-chevron-right"></i>
+            </a>
+        </div>
+        <!-- Botón en la parte inferior centrada -->
+        <div class="card-footer text-center">
+            <a href="Transferencias.jsp" class="btn text-warning" title="Añadir nueva transferencia">
+                <i class="fas fa-plus fa-2x"></i>
+            </a>
+        </div>
+    </div>
+</div>
+
         <% } %>
     </div>
 
