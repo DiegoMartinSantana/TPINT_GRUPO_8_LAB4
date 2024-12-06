@@ -24,7 +24,7 @@
        	</div>
        	
        	<div class="col-8">
-       	
+       	<form action="InformesServlet" method="post">
         <div class="section ">
             <h2>Fecha desde</h2>
             <input type="date" name="fechaDesde" required>
@@ -32,7 +32,7 @@
             <input type="date" name="fechaHasta" required>
             <input type="submit" class="btn btn-primary mt-3" value="Generar Informes" name="btnGenerar">
         </div>
-        
+        </form>
     
         <div class="section">
     <h2>Prestamos aprobados</h2>
@@ -70,7 +70,6 @@
         <thead>
             <tr>
                 <th>Nombre</th>
-                <th>CUIT/CUIL</th>
                 <th>Total prestado</th>
             </tr>
         </thead>
@@ -81,7 +80,6 @@
             %>
             <tr>
                 <td><%= cliente.getNombre() %> <%= cliente.getApellido() %></td>
-                <td><%= cliente.getId() %></td>
                 <td>$<%= cliente.getTotalPrestado() %></td>
             </tr>
             <% 

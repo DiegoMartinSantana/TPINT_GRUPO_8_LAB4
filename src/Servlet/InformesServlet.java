@@ -16,7 +16,7 @@ import NegocioImpl.InformeNegocio;
 /**
  * Servlet implementation class InformesServlert
  */
-@WebServlet("/InformesServlert")
+@WebServlet("/InformesServlet")
 public class InformesServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -35,8 +35,6 @@ public class InformesServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		if(request.getParameter("btnGenerar") != null) {
-			
-		
 		
 		try {
 				

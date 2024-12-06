@@ -15,23 +15,25 @@ import Dominio.Informe;
 public class InformesDao implements IInformesDao {
 
 	private static final String SELECT_INFORMES = "SELECT 	COUNT(*) AS Cantidad,"
-			+ "		SUM (importe_solicitado) AS Total,"
-			+ "        (SELECT nombre FROM cliente C"
+			+ "			sum(importe_solicitado) AS Total,"
+			+ "			(SELECT CONCAT(nombre, ' ', apellido) as nombre FROM cliente C"
 			+ "			JOIN cuenta cu ON c.id_cliente = cu.id_cliente"
-			+ "            JOIN prestamo p ON cu.id_cuenta = p.id_cuenta"
-			+ "            GROUP BY c.nombre ORDER BY COUNT(*) DESC LIMIT 1) AS Cliente_Lider"
-			+ "FROM prestamo WHERE fecha BETWEEN ? AND ?";
+			+ "            JOIN prestamo_solicitado ps ON ps.id_cuenta = cu.id_cuenta"
+			+ "            JOIN prestamo p on p.id_prestamo_solicitado = ps.id_prestamo_solicitado"
+			+ "			GROUP BY CONCAT(nombre, ' ', apellido) ORDER BY COUNT(*) DESC LIMIT 1) AS Cliente_Lider"
+			+ "			FROM prestamo WHERE fecha BETWEEN ? AND ?";
 	private static final String SELECT_CUMPLIMIENTO = "SELECT " +
             "(SELECT COUNT(*) FROM cuota WHERE fecha_pago IS NOT NULL AND vencimiento BETWEEN ? AND ?) * 100.0 / " +
             "(SELECT COUNT(*) FROM cuota WHERE vencimiento BETWEEN ? AND ?) AS tasa_cumplimiento";
 	private static final String SELECT_CLIENTES_VIP = 
-		    "SELECT c.id_cliente, c.nombre, c.apellido, SUM(p.importe_solicitado) AS total_prestado " +
-		    "FROM cliente c " +
-		    "JOIN cuenta cu ON c.id_cliente = cu.id_cliente " +
-		    "JOIN prestamo p ON cu.id_cuenta = p.id_cuenta " +
-		    "GROUP BY c.id_cliente, c.nombre, c.apellido " +
-		    "ORDER BY total_prestado DESC " +
-		    "LIMIT 3";
+		    "SELECT c.id_cliente, c.nombre, c.apellido, SUM(p.importe_solicitado) AS total_prestado \r\n"
+		    + "FROM cliente c \r\n"
+		    + "		    JOIN cuenta cu ON c.id_cliente = cu.id_cliente "
+		    + "		    JOIN prestamo_solicitado ps ON ps.id_cuenta = cu.id_cuenta"
+		    + "		    JOIN prestamo p ON ps.id_prestamo_solicitado = p.id_prestamo_solicitado "
+		    + "		    GROUP BY c.id_cliente, c.nombre, c.apellido "
+		    + "		    ORDER BY total_prestado DESC "
+		    + "		    LIMIT 3";
 	
 	
 	public void cargarClientesVIP(Informe informe) throws Exception {
