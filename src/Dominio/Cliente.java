@@ -1,5 +1,6 @@
 package Dominio;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +23,7 @@ public class Cliente {
 	private String email;
 	private String telefono;
 	private boolean activo;
+	private BigDecimal totalPrestado;
 	
 	public Cliente() {
 		this.cuentasCliente = new ArrayList<>();
@@ -220,6 +222,16 @@ public class Cliente {
 	public void setId(int id) {
 		this.id=id;
 		
+	}
+
+
+	public BigDecimal getTotalPrestado() {
+		return totalPrestado;
+	}
+
+
+	public void setTotalPrestado(BigDecimal totalPrestado) {
+		this.totalPrestado = totalPrestado;
 	}
 
 

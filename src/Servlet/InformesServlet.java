@@ -1,11 +1,17 @@
 package Servlet;
 
 import java.io.IOException;
+import java.sql.Date;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import Dominio.Informe;
+import Negocio.IInformeNegocio;
+import NegocioImpl.InformeNegocio;
 
 /**
  * Servlet implementation class InformesServlert
@@ -13,29 +19,47 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/InformesServlert")
 public class InformesServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
+
+    private IInformeNegocio informesNegocio;
+    
     public InformesServlet() {
-        super();
-        // TODO Auto-generated constructor stub
+    	this.informesNegocio = new InformeNegocio();
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		
+		request.getRequestDispatcher("Informes.jsp").forward(request, response);
+		
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
-	}
 
+		if(request.getParameter("btnGenerar") != null) {
+			
+		
+		
+		try {
+				
+		Date fechaDesde = Date.valueOf(request.getParameter("fechaDesde"));
+        Date fechaHasta = Date.valueOf(request.getParameter("fechaHasta"));
+        
+        
+		Informe informePrestamos = informesNegocio.obtenerInformePrestamos(fechaDesde, fechaHasta);
+		
+        
+        request.setAttribute("informePrestamos", informePrestamos);
+		
+        request.getRequestDispatcher("Informes.jsp").forward(request, response);
+        
+		}
+		
+		catch(Exception e) {
+            e.printStackTrace();
+            request.setAttribute("error", "Error al generar informes: " + e.getMessage());
+            request.getRequestDispatcher("Informes.jsp").forward(request, response);
+		}
+
+		}
+	}
+	
 }
