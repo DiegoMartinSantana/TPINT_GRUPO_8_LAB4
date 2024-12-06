@@ -7,6 +7,7 @@ import java.util.List;
 import DatosImpl.CuentaDao;
 import DatosImpl.MovimientoDao;
 import DatosImpl.PrestamoDao;
+import Dominio.Cuenta;
 import Dominio.Movimiento;
 import Negocio.IMovimientoNegocio;
 
@@ -61,6 +62,20 @@ public class MovimientoNegocio implements IMovimientoNegocio  {
 		
 		return movimientos;
 	}
+
+
+	@Override
+	public Cuenta obtenerCuentaPorCBU(String cbu) {
+		return movimientoDao.obtenerCuentaPorCBU(cbu);
+	}
+
+
+	@Override
+	public boolean crearMovimiento2(Movimiento movimiento) {
+		return movimientoDao.crearMovimiento2(movimiento);
+	}
+
+	
 	
 
 }

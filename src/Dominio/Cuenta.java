@@ -12,6 +12,8 @@ public class Cuenta {
     private Cliente cliente;
     private boolean activa;
     
+   
+    
     public Cuenta() {}
 
     public Cuenta(int idCuenta, int idCliente, int tipo, LocalDate creacion, String cbu, float saldo, boolean activa) {

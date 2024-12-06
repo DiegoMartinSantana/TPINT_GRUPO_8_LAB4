@@ -149,7 +149,7 @@ document.addEventListener("DOMContentLoaded", function () {
 						<%
 							for (Cuenta cuenta : cuentas) {
 						%>
-						<option value="<%=cuenta.getIdCuenta()%>">
+						<option value="<%=cuenta.getCbu()%>">
 							<%="Cuenta " + cuenta.getIdCuenta() + " - CBU: " + cuenta.getCbu()%>
 						</option>
 						<%
@@ -189,9 +189,20 @@ document.addEventListener("DOMContentLoaded", function () {
 						placeholder="Ingrese el monto" min="1" required>
 				</div>
 
+				<div class="field">
+					<label for="detalle">Detalle de la Transferencia:</label> <select
+						id="detalle" name="detalle" class="form-select" required>
+						<option value="Pago de servicios">Pago de servicios</option>
+						<option value="Transferencia familiar">Transferencia
+							familiar</option>
+						<option value="Inversión">Inversión</option>
+						<option value="Otro">Otro</option>
+					</select>
+				</div>
 
 
-            <button type="submit">Realizar Transferencia</button>
+
+				<button type="submit">Realizar Transferencia</button>
         </form>
         
         <% } else { %>

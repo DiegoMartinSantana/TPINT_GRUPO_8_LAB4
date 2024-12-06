@@ -16,4 +16,6 @@ public interface IMovimientoDao {
     Movimiento obtenerMovimientoPorId(int idMovimiento);
 	Cuenta obtenerCuentaPorId(int idCuenta);
 	ArrayList<Movimiento> obtenerUltimasTransferencias(int idCuenta);
+    Cuenta obtenerCuentaPorCBU(String cbu);
+    boolean crearMovimiento2(Movimiento movimiento);
 }
