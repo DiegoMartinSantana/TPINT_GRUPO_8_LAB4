@@ -273,3 +273,76 @@ INSERT INTO cuota (id_prestamo, numero_cuota, importe, fecha_pago, vencimiento) 
 INSERT INTO pago (id_prestamo, id_cuota, id_movimiento, fecha, estado) VALUES
 (1, 1, 1, '2023-02-10', 1),
 (1, 2, 2, '2023-03-10', 1)
+
+
+-- Procedimientos almacenados
+
+DELIMITER $$
+
+CREATE PROCEDURE aceptar_prestamo (
+    IN id_solicitud INT,
+    IN monto_solicitado FLOAT,
+    IN id_cuenta INT,
+    IN id_movimiento INT,
+    IN fecha DATE,
+    IN detalle VARCHAR(255)
+)
+BEGIN
+    -- Actualizar el estado de la solicitud de préstamo a "Aceptado"
+    UPDATE prestamo_solicitado
+    SET estado = 1  -- 1 = Aceptado (Estado de préstamo autorizado)
+    WHERE id_prestamo_solicitado = id_solicitud;
+
+    -- Crear el movimiento relacionado con el préstamo (por ejemplo, un depósito en la cuenta del cliente)
+    INSERT INTO movimiento (id_cuenta, id_tipo_movimiento, fecha, detalle, importe, id_destino)
+    VALUES (id_cuenta, 1, fecha, detalle, monto_solicitado, 0);  -- El id_destino es 0 porque no hay un destinatario
+
+    -- Obtener el id del movimiento insertado
+    SET @id_movimiento := LAST_INSERT_ID();
+
+    -- Insertar el préstamo en la tabla prestamo
+    INSERT INTO prestamo (
+        id_prestamo_solicitado, 
+        id_movimiento, 
+        monto_cuota, 
+        interes, 
+        importe_solicitado, 
+        fecha, 
+        importe_pagar, 
+        plazo_cuotas, 
+        estado
+    )
+    SELECT 
+        id_prestamo_solicitado,
+        @id_movimiento,
+        monto_cuota,
+        interes,
+        importe_solicitado,
+        fecha,
+        importe_pagar,
+        plazo_cuotas,
+        1  -- Estado pendiente de pago
+    FROM prestamo_solicitado
+    WHERE id_prestamo_solicitado = id_solicitud;
+
+END $$
+
+DELIMITER ;
+
+-- Pruebas
+
+-- Pruebas
+
+CALL aceptar_prestamo(
+    1,         -- ID de la solicitud de préstamo
+    10000,     -- Monto solicitado para el préstamo
+    2,            -- ID de la cuenta del cliente
+    0,        -- ID del movimiento relacionado
+    '2024-12-02',              -- Fecha del movimiento (por ejemplo, '2024-12-02')
+    'Préstamo aprobado'             -- Detalle del movimiento (por ejemplo, 'Préstamo aceptado')
+);
+
+
+
+
+

@@ -1,12 +1,15 @@
 
 package DatosImpl;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import Datos.IPrestamoDao;
+import Dominio.DatosPrestamosSolicitadosSP;
 import Dominio.PrestamoSolicitado;
 import Dominio.Dto.PrestamoDto;
 
@@ -47,6 +50,8 @@ public class PrestamoDao implements IPrestamoDao {
 	        "INSERT INTO prestamo_solicitado (" +
 	        "id_cuenta, monto_cuota, interes, importe_solicitado, fecha, importe_pagar, plazo_cuotas" +
 	        ") VALUES (?, ?, ?, ?, ?, ?, ?)";
+	
+	private static final String aceptarPrestamoSP = "{CALL aceptar_prestamo(?, ?, ?, ?, ?, ?)}";
 	
 	
 
@@ -204,6 +209,36 @@ public int  SetEstado(int idPrestamo, int set) {
 
         return isInsertExitoso;
 	}
+	@Override
+	public void aceptarPrestamo(DatosPrestamosSolicitadosSP PrestamoSP) {
+				 Connection conexion = Conexion.getConexion().getSQLConexion();
+	             
+	             try {
+	            // Establecer los parámetros del procedimiento
+	            CallableStatement stmt = conexion.prepareCall(aceptarPrestamoSP); 
+	            stmt.setInt(1, PrestamoSP.getIdPrestamoSolicitado());
+	            stmt.setFloat(2, PrestamoSP.getMontoSolicitado());
+	            stmt.setInt(3, PrestamoSP.getIDCuenta());
+	            stmt.setInt(4, PrestamoSP.getIDMovimiento());
+	            stmt.setDate(5, java.sql.Date.valueOf(PrestamoSP.getFecha())); 
+	            stmt.setString(6, PrestamoSP.getDetallePrestamoSolicitado());
+
+	            // Ejecutar el procedimiento
+	            stmt.execute();
+	             }
+	            catch (SQLException e) {
+	                e.printStackTrace();
+	                try {
+	                    conexion.rollback();
+	                } catch (SQLException e1) {
+	                    e1.printStackTrace();
+	                }
+	            }
+	        
+	
+	}
+}
 
 	
-}
+
+

@@ -3,6 +3,7 @@ package NegocioImpl;
 import java.util.ArrayList;
 
 import DatosImpl.PrestamoDao;
+import Dominio.DatosPrestamosSolicitadosSP;
 import Dominio.PrestamoSolicitado;
 import Dominio.Dto.PrestamoDto;
 import Negocio.IPrestamoNegocio;
@@ -37,6 +38,11 @@ public class PrestamosNegocio  implements IPrestamoNegocio{
 	public boolean crearPrestamoSolicitado(PrestamoSolicitado prestamoSolicitado) {
 		// TODO Auto-generated method stub
 		return prestamoDao.crearPrestamoSolicitado(prestamoSolicitado);
+	}
+	@Override
+	public void aceptarPrestamo(DatosPrestamosSolicitadosSP PrestamoSP) {
+		prestamoDao.aceptarPrestamo(PrestamoSP);
+		
 	}
 		
 

@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import DatosImpl.CuentaDao;
 import DatosImpl.PrestamoDao;
 import Dominio.Cuenta;
+import Dominio.DatosPrestamosSolicitadosSP;
 import Dominio.Movimiento;
 import Dominio.Dto.PrestamoDto;
 import NegocioImpl.CuentaNegocio;
@@ -30,6 +31,7 @@ public class PrestamosServlet extends HttpServlet {
     private MovimientoNegocio movimientoNegocio = new MovimientoNegocio();
     private CuentaNegocio cuentaNegocio = new CuentaNegocio();
     private ArrayList<PrestamoDto> prestamos  ;
+    private DatosPrestamosSolicitadosSP PrestamoSP = new DatosPrestamosSolicitadosSP();
     public PrestamosServlet() {
         super();
         
@@ -69,43 +71,40 @@ public class PrestamosServlet extends HttpServlet {
      
 		if(idPrestamo != 0) {
 		if(request.getParameter("btnAceptar") != null  &&  value != 0 && value == 1) {
-			//alta
+			//Alta			
 			prestamosNegocio.SetEstado(idPrestamo,1);
 			PrestamoDto prestamoDto = prestamosNegocio.obtenerPrestamoPorId(idPrestamo);
 	                
 	            if (prestamoDto != null) {
-	                Cuenta cuenta = cuentaNegocio.obtenerCuentaPorId(prestamoDto.idCuenta); 
+	               // Cuenta cuenta = cuentaNegocio.obtenerCuentaPorId(prestamoDto.idCuenta); 
 
-	                if (cuenta != null) {               
-	                    movimiento.setId_cuenta(cuenta.getIdCuenta());
-	                    movimiento.setTipo(2);
-	                    movimiento.setImporte(prestamoDto.importeSolicitado); 
-	                    movimiento.setDetalle("Aprobación de préstamo");
-	                    movimiento.setFecha(java.time.LocalDate.now());
-	                    movimiento.setId_destino(0);
-	                }
-	                cuenta.setSaldo(cuenta.getSaldo() + prestamoDto.importeSolicitado);
-	                cuentaNegocio.actualizarSaldo(cuenta);
+	              //  if (cuenta != null) {               
+	                	PrestamoSP.setIDCuenta(prestamoDto.idCuenta);
+	                	PrestamoSP.setMontoSolicitado(prestamoDto.importeSolicitado); 
+	                	PrestamoSP.setFecha(java.time.LocalDate.now());
+	                	PrestamoSP.setIdPrestamoSolicitado(idPrestamo);
+	                	PrestamoSP.setIDMovimiento(0);        	
+	                	prestamosNegocio.aceptarPrestamo(PrestamoSP);
+	                	actualizarListado(request, response);
+	               // }
 	            }
-			actualizarListado(request, response);
 			
 		}else {
 	
 			prestamosNegocio.SetEstado(idPrestamo,2);
-		actualizarListado(request, response);
+			actualizarListado(request, response);
+			if(request.getParameter("idPrestamo") != null ) {
+				
+				int prestamo = Integer.parseInt(request.getParameter("idPrestamo"));
+				
+				prestamosNegocio.rechazarPrestamo(prestamo);
+				
 			
 		
 
 			}
 		}	
 		
-		if(request.getParameter("idPrestamo") != null ) {
-			
-			int prestamo = Integer.parseInt(request.getParameter("idPrestamo"));
-        	
-        	prestamosNegocio.rechazarPrestamo(prestamo);
-
-        	actualizarListado(request, response);
 		}
 		
 		
