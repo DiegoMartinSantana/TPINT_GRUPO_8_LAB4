@@ -52,7 +52,7 @@ public class PrestamoDao implements IPrestamoDao {
 	        "id_cuenta, monto_cuota, interes, importe_solicitado, fecha, importe_pagar, plazo_cuotas" +
 	        ") VALUES (?, ?, ?, ?, ?, ?, ?)";
 	
-	private static final String aceptarPrestamoSP = "{CALL aceptar_prestamo(?, ?, ?, ?, ?, ?)}";
+	private static final String aceptarPrestamoSP = "{CALL aceptar_prestamo(?, ?, ?, ?, ?)}";
 	
 	
 
@@ -218,16 +218,14 @@ public int  SetEstado(int idPrestamo, int set) {
 				 Connection conexion = Conexion.getConexion().getSQLConexion();
 	             
 	             try {
-	            // Establecer los parámetros del procedimiento
+
 	            CallableStatement stmt = conexion.prepareCall(aceptarPrestamoSP); 
 	            stmt.setInt(1, PrestamoSP.getIdPrestamoSolicitado());
 	            stmt.setFloat(2, PrestamoSP.getMontoSolicitado());
 	            stmt.setInt(3, PrestamoSP.getIDCuenta());
-	            stmt.setInt(4, PrestamoSP.getIDMovimiento());
-	            stmt.setDate(5, java.sql.Date.valueOf(PrestamoSP.getFecha())); 
-	            stmt.setString(6, PrestamoSP.getDetallePrestamoSolicitado());
+	            stmt.setDate(4, java.sql.Date.valueOf(PrestamoSP.getFecha())); 
+	            stmt.setString(5, PrestamoSP.getDetallePrestamoSolicitado());
 
-	            // Ejecutar el procedimiento
 	            stmt.execute();
 	             }
 	            catch (SQLException e) {

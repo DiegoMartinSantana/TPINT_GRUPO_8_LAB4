@@ -82,8 +82,7 @@ public class PrestamosServlet extends HttpServlet {
 	                	PrestamoSP.setIDCuenta(prestamoDto.idCuenta);
 	                	PrestamoSP.setMontoSolicitado(prestamoDto.importeSolicitado); 
 	                	PrestamoSP.setFecha(java.time.LocalDate.now());
-	                	PrestamoSP.setIdPrestamoSolicitado(idPrestamo);
-	                	PrestamoSP.setIDMovimiento(0);        	
+	                	PrestamoSP.setIdPrestamoSolicitado(idPrestamo);       	
 	                	prestamosNegocio.aceptarPrestamo(PrestamoSP);
 	                	actualizarListado(request, response);
 	               // }

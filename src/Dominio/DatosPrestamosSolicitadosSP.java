@@ -7,7 +7,6 @@ public class DatosPrestamosSolicitadosSP {
 	public int  IdPrestamoSolicitado;
 	public float MontoSolicitado;
 	public int IDCuenta;
-	public int IDMovimiento;
 	public LocalDate fecha;
 	public String DetallePrestamoSolicitado = "Prestamo Aceptado";
 	
@@ -45,14 +44,6 @@ public class DatosPrestamosSolicitadosSP {
 
 	public void setIDCuenta(int iDCuenta) {
 		IDCuenta = iDCuenta;
-	}
-
-	public int getIDMovimiento() {
-		return IDMovimiento;
-	}
-
-	public void setIDMovimiento(int iDMovimiento) {
-		IDMovimiento = iDMovimiento;
 	}
 
 	public LocalDate getFecha() {

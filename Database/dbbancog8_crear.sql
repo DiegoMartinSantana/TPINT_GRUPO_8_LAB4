@@ -283,24 +283,68 @@ CREATE PROCEDURE aceptar_prestamo (
     IN id_solicitud INT,
     IN monto_solicitado FLOAT,
     IN id_cuenta INT,
-    IN id_movimiento INT,
     IN fecha DATE,
     IN detalle VARCHAR(255)
 )
 BEGIN
-    -- Actualizar el estado de la solicitud de préstamo a "Aceptado"
-    UPDATE prestamo_solicitado
-    SET estado = 1  -- 1 = Aceptado (Estado de préstamo autorizado)
+    
+    DECLARE v_monto_cuota FLOAT;
+    DECLARE v_interes FLOAT;
+    DECLARE v_plazo_cuotas INT;
+    DECLARE v_importe_pagar FLOAT;
+    DECLARE v_contador INT;
+    DECLARE v_fecha_pago DATE;
+    DECLARE v_fecha_vencimiento DATE;
+
+    -- LE DAMOS VALORES A LAS VARIABLES CREADAS
+    
+    SELECT 
+        monto_cuota, 
+        interes, 
+        plazo_cuotas, 
+        importe_pagar
+    INTO 
+        v_monto_cuota, 
+        v_interes, 
+        v_plazo_cuotas, 
+        v_importe_pagar
+    FROM prestamo_solicitado
     WHERE id_prestamo_solicitado = id_solicitud;
 
-    -- Crear el movimiento relacionado con el préstamo (por ejemplo, un depósito en la cuenta del cliente)
-    INSERT INTO movimiento (id_cuenta, id_tipo_movimiento, fecha, detalle, importe, id_destino)
-    VALUES (id_cuenta, 1, fecha, detalle, monto_solicitado, 0);  -- El id_destino es 0 porque no hay un destinatario
+	-- CALCULO DEL MONTO DE LA CUOTA SUMANDOLE EL INTERES (CREO QUE SE PUEDE HACER MÁS FACIL EL CALCULO, PERO SOY PROGRAMADOR NO MATEMÁTICO)
 
-    -- Obtener el id del movimiento insertado
+	SET v_monto_cuota = v_monto_cuota + (v_monto_cuota / 100 * v_interes);
+
+    -- PRESTAMO SOLICITADO PASA A ESTADO AUTORIZADO
+    
+    UPDATE prestamo_solicitado
+    SET estado = 1 
+    WHERE id_prestamo_solicitado = id_solicitud;
+
+    -- INSERTA EL MOVIMIENTO
+    
+    INSERT INTO movimiento (
+        id_cuenta, 
+        id_tipo_movimiento, 
+        fecha, 
+        detalle, 
+        importe, 
+        id_destino
+    ) VALUES (
+        id_cuenta, 
+        1, 
+        fecha, 
+        detalle, 
+        monto_solicitado, 
+        0
+    );
+
+    -- LEVANTA EL ID DEL MOVIMIENTO PARA INSERTARLO EN EL PRESTAMO
+    
     SET @id_movimiento := LAST_INSERT_ID();
 
-    -- Insertar el préstamo en la tabla prestamo
+    -- INSERTA EL PRESTAMO
+    
     INSERT INTO prestamo (
         id_prestamo_solicitado, 
         id_movimiento, 
@@ -311,38 +355,54 @@ BEGIN
         importe_pagar, 
         plazo_cuotas, 
         estado
-    )
-    SELECT 
-        id_prestamo_solicitado,
+    ) VALUES (
+        id_solicitud,
         @id_movimiento,
-        monto_cuota,
-        interes,
-        importe_solicitado,
+        v_monto_cuota,
+        v_interes,
+        monto_solicitado,
         fecha,
-        importe_pagar,
-        plazo_cuotas,
-        1  -- Estado pendiente de pago
-    FROM prestamo_solicitado
-    WHERE id_prestamo_solicitado = id_solicitud;
+        v_importe_pagar,
+        v_plazo_cuotas,
+        1 
+    );
+
+    -- LEVANTA EL ID DEL PRESTAMO PARA INSERTARLO EN LAS CUOTAS
+    
+    SET @id_prestamo := LAST_INSERT_ID();
+
+    -- INSERT DE LAS CUOTAS DE A CUERDO A LAS CANTIDADES Y FECHAS ESTABLECIDAS
+    
+    SET v_contador = 1;
+    SET v_fecha_pago = DATE_ADD(fecha, INTERVAL 1 MONTH);
+    SET v_fecha_vencimiento = DATE_ADD(fecha + 5, INTERVAL 1 MONTH);
+
+    WHILE v_contador <= v_plazo_cuotas DO
+        INSERT INTO cuota (
+            id_prestamo, 
+            numero_cuota, 
+            importe, 
+            fecha_pago,
+            vencimiento
+        ) VALUES (
+            @id_prestamo,
+            v_contador,
+            v_monto_cuota,
+            v_fecha_pago,
+            v_fecha_vencimiento
+        );
+
+        SET v_contador = v_contador + 1;
+        SET v_fecha_pago = DATE_ADD(v_fecha_pago, INTERVAL 1 MONTH);
+        SET v_fecha_vencimiento = DATE_ADD(v_fecha_vencimiento, INTERVAL 1 MONTH);
+    END WHILE;
+
+    -- UPDATE DEL SALDO DE LA CUENTA
+    
+    UPDATE cuenta c
+    SET c.saldo = c.saldo + monto_solicitado 
+    WHERE c.id_cuenta = id_cuenta;
 
 END $$
 
 DELIMITER ;
-
--- Pruebas
-
--- Pruebas
-
-CALL aceptar_prestamo(
-    1,         -- ID de la solicitud de préstamo
-    10000,     -- Monto solicitado para el préstamo
-    2,            -- ID de la cuenta del cliente
-    0,        -- ID del movimiento relacionado
-    '2024-12-02',              -- Fecha del movimiento (por ejemplo, '2024-12-02')
-    'Préstamo aprobado'             -- Detalle del movimiento (por ejemplo, 'Préstamo aceptado')
-);
-
-
-
-
-
