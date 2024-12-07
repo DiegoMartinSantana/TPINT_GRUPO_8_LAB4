@@ -39,15 +39,6 @@ public class servletTrasferencia extends HttpServlet {
 		
 	}
 	
-	private Cuenta ObtenerCuenta(String cbu,HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		
-		Cuenta cuentaDestinoObj = new Cuenta();
-        
-		cuentaDestinoObj = traDao.obtenerCuentaPorCBU2(cbu);
-	    
-		return cuentaDestinoObj;
-	}
 
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -67,7 +58,8 @@ public class servletTrasferencia extends HttpServlet {
 
 	        if ("misCuentas".equals(tipoCuentaDestino)) {
 	           
-	        	cuentaDestinoObj=ObtenerCuenta(tipoCuentaDestino, request, response);
+	        	cuentaDestino = request.getParameter("cuentaDestino");
+	            cuentaDestinoObj = traDao.obtenerCuentaPorCBU2(cuentaDestino);
 	            
 	        } else if ("otraCuenta".equals(tipoCuentaDestino)) {
 	            
@@ -112,6 +104,9 @@ public class servletTrasferencia extends HttpServlet {
 	        	request.getRequestDispatcher("Home.jsp").forward(request, response);	
 	            
 	            
+	        }
+	        else {
+	        	 System.out.println("NO INGRESO.");
 	        }
 	        
 	        

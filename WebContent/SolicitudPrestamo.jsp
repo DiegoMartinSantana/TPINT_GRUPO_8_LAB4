@@ -145,7 +145,7 @@
         %>
         
       
-        <form action="servletSolicitatPrestamo" method="post">
+        <form action="servletSolicitarPrestamo" method="post">
             
       
             <div class="field">

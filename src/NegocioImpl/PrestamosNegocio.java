@@ -39,11 +39,15 @@ public class PrestamosNegocio  implements IPrestamoNegocio{
 		// TODO Auto-generated method stub
 		return prestamoDao.crearPrestamoSolicitado(prestamoSolicitado);
 	}
+	
+	 
 	@Override
+	
 	public void aceptarPrestamo(DatosPrestamosSolicitadosSP PrestamoSP) {
 		prestamoDao.aceptarPrestamo(PrestamoSP);
 		
 	}
+
 		
 
 }

@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import Datos.IPrestamoDao;
 import Dominio.DatosPrestamosSolicitadosSP;
+//import Dominio.DatosPrestamosSolicitadosSP;
 import Dominio.PrestamoSolicitado;
 import Dominio.Dto.PrestamoDto;
 
@@ -209,7 +210,10 @@ public int  SetEstado(int idPrestamo, int set) {
 
         return isInsertExitoso;
 	}
+	
 	@Override
+	
+	
 	public void aceptarPrestamo(DatosPrestamosSolicitadosSP PrestamoSP) {
 				 Connection conexion = Conexion.getConexion().getSQLConexion();
 	             
@@ -237,6 +241,9 @@ public int  SetEstado(int idPrestamo, int set) {
 	        
 	
 	}
+	
+	
+	
 }
 
 	

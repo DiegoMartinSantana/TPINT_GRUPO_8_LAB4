@@ -70,8 +70,13 @@
         
                     <li class="nav-item">
                     
-                        <a class="nav-link" href="PrestamosUsuario">Préstamos</a>
+                        <a class="nav-link" href="SolicitudPrestamo.jsp">Solicitud Préstamos</a>
                     </li>
+                    <li class="nav-item">
+                    
+                        <a class="nav-link" href="ListarPrestamosUser.jsp">Detalles Préstamos</a>
+                    </li>
+                    
                 </ul>
             </div>
 

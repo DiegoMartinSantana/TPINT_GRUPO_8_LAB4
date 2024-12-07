@@ -130,44 +130,34 @@ public class MovimientoDao implements IMovimientoDao {
         
         return cuenta;
     }
-    
-
-
-    
-    
+   
     
 	@Override
 	public boolean crearMovimiento(Movimiento movimiento) {
-		PreparedStatement statement;
-        Connection conexion = Conexion.getConexion().getSQLConexion();
-        boolean isInsertExitoso = false;
-        
-        try {
-        	
-        	statement = conexion.prepareStatement(insertarMovimiento);
+	    boolean isInsertExitoso = false;
+
+	    try (Connection conexion = Conexion.getConexion().getSQLConexion();
+	         PreparedStatement statement = conexion.prepareStatement(insertarMovimiento)) {
+
 	        statement.setInt(1, movimiento.getId_cuenta());
 	        statement.setInt(2, movimiento.getTipo());
 	        statement.setDate(3, java.sql.Date.valueOf(movimiento.getFecha()));
 	        statement.setString(4, movimiento.getDetalle());
 	        statement.setFloat(5, movimiento.getImporte());
 	        statement.setInt(6, movimiento.getId_destino());
-            	
-            int rows = statement.executeUpdate();
-            if (rows >0) {
-                conexion.commit();
-                isInsertExitoso = true;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            try {
-                conexion.rollback();
-            } catch (SQLException e1) {
-                e1.printStackTrace();
-            }
-        }
 
-        return isInsertExitoso;
+	        int rows = statement.executeUpdate();
+	        if (rows > 0) {
+	            conexion.commit();
+	            isInsertExitoso = true;
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+
+	    return isInsertExitoso;
 	}
+
 
 
 

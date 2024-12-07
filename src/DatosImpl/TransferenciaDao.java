@@ -24,41 +24,42 @@ public class TransferenciaDao implements ITransferenciaDao {
 	
 	@Override
 	public Cuenta obtenerCuentaPorCBU2(String cbu) {
-		  Cuenta cuenta = null;
-		    Connection conexion = null;
-		    PreparedStatement statement = null;
-		    ResultSet resultSet = null;
+	    Cuenta cuenta = null;
+	    PreparedStatement statement = null;
+	    ResultSet resultSet = null;
 
-		    try {
-		        conexion = Conexion.getConexion().getSQLConexion();
-		        statement = conexion.prepareStatement(select_cuentaXCBU);
-		        statement.setString(1, cbu);
-		        resultSet = statement.executeQuery();
+	    try {
+	        Connection conexion = Conexion.getConexion().getSQLConexion();
+	        statement = conexion.prepareStatement(select_cuentaXCBU);
+	        statement.setString(1, cbu);
+	        resultSet = statement.executeQuery();
 
-		        if (resultSet.next()) {
-		            cuenta = new Cuenta(
-		                resultSet.getInt("id_cuenta"),
-		                resultSet.getInt("id_cliente"),
-		                resultSet.getInt("tipo"),
-		                resultSet.getDate("creacion").toLocalDate(),
-		                resultSet.getString("cbu"),
-		                resultSet.getFloat("saldo"),
-		                resultSet.getBoolean("activa")
-		            );
-		        }
-		    } catch (SQLException e) {
-		        e.printStackTrace();
-		    } finally {
-		       
-		        try {
-		            if (resultSet != null) resultSet.close();
-		            if (statement != null) statement.close();
-		            if (conexion != null) conexion.close();
-		        } catch (SQLException e) {
-		            e.printStackTrace();
-		        }
-		    }
-		    return cuenta;
+	        if (resultSet.next()) {
+	            cuenta = new Cuenta(
+	                resultSet.getInt("id_cuenta"),
+	                resultSet.getInt("id_cliente"),
+	                resultSet.getInt("tipo"),
+	                resultSet.getDate("creacion").toLocalDate(),
+	                resultSet.getString("cbu"),
+	                resultSet.getFloat("saldo"),
+	                resultSet.getBoolean("activa")
+	            );
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        try {
+	            if (resultSet != null) resultSet.close();
+	            if (statement != null) statement.close();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
+
+	    return cuenta;
 	}
+
+
+
 
 }
