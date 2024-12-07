@@ -94,22 +94,29 @@
 
 <script>
 
-function mostrarOpcionesCuenta() {
-    const opcionSeleccionada = document.getElementById("cuentaDestinoOpciones").value;
-    const misCuentasField = document.getElementById("misCuentasField");
-    const otraCuentaField = document.getElementById("otraCuentaField");
-
-    if (opcionSeleccionada === "misCuentas") {
-        misCuentasField.style.display = "block";
-        otraCuentaField.style.display = "none";
-    } else if (opcionSeleccionada === "otraCuenta") {
-        misCuentasField.style.display = "none";
-        otraCuentaField.style.display = "block";
+function validarTransferencia() {
+    var tipoSeleccionado = document.getElementById('cuentaDestinoOpciones').value;
+    var monto = parseFloat(document.getElementById('monto').value);
+    
+    // Validar que el monto sea mayor a 0
+    if (monto <= 0) {
+        alert('El monto debe ser mayor a 0');
+        return false;
     }
+    
+    // Validar CBU si se selecciona otra cuenta
+    if (tipoSeleccionado === 'otraCuenta') {
+        var cbuOtro = document.getElementById('cbuOtro').value;
+        if (cbuOtro.length !== 22 || !/^\d+$/.test(cbuOtro)) {
+            alert('El CBU debe contener 22 dígitos numéricos');
+            return false;
+        }
+    }
+    
+    return true;
 }
 
-document.addEventListener("DOMContentLoaded", function () {
-    mostrarOpcionesCuenta();
+document.addEventListener('DOMContentLoaded', mostrarOpcionesCuenta);
 });
 </script>
 
@@ -120,100 +127,159 @@ document.addEventListener("DOMContentLoaded", function () {
   <%@include file="NavegacionComponenteUsuario.jsp" %>
 
 <div class="container" style="margin-top:50px">
-   
     <div class="section">
-        <h2>Realizar Trasferencia</h2>
-        <%  
-        	float interes = 2;
-            List<Cuenta> cuentas = (List<Cuenta>)request.getSession().getAttribute("Cuentas");
-            if (cuentas != null && !cuentas.isEmpty()) {
+        <h2>Realizar Transferencia</h2>
+        
+        <%
+        float interes = 2;
+        List<Cuenta> cuentas = (List<Cuenta>) request.getSession().getAttribute("Cuentas");
+        String error = (String) request.getAttribute("error");
+        String success = (String) request.getAttribute("success");
         %>
         
-      
-        <form action="servletTrasferencia" method="post">
-
-
-				<div class="field">
-					<label for="cuentaDestinoOpciones">Seleccionar Tipo de
-						Cuenta de Depósito:</label> <select id="cuentaDestinoOpciones"
-						name="cuentaDestinoOpciones" class="form-select" required
-						onchange="mostrarOpcionesCuenta()">
-						<option value="misCuentas" selected>Mis Cuentas</option>
-						<option value="otraCuenta">Otra Cuenta</option>
-					</select>
-				</div>
-
-				<div class="field" id="misCuentasField">
-					<label for="cuentaDestino">Seleccionar Cuenta:</label> <select
-						id="cuentaDestino" name="cuentaDestino" class="form-select">
-						<%
-							for (Cuenta cuenta : cuentas) {
-						%>
-						<option value="<%=cuenta.getCbu()%>">
-							<%="Cuenta " + cuenta.getIdCuenta() + " - CBU: " + cuenta.getCbu()%>
-						</option>
-						<%
-							}
-						%>
-					</select>
-				</div>
-
-				<div class="field" id="otraCuentaField" style="display: none;">
-					<label for="cbuOtro">Ingresar CBU de Otra Cuenta:</label> <input
-						type="text" id="cbuOtro" name="cbuOtro" class="form-control"
-						placeholder="Ingrese el CBU" pattern="\d{22}">
-				</div>
-
-
-				<!--  
-                <select id="interes" name="interes" required onchange="calcularMontoAPagar()">
-                    <option value="2">2%</option>
-                    <option value="5">5%</option>
-                    <option value="7">7%</option>
-                    <option value="10">10%</option>
-                </select>
-                -->
-
+        <% if (cuentas != null && !cuentas.isEmpty()) { %>
+            <!-- Mostrar mensajes de error o éxito -->
+            <% if (error != null && !error.isEmpty()) { %>
+                <div class="alert alert-danger" role="alert">
+                    <%= error %>
+                </div>
+            <% } %>
             
-            <div class="field">
-                <label for="fecha">Fecha de Trasnferencia:</label>
-                <input type="date" id="fechaCreacion" name="fechaCreacion" 
-                       value="<%= new java.text.SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date()) %>" 
-                       readonly>
-            </div>
-
-
-				<div class="field">
-					<label for="monto">Monto a Transferir o Depositar:</label> <input
-						type="number" id="monto" name="monto" class="form-control"
-						placeholder="Ingrese el monto" min="1" required>
-				</div>
-
-				<div class="field">
-					<label for="detalle">Detalle de la Transferencia:</label> <select
-						id="detalle" name="detalle" class="form-select" required>
-						<option value="Pago de servicios">Pago de servicios</option>
-						<option value="Transferencia familiar">Transferencia
-							familiar</option>
-						<option value="Inversión">Inversión</option>
-						<option value="Otro">Otro</option>
-					</select>
-				</div>
-
-
-
-				<button type="submit">Realizar Transferencia</button>
-        </form>
+            <% if (success != null && !success.isEmpty()) { %>
+                <div class="alert alert-success" role="alert">
+                    <%= success %>
+                </div>
+            <% } %>
         
+            <form action="servletTransferencia" method="post" onsubmit="return validarTransferencia()">
+                <div class="row">
+                    <!-- Selección de cuenta origen -->
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="id_cuenta_origen" class="form-label">Cuenta de Origen:</label>
+                            <select name="id_cuenta_origen" class="form-select">
+							    <% for (Cuenta cuenta : cuentas) { 
+							        String tipoCuenta = "";
+							        if (cuenta.getTipo() == 1) {
+							            tipoCuenta = "Caja de Ahorro";
+							        } else if (cuenta.getTipo() == 2) {
+							            tipoCuenta = "Cuenta Corriente";
+							        }
+							    %>
+							        <option value="<%= cuenta.getIdCuenta() %>">
+							            <%= tipoCuenta %> - CBU: <%= cuenta.getCbu() %>
+							        </option>
+							    <% } %>
+							</select>
+                        </div>
+                    </div>
+                    
+                    <!-- Selección entre Mis Cuentas u Otra Cuenta -->
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="cuentaDestinoOpciones" class="form-label">Destinatario:</label>
+                            <select id="cuentaDestinoOpciones" name="cuentaDestinoOpciones" 
+                                    class="form-select" required onchange="mostrarOpcionesCuenta()">
+                                <option value="misCuentas" selected>Mis Cuentas</option>
+                                <option value="otraCuenta">Otra Cuenta</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Campos dinámicos -->
+                <div class="row">
+                    <div class="col-md-6" id="misCuentasField">
+                        <div class="mb-3">
+                            <label for="id_cuenta_destino" class="form-label">Seleccionar Cuenta:</label>
+                            <select name="id_cuenta_destino" class="form-select">
+							    <% for (Cuenta cuenta : cuentas) { 
+							        String tipoCuenta = "";
+							        if (cuenta.getTipo() == 1) {
+							            tipoCuenta = "Caja de Ahorro";
+							        } else if (cuenta.getTipo() == 2) {
+							            tipoCuenta = "Cuenta Corriente";
+							        }
+							    %>
+							        <option value="<%= cuenta.getIdCuenta() %>">
+							            <%= tipoCuenta %> - CBU: <%= cuenta.getCbu() %>
+							        </option>
+							    <% } %>
+							</select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6" id="otraCuentaField" style="display: none;">
+                        <div class="mb-3">
+                            <label for="cbuOtro" class="form-label">Ingresar CBU de Otra Cuenta:</label>
+                            <input type="text" id="cbuOtro" name="cbuOtro" 
+                                   class="form-control" placeholder="Ingrese el CBU" 
+                                   pattern="\d{22}" maxlength="22" minlength="22">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fecha, monto y detalle -->
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="fechaCreacion" class="form-label">Fecha de Transferencia:</label>
+                            <input type="date" id="fechaCreacion" name="fechaCreacion"
+                                   value="<%= new java.text.SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date()) %>"
+                                   class="form-control" readonly>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="importe" class="form-label">Monto a Transferir:</label>
+                            <input type="number" name="importe" 
+                                   class="form-control" placeholder="Ingrese el monto" 
+                                   min="1" step="0.01" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="mb-3">
+                            <label for="detalle" class="form-label">Detalle de la Transferencia:</label>
+                            <select id="detalle" name="detalle" class="form-select" required>
+                                <option value="Pago de servicios">Pago de servicios</option>
+                                <option value="Transferencia familiar">Transferencia familiar</option>
+                                <option value="Inversión">Inversión</option>
+                                <option value="Otro">Otro</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <input type="submit" class="btn btn-primary w-100" name="btnTransferencia" value="Realizar Transferencia">
+                </div>
+            </form>
         <% } else { %>
-            <p>No tienes cuentas para realizar TRANFERENCIA.</p>
+            <div class="alert alert-warning">
+                No tienes cuentas para realizar TRANSFERENCIA.
+            </div>
         <% } %>
-    </div>
-
-    <div class="form-footer">
-        
     </div>
 </div>
 
+<script>
+    function mostrarOpcionesCuenta() {
+        const opcion = document.getElementById("cuentaDestinoOpciones").value;
+        const misCuentasField = document.getElementById("misCuentasField");
+        const otraCuentaField = document.getElementById("otraCuentaField");
+
+        if (opcion === "misCuentas") {
+            misCuentasField.style.display = "block";
+            otraCuentaField.style.display = "none";
+        } else if (opcion === "otraCuenta") {
+            misCuentasField.style.display = "none";
+            otraCuentaField.style.display = "block";
+        }
+    }
+</script>
 </body>
 </html>

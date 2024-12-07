@@ -406,3 +406,94 @@ BEGIN
 END $$
 
 DELIMITER ;
+
+DELIMITER //
+
+CREATE PROCEDURE sp_transferir_fondos (
+    IN p_id_cuenta_origen INT,
+    IN p_id_cuenta_destino INT,
+    IN p_importe FLOAT,
+    IN p_detalle VARCHAR(200)
+)
+BEGIN
+    DECLARE v_saldo_origen FLOAT;
+    DECLARE v_error_message VARCHAR(255);
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        ROLLBACK;
+        RESIGNAL;
+    END;
+
+    -- Iniciar transacción
+    START TRANSACTION;
+
+    -- Verificar que las cuentas existen y están activas
+    IF NOT EXISTS (SELECT 1 FROM cuenta WHERE id_cuenta = p_id_cuenta_origen AND activa = 1) THEN
+        SET v_error_message = CONCAT('Cuenta de origen ', p_id_cuenta_origen, ' no existe o no está activa');
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = v_error_message;
+    END IF;
+
+    IF NOT EXISTS (SELECT 1 FROM cuenta WHERE id_cuenta = p_id_cuenta_destino AND activa = 1) THEN
+        SET v_error_message = CONCAT('Cuenta de destino ', p_id_cuenta_destino, ' no existe o no está activa');
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = v_error_message;
+    END IF;
+
+    -- Verificar saldo suficiente
+    SELECT saldo INTO v_saldo_origen 
+    FROM cuenta 
+    WHERE id_cuenta = p_id_cuenta_origen;
+
+    IF v_saldo_origen < p_importe THEN
+        SET v_error_message = CONCAT('Saldo insuficiente. Saldo actual: ', v_saldo_origen);
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = v_error_message;
+    END IF;
+
+    -- Insertar movimiento de salida (negativo)
+    INSERT INTO movimiento (
+        id_cuenta, 
+        id_tipo_movimiento, 
+        fecha, 
+        detalle, 
+        importe, 
+        id_destino
+    ) VALUES (
+        p_id_cuenta_origen, 
+        2,  -- Tipo de movimiento: Transferencia
+        CURRENT_DATE(), 
+        p_detalle, 
+        -p_importe, 
+        p_id_cuenta_destino
+    );
+
+    -- Insertar movimiento de entrada (positivo)
+    INSERT INTO movimiento (
+        id_cuenta, 
+        id_tipo_movimiento, 
+        fecha, 
+        detalle, 
+        importe, 
+        id_destino
+    ) VALUES (
+        p_id_cuenta_destino, 
+        2,  -- Tipo de movimiento: Transferencia
+        CURRENT_DATE(), 
+        p_detalle, 
+        p_importe, 
+        p_id_cuenta_origen
+    );
+
+    -- Actualizar saldo de cuenta de origen
+    UPDATE cuenta 
+    SET saldo = saldo - p_importe 
+    WHERE id_cuenta = p_id_cuenta_origen;
+
+    -- Actualizar saldo de cuenta de destino
+    UPDATE cuenta 
+    SET saldo = saldo + p_importe 
+    WHERE id_cuenta = p_id_cuenta_destino;
+
+    -- Confirmar transacción
+    COMMIT;
+END //
+
+DELIMITER ;
