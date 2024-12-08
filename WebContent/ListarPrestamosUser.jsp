@@ -9,8 +9,14 @@
 <title>Prestamos</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
+<link rel="stylesheet"
+	href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.css" />
 </head>
 <body>
+
 <%@include file="NavegacionComponenteUsuario.jsp" %>
     
     <% 
@@ -27,12 +33,12 @@
      	<% if(prestamos != null){ %>
         <div class="row">
             <div class="col-12">
-                <h3>Accepted Loans</h3>
-                <table class="table table-bordered table-hover">
+               
+                <table class="table table-bordered table-hover" id="prestamosTable">
                     <thead class="table">
                         <tr>
-                            <th>ID Prestamo</th>
-                            <th>ID Cuenta</th>
+                          
+                            <th>Cbu</th>
                             <th>Monto Cuota</th>
                             <th>Importe Solicitado</th>
                             <th>Plazo Cuotas</th>
@@ -43,17 +49,25 @@
                         </tr>
                     </thead>
                     <tbody>
-                        
+                             <%for(PrestamoDto prestamo : prestamos ){ %>
                             <tr>
-                            <%for(PrestamoDto prestamo : prestamos ){ %>
-                                <td><%=prestamo.idPrestamo %></td>
-                                <td><%=prestamo.idCuenta %></td>
+                              
+                                <td><%=prestamo.cbu%></td>
                                 <td><%=prestamo.montoCuota %></td>
                                 <td><%=prestamo.importeSolicitado %></td>
                                 <td><%=prestamo.plazoCuotas %></td>
                                 <td><%=prestamo.interes %></td>
                                 <td><%=prestamo.importePagar %></td>
-                                <td><%=prestamo.estado %></td>
+                                <%if(prestamo.estado==3) {%>
+                                	<td>Pendiente</td>
+                               <%} %>
+                                <%if(prestamo.estado==2){ %>
+                                		<td>Rechazado</td>
+                               <%} %> 
+                                 <%if(prestamo.estado==1) {%>
+                                	<td>Aceptado</td>
+                               <%} %> 
+                                
                                 <td><%=prestamo.fechaPrestamo %></td>
                            <%} %>
                             </tr>
@@ -63,47 +77,25 @@
             </div>
         </div>
 
-        
-        <div class="row mt-5">
-            <div class="col-12">
-                <h3>Prestamos pendientes</h3>
-                <table class="table table-bordered table-hover">
-                    <thead class="table">
-                        <tr>
-                            <th>ID Prestamo Solicitado</th>
-                            <th>ID Cuenta</th>
-                            <th>Monto Cuota</th>
-                            <th>Importe Solicitado</th>
-                            <th>Plazo Cuotas</th>
-                            <th>Interés</th>
-                            <th>Importe Pagar</th>
-                            <th>Estado</th>
-                            <th>Fecha Prestamo</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                       
-                            <tr>
-                                <td>${prestamoSolicitado.IdPrestamoSolicitado}</td>
-                                <td>${prestamoSolicitado.IdCuenta}</td>
-                                <td>${prestamoSolicitado.MontoCuota}</td>
-                                <td>${prestamoSolicitado.ImporteSolicitado}</td>
-                                <td>${prestamoSolicitado.PlazoCuotas}</td>
-                                <td>${prestamoSolicitado.Interes}</td>
-                                <td>${prestamoSolicitado.ImportePagar}</td>
-                                <td>${prestamoSolicitado.Estado}</td>
-                                <td>${prestamoSolicitado.FechaPrestamo}</td>
-                            </tr>
-                   
-                    </tbody>
-                </table>
-            </div>
-        </div>
         <%}else{ %>
         <p>sin prestamos.</p>	
         <%} %>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+$(document).ready(function() {
+    // Eliminar filas ignoradas antes de inicializar DataTables
+    $('#prestamosTable tbody .datatable-ignore').remove();
+
+    // Inicializar DataTables
+    $('#prestamosTable').DataTable({
+        // Configuración opcional si necesitas personalizar algo
+        language: {
+        	url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json'
+        }
+    });
+});
+</script>
 </body>
 </html>

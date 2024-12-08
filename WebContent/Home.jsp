@@ -112,7 +112,7 @@ body {
                 Últimas Transferencias <i class="fas fa-chevron-right"></i>
             </a>
         </div>
-        <!-- Botón en la parte inferior centrada -->
+        
         <div class="card-footer text-center">
             <a href="Transferencias.jsp" class="btn text-warning" title="Añadir nueva transferencia">
                 <i class="fas fa-plus fa-2x"></i>
@@ -151,9 +151,5 @@ body {
         </div>
     </div>
 </div>
-
-
- 
 </body>
-
 </html>

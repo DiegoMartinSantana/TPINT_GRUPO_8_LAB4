@@ -1,6 +1,7 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
 <style>
     .nav-icon {
         font-size: 2.2rem; 
@@ -60,21 +61,19 @@
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="HomeServlet">Inicio</a>
                     </li>
+                  
                     <li class="nav-item">
-                        <a class="nav-link" href="ListarCuenta.jsp">Cuentas</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="Transferencias.jsp">Transferencias</a>
+                        <a class="nav-link" href="Transferencias.jsp">Transferir</a>
                     </li>
              
         
                     <li class="nav-item">
                     
-                        <a class="nav-link" href="SolicitudPrestamo.jsp">Solicitud Préstamos</a>
+                        <a class="nav-link" href="SolicitudPrestamo.jsp">Solicitar Prestamo</a>
                     </li>
                     <li class="nav-item">
                     
-                        <a class="nav-link" href="ListarPrestamosUser.jsp">Detalles Préstamos</a>
+                        <a class="nav-link" href="PrestamosUsuario">Prestamos</a>
                     </li>
                     
                 </ul>

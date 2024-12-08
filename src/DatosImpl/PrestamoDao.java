@@ -15,26 +15,25 @@ import Dominio.PrestamoSolicitado;
 import Dominio.Dto.PrestamoDto;
 
 public class PrestamoDao implements IPrestamoDao {
-	private static final String selectById ="SELECT" + 
-			"            p.id_prestamo, " + 
-			" 			m.id_movimiento, "+
-			"           c.id_cuenta, " +
-			"            c.cbu AS cbu_cuenta, " + 
-			"            cl.cuil, " + 
-			"            cl.nombre, "  + 
-			"			 cl.apellido, " +
-			"            p.importe_pagar, " + 
-			"            p.importe_solicitado, " + 
-			"            p.monto_cuota, " + 
-			"            p.interes, " + 
-			"            p.plazo_cuotas, " + 
-			"            p.fecha, " + 
-			"            p.estado from prestamo p " +
-			"            INNER JOIN movimiento m ON p.id_movimiento = m.id_movimiento " + 
-			"            INNER JOIN cuenta c ON m.id_cuenta = c.id_cuenta " + 
-			"            INNER JOIN cliente cl ON c.id_cliente = cl.id_cliente " + 
-			"		     WHERE p.id_prestamo = ?;";
-	
+	private static final String selectById ="SELECT "
+            + "p.id_prestamo_solicitado, "
+            + "c.id_cuenta, "
+            + "c.cbu AS cbu_cuenta, "
+            + "cl.cuil, "
+            + "cl.nombre, "
+            + "cl.apellido, "
+            + "p.importe_pagar, "
+            + "p.importe_solicitado, "
+            + "p.monto_cuota, "
+            + "p.interes, "
+            + "p.plazo_cuotas, "
+            + "p.fecha, "
+            + "p.estado "
+            + "FROM prestamo_solicitado p "
+            + "INNER JOIN cuenta c ON p.id_cuenta = c.id_cuenta "
+            + "INNER JOIN cliente cl ON c.id_cliente = cl.id_cliente "
+            + "WHERE p.id_prestamo_solicitado = ?;";
+
 	
 	private static final String Rechazar = "UPDATE prestamo_solicitado SET estado = 2 WHERE id_prestamo_solicitado = ?";
 	
@@ -70,7 +69,7 @@ public class PrestamoDao implements IPrestamoDao {
 
 	        if (resultSet.next()) {
 	            prestamoDto = new PrestamoDto();
-	            prestamoDto.idPrestamo = resultSet.getInt("id_prestamo");
+	            prestamoDto.idPrestamo = resultSet.getInt("id_prestamo_solicitado");
 	            prestamoDto.cbu = resultSet.getString("cbu_cuenta");
 	            prestamoDto.cuil = resultSet.getString("cuil");
 	            prestamoDto.importePagar = resultSet.getFloat("importe_pagar");

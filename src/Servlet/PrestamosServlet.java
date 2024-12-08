@@ -72,7 +72,7 @@ public class PrestamosServlet extends HttpServlet {
 		if(idPrestamo != 0) {
 		if(request.getParameter("btnAceptar") != null  &&  value != 0 && value == 1) {
 			//Alta			
-			prestamosNegocio.SetEstado(idPrestamo,1);
+		
 			PrestamoDto prestamoDto = prestamosNegocio.obtenerPrestamoPorId(idPrestamo);
 	                
 	            if (prestamoDto != null) {
@@ -97,9 +97,7 @@ public class PrestamosServlet extends HttpServlet {
 				int prestamo = Integer.parseInt(request.getParameter("idPrestamo"));
 				
 				prestamosNegocio.rechazarPrestamo(prestamo);
-				
-			
-		
+
 
 			}
 		}	
@@ -107,7 +105,7 @@ public class PrestamosServlet extends HttpServlet {
 		}
 		
 		
-		doGet(request, response);
+
 	
 	}
 
