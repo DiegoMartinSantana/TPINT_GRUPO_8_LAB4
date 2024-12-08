@@ -89,6 +89,12 @@
         font-size: 14px;
         box-sizing: border-box; 
     }
+    input[readonly] {
+    background-color: #f0f0f0; 
+    color: #333;
+    border: 1px solid #ddd;
+    cursor: not-allowed; 
+}
 
     </style>
 

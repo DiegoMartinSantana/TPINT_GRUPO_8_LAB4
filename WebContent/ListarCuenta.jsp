@@ -73,9 +73,9 @@
                     }
                 } else {
                 %>
-                <tr>
-                    <td colspan="8" style="text-align: center;">No hay cuentas disponibles.</td>
-                </tr>
+                <tr class="datatable-ignore">
+    <td colspan="8" style="text-align: center;">No hay cuentas disponibles.</td>
+</tr>
                 <%
                 }
                 %>
@@ -86,12 +86,19 @@
 
 </div>
 <script>
-        $(document).ready(function() {
-            console.log("jQuery version:", $.fn.jquery);
-            console.log("DataTables disponible:", typeof $.fn.DataTable);
-            $('#cuentasTable').DataTable();
-        });
-    </script>
+$(document).ready(function() {
+    // Eliminar filas ignoradas antes de inicializar DataTables
+    $('#cuentasTable tbody .datatable-ignore').remove();
+
+    // Inicializar DataTables
+    $('#cuentasTable').DataTable({
+        // Configuración opcional si necesitas personalizar algo
+        language: {
+        	url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json'
+        }
+    });
+});
+</script>
 
 </body>
 </html>

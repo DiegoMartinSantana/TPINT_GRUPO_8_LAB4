@@ -110,11 +110,18 @@
 
     </div>
 <script>
-        $(document).ready(function() {
-            console.log("jQuery version:", $.fn.jquery);
-            console.log("DataTables disponible:", typeof $.fn.DataTable);
-            $('#clientesTable').DataTable();
-        });
+$(document).ready(function() {
+    // Eliminar filas ignoradas antes de inicializar DataTables
+    $('#clientesTable tbody .datatable-ignore').remove();
+
+    // Inicializar DataTables
+    $('#clientesTable').DataTable({
+        // Configuración opcional si necesitas personalizar algo
+        language: {
+        	url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json'
+        }
+    });
+});
     </script>
 
 </body>
