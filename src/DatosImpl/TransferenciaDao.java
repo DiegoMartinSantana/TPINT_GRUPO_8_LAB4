@@ -15,8 +15,6 @@ public class TransferenciaDao implements ITransferenciaDao {
 
 	private static TransferenciaDao instancia = null;
 	
-	/*private static final String select_cuentaXCBU="SELECT id_cuenta, id_cliente, tipo, creacion,cbu, saldo, activa FROM cuenta WHERE cbu = ?";*/
-	
 	private static final String TRASNFERIR_FONDOS = "{CALL sp_transferir_fondos(?, ?, ?, ?)}";
 	
 	public static TransferenciaDao obtenerInstancia() {

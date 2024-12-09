@@ -515,3 +515,99 @@ BEGIN
 END //
 
 DELIMITER ;
+
+DELIMITER //
+
+CREATE PROCEDURE PagarCuota(
+    IN p_id_prestamo INT,
+    IN p_id_cuota INT,
+    IN p_id_cuenta INT
+)
+BEGIN
+    DECLARE v_importe_cuota FLOAT;
+    DECLARE v_saldo_cuenta FLOAT;
+    DECLARE v_total_cuotas INT;
+    DECLARE v_cuotas_pagadas INT;
+    DECLARE v_id_movimiento INT;
+    DECLARE v_estado_prestamo INT;
+
+    START TRANSACTION;
+
+    -- ASIGNA EL IMPORTE DE LA CUOTA
+    SELECT importe INTO v_importe_cuota
+    FROM cuota 
+    WHERE id_prestamo = p_id_prestamo AND id_cuota = p_id_cuota;
+
+    -- ASIGNA EL SALDO DE LA CUENTA
+    SELECT saldo INTO v_saldo_cuenta
+    FROM cuenta
+    WHERE id_cuenta = p_id_cuenta FOR UPDATE;
+
+    -- VERIFICA QUE EL SALDO SEA SUFICIENTE
+    IF v_saldo_cuenta < v_importe_cuota THEN
+        SIGNAL SQLSTATE '45000' 
+        SET MESSAGE_TEXT = 'Saldo insuficiente para pagar la cuota';
+    END IF;
+
+    -- INSERT DEL MOVIMIENTO
+    INSERT INTO movimiento (
+        id_cuenta, 
+        id_tipo_movimiento, 
+        fecha, 
+        detalle, 
+        importe, 
+        id_destino
+    ) VALUES (
+        p_id_cuenta, 
+        2, -- Tipo de movimiento de pago
+        CURRENT_DATE, 
+        CONCAT('Pago cuota ', p_id_cuota, ' de préstamo ', p_id_prestamo), 
+        -v_importe_cuota, 
+        0
+    );
+
+    -- LEVANTA EL ID DEL MOVIMIENTO
+    SET v_id_movimiento = LAST_INSERT_ID();
+
+    -- ACTUALIZA EL SALDO EN LA CUENTA
+    UPDATE cuenta 
+    SET saldo = saldo - v_importe_cuota
+    WHERE id_cuenta = p_id_cuenta;
+
+    -- CAMBIA A PAGADO EL ESTADO DE LA CUOTA
+    UPDATE cuota
+    SET estado = 2 
+    WHERE id_prestamo = p_id_prestamo AND id_cuota = p_id_cuota;
+
+    -- INSERTA EL PAGO
+    INSERT INTO pago (
+        id_prestamo, 
+        id_cuota, 
+        id_movimiento, 
+        fecha
+    ) VALUES (
+        p_id_prestamo, 
+        p_id_cuota, 
+        v_id_movimiento, 
+        CURRENT_DATE
+    );
+
+    -- VERIFICA SI ES LA ULTIMA CUOTA DEL PRESTAMO
+    SELECT 
+        COUNT(*) AS total_cuotas,
+        SUM(CASE WHEN estado = 2 THEN 1 ELSE 0 END) AS cuotas_pagadas
+    INTO v_total_cuotas, v_cuotas_pagadas
+    FROM cuota
+    WHERE id_prestamo = p_id_prestamo;
+
+    -- SI SE ESTA PAGANDO LA ULTIMA CUOTA DEL PRESTAMO, LE PONE ESTADO FINALIZADO
+    IF v_total_cuotas = v_cuotas_pagadas THEN
+        UPDATE prestamo
+        SET estado = 2 
+        WHERE id_prestamo = p_id_prestamo;
+    END IF;
+
+    COMMIT;
+END //
+
+DELIMITER ;
