@@ -18,8 +18,10 @@ import Dominio.Cuenta;
 import Dominio.Movimiento;
 import Dominio.Transferencia;
 import Dominio.Usuario;
+import Negocio.ITransferenciaNegocio;
 import NegocioImpl.ClienteNegocio;
 import NegocioImpl.MovimientoNegocio;
+import NegocioImpl.TransferenciaNegocio;
 
 /**
  * Servlet implementation class servletTrasferencia
@@ -27,95 +29,48 @@ import NegocioImpl.MovimientoNegocio;
 @WebServlet("/servletTransferencia")
 public class servletTransferencia extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-	/*private MovimientoNegocio movimientoNegocio = new MovimientoNegocio();
-	 ClienteNegocio clienteNegocio = new ClienteNegocio();
-	 TransferenciaDao traDao = new TransferenciaDao();*/
 	
     public servletTransferencia() {
         super();
-        // TODO Auto-generated constructor stub
     }
-
     
-    private ITransferenciaDao transferenciaDAO = new TransferenciaDao();
-    
+    private TransferenciaNegocio transferenciaNegocio = new TransferenciaNegocio();
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.getRequestDispatcher("/transferencia.jsp").forward(request, response);
 	}
 	
-	//-1 = mismas cuentas
-	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		if (request.getParameter("btnTransferencia") != null) {
-	        try {
-	            // Obtener parámetros del formulario
-	            String origenParam = request.getParameter("id_cuenta_origen");
-	            String tipoDestino = request.getParameter("cuentaDestinoOpciones");
-	            String destinoParam;
+            try {
+                int idCuentaOrigen = Integer.parseInt(request.getParameter("id_cuenta_origen"));
+                int idCuentaDestino = Integer.parseInt(request.getParameter("id_cuenta_destino"));
+                float importe = Float.parseFloat(request.getParameter("importe"));
+                String detalle = request.getParameter("detalle");
 
-	            if ("misCuentas".equals(tipoDestino)) {
-	                destinoParam = request.getParameter("id_cuenta_destino");
-	            } else if ("otraCuenta".equals(tipoDestino)) {
-	                destinoParam = request.getParameter("cbuOtro");
-	            } else {
-	                throw new IllegalArgumentException("Opción de cuenta destino no válida.");
-	            }
-	            String importeParam = request.getParameter("importe");
+                Transferencia transferencia = new Transferencia();
+                transferencia.setId_cuenta_origen(idCuentaOrigen);
+                transferencia.setId_cuenta_destino(idCuentaDestino);
+                transferencia.setImporte_transferencia(importe);
+                transferencia.setDetalle(detalle);
 
-	            if (origenParam == null || destinoParam == null || importeParam == null) {
-	                throw new IllegalArgumentException("Datos incompletos. Verifique el formulario.");
-	            }
+                boolean resultado = transferenciaNegocio.realizarTransferencia(transferencia);
 
-	            int idCuentaOrigen = Integer.parseInt(origenParam);
-	            int idCuentaDestino = Integer.parseInt(destinoParam);
-	            float importe = Float.parseFloat(importeParam);
-	            String detalle = request.getParameter("detalle");
+                if (resultado) {
+                    request.setAttribute("mensaje", "Transferencia realizada con éxito.");
+                    request.setAttribute("tipoMensaje", "success");
+                } else {
+                    request.setAttribute("mensaje", "Error al realizar la transferencia.");
+                    request.setAttribute("tipoMensaje", "error");
+                }
+            } catch (Exception e) {
+                request.setAttribute("mensaje", "Error: " + e.getMessage());
+                request.setAttribute("tipoMensaje", "error");
+            }
 
-	         
-	            if (idCuentaOrigen == idCuentaDestino) {
-	            	request.getSession().setAttribute("MismasCuentas", -1 );
-	            	request.getRequestDispatcher("Transferencias.jsp").forward(request, response);
-	            	return;
-	             
-	            }else {
-	         
-	            	request.getSession().removeAttribute("MismasCuentas");
-	            }
-	            if (importe <= 0) {
-	                throw new IllegalArgumentException("El importe debe ser mayor a cero.");
-	            }
-
-	            // Crear objeto de transferencia
-	            Transferencia transferencia = new Transferencia();
-	            transferencia.setId_cuenta_origen(idCuentaOrigen);
-	            transferencia.setId_cuenta_destino(idCuentaDestino);
-	            transferencia.setImporte_transferencia(importe);
-	            transferencia.setDetalle(detalle);
-
-	            // Procesar transferencia
-	            transferenciaDAO.generarTransferencia(transferencia);
-
-	            // Configurar mensaje de éxito
-	            request.setAttribute("mensaje", "Transferencia realizada con éxito.");
-	            request.setAttribute("tipoMensaje", "success");
-	        } catch (NumberFormatException e) {
-	            request.setAttribute("mensaje", "Error: Datos inválidos. Verifique los números.");
-	            request.setAttribute("tipoMensaje", "error");
-	        } catch (IllegalArgumentException e) {
-	            request.setAttribute("mensaje", "Error: " + e.getMessage());
-	            request.setAttribute("tipoMensaje", "error");
-	        } catch (Exception e) {
-	            e.printStackTrace(); // Debug en consola
-	            request.setAttribute("mensaje", "Error inesperado: " + e.getMessage());
-	            request.setAttribute("tipoMensaje", "error");
-	        }
-
-	        // Reenviar al JSP
-	        request.getRequestDispatcher("/Transferencias.jsp").forward(request, response);
-	    }
+            request.getRequestDispatcher("/Home.jsp").forward(request, response);
+        }
 		
 	}
 	}
