@@ -81,11 +81,13 @@ public class CuentaDao implements ICuentaDao {
     
     @Override
     public boolean crearCuenta(Cuenta cuenta) {
-        PreparedStatement statement;
-        Connection conexion = Conexion.getConexion().getSQLConexion();
+        PreparedStatement statement = null;
+        Connection conexion = null;
         boolean isInsertExitoso = false;
         String cbu = generarCbu();
+        
         try {
+            conexion = Conexion.getConexion().getSQLConexion();
             statement = conexion.prepareStatement(INSERT);
             statement.setInt(1, cuenta.getIdCliente());
             statement.setInt(2, cuenta.getTipo());
@@ -95,19 +97,20 @@ public class CuentaDao implements ICuentaDao {
             statement.setBoolean(6, cuenta.isActiva());
             	
             int rows = statement.executeUpdate();
-            if (rows >0) {
+            if (rows > 0) {
                 conexion.commit();
                 isInsertExitoso = true;
             }
         } catch (SQLException e) {
             e.printStackTrace();
             try {
-                conexion.rollback();
-            } catch (SQLException e1) {
-                e1.printStackTrace();
+                if (conexion != null) {
+                    conexion.rollback();
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
             }
         }
-
         return isInsertExitoso;
     }
 

@@ -88,16 +88,10 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response) 
         boolean exito = cuentaNegocio.agregarCuenta(nuevaCuenta);
     	boolean exito_mov = movimientoNegocio.crearMovimiento(nuevoMovimiento);
 
-        if (exito != false && exito_mov != false) {
-        	
-        	
-        	ActualizarLista(request, response);
-            //request.getRequestDispatcher("ListarBanco.jsp").forward(request, response);	
-            
-            
+    	if (exito && exito_mov) {
+            response.sendRedirect("ListarCuenta.jsp");
         }
-        
-        
+      
         
     }
 }
