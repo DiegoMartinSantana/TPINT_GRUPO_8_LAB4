@@ -12,6 +12,13 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"></style>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
+<link rel="stylesheet"
+	href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.css" />
+
   <style>
 
 body {
@@ -109,7 +116,7 @@ body {
             <p class="text-muted mb-1">Saldo Disponible:</p>
             <h5 class="saldo">$<%= cuenta.getSaldo() %></h5>
             <a href="HomeServlet?cuentaId=<%= cuenta.getIdCuenta() %>" class="btn btn-outline-primary btn-block mt-3">
-                Últimas Transferencias <i class="fas fa-chevron-right"></i>
+               Ver Transferencias <i class="fas fa-chevron-right"></i>
             </a>
         </div>
         
@@ -125,11 +132,11 @@ body {
     </div>
 
     
-    <h4 class="section-title mt-5 mb-4"><i class="fas fa-history"></i> Últimas Transferencias</h4>
+    <h4 class="section-title mt-5 mb-4"><i class="fas fa-history"></i> Historial Transferencias</h4>
     <div class="card transfer-card shadow-sm">
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-hover">
+                <table class="table table-hover" id="transferenciasTable">
                     <thead class="table-primary">
                         <tr>
                             <th>Fecha</th>
@@ -151,5 +158,20 @@ body {
         </div>
     </div>
 </div>
+<script>
+$(document).ready(function() {
+    // Eliminar filas ignoradas antes de inicializar DataTables
+    $('#transferenciasTable tbody .datatable-ignore').remove();
+
+    // Inicializar DataTables
+    $('#transferenciasTable').DataTable({
+        // Configuración opcional si necesitas personalizar algo
+        language: {
+        	url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json'
+        }
+    });
+});
+    </script>
+
 </body>
 </html>

@@ -113,7 +113,7 @@ function validarTransferencia() {
     // Validar CBU si se selecciona otra cuenta
     if (tipoSeleccionado === 'otraCuenta') {
         var cbuOtro = document.getElementById('cbuOtro').value;
-        if (cbuOtro.length !== 22 || !/^\d+$/.test(cbuOtro)) {
+        if (cbuOtro.length !== 22 ) {
             alert('El CBU debe contener 22 dígitos numéricos');
             return false;
         }
@@ -197,6 +197,9 @@ document.addEventListener('DOMContentLoaded', mostrarOpcionesCuenta);
                 <div class="row">
                     <div class="col-md-6" id="misCuentasField">
                         <div class="mb-3">
+                        <%
+                        
+                        %>
                             <label for="id_cuenta_destino" class="form-label">Seleccionar Cuenta:</label>
                             <select name="id_cuenta_destino" class="form-select">
 							    <% for (Cuenta cuenta : cuentas) { 
@@ -212,6 +215,9 @@ document.addEventListener('DOMContentLoaded', mostrarOpcionesCuenta);
 							        </option>
 							    <% } %>
 							</select>
+							<%if(request.getSession().getAttribute("MismasCuentas")!=null){ %>
+							<p style="color:red">Seleccione una cuenta distinta a la de origen.</p>
+                        	<%} %>
                         </div>
                     </div>
 

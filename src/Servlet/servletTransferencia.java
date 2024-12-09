@@ -45,86 +45,10 @@ public class servletTransferencia extends HttpServlet {
 		request.getRequestDispatcher("/transferencia.jsp").forward(request, response);
 	}
 	
-
+	//-1 = mismas cuentas
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		    /*String tipoCuentaDestino = request.getParameter("cuentaDestinoOpciones");
-	        String cuentaDestino = null;
-	        String cbuOtro = null;
-	        String detalle = request.getParameter("detalle");
-	        float monto = Float.parseFloat(request.getParameter("monto"));
-	        LocalDate fechaCreacion = LocalDate.parse(request.getParameter("fechaCreacion"));
-	        
-	        Movimiento nuevoMovimiento = new Movimiento();
-	        Cuenta cuentaDestinoObj = new Cuenta();
-	        
-	        
-	        
-
-	        if ("misCuentas".equals(tipoCuentaDestino)) {
-	           
-	        	cuentaDestino = request.getParameter("cuentaDestino");
-	            cuentaDestinoObj = traDao.obtenerCuentaPorCBU2(cuentaDestino);
-	            
-	        } else if ("otraCuenta".equals(tipoCuentaDestino)) {
-	            
-	            cbuOtro = request.getParameter("cbuOtro");
-
-	            if (cbuOtro != null && !cbuOtro.trim().isEmpty()) {
-	                
-	                
-					cuentaDestinoObj = movimientoNegocio.obtenerCuentaPorCBU(cbuOtro);
-
-	                if (cuentaDestinoObj == null) {
-	                    
-	                    request.setAttribute("error", "No se encontró la cuenta con el CBU proporcionado.");
-	                    request.getRequestDispatcher("Transferencias.jsp").forward(request, response);
-	                    return;
-	                }
-	            } else {
-	                
-	                request.setAttribute("error", "Debe ingresar un CBU válido.");
-	                request.getRequestDispatcher("Transferencias.jsp").forward(request, response);
-	                return;
-	            }
-	        }
-	        
-            
-	        
-	        
-	        nuevoMovimiento.setId_cuenta(cuentaDestinoObj.getIdCuenta());
-	        nuevoMovimiento.setTipo(4);
-	        nuevoMovimiento.setDetalle(detalle);
-	        nuevoMovimiento.setImporte(monto);
-	        nuevoMovimiento.setFecha(fechaCreacion);
-	        nuevoMovimiento.setId_destino(cuentaDestinoObj.getIdCuenta());
-	        
-	        
- 
-	        
-	        boolean exito_mov = movimientoNegocio.crearMovimiento(nuevoMovimiento);
-	        
-	        if (exito_mov) {
-	        	
-	        	request.getRequestDispatcher("Home.jsp").forward(request, response);	
-	            
-	            
-	        }
-	        else {
-	        	 System.out.println("NO INGRESO.");
-	        }*/
-	        
-	        
-	        
-		/*HttpSession session = request.getSession(false);
-        if (session == null || session.getAttribute("usuario") == null) {
-            response.sendRedirect(request.getContextPath() + "/login.jsp");
-            return;
-        }
-        
-        Usuario usuarioActual = (Usuario) session.getAttribute("usuario");*/
-        
 		if (request.getParameter("btnTransferencia") != null) {
 	        try {
 	            // Obtener parámetros del formulario
@@ -150,9 +74,15 @@ public class servletTransferencia extends HttpServlet {
 	            float importe = Float.parseFloat(importeParam);
 	            String detalle = request.getParameter("detalle");
 
-	            // Validaciones adicionales
+	         
 	            if (idCuentaOrigen == idCuentaDestino) {
-	                throw new IllegalArgumentException("No puede transferir a la misma cuenta.");
+	            	request.getSession().setAttribute("MismasCuentas", -1 );
+	            	request.getRequestDispatcher("Transferencias.jsp").forward(request, response);
+	            	return;
+	             
+	            }else {
+	         
+	            	request.getSession().removeAttribute("MismasCuentas");
 	            }
 	            if (importe <= 0) {
 	                throw new IllegalArgumentException("El importe debe ser mayor a cero.");

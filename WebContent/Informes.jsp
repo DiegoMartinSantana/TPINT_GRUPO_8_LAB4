@@ -26,8 +26,11 @@
        	<div class="col-8">
        	<form action="InformesServlet" method="post">
         <div class="section ">
+        <!-- agregar valor x defecto
+        	y llenar de ifs para display
+         -->
             <h2>Fecha desde</h2>
-            <input type="date" name="fechaDesde" required>
+            <input type="date" name="fechaDesde" value="" required>
             <h2>Fecha hasta</h2>
             <input type="date" name="fechaHasta" required>
             <input type="submit" class="btn btn-primary mt-3" value="Generar Informes" name="btnGenerar">

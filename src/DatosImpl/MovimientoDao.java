@@ -13,7 +13,7 @@ import Dominio.Movimiento;
 
 public class MovimientoDao implements IMovimientoDao {
 	
-	private static int LIMIT = 4; 
+	
 	
 	private static MovimientoDao instancia = null;
 	private static final String obtenerTransferenciaByCuenta ="SELECT " +
@@ -29,8 +29,8 @@ public class MovimientoDao implements IMovimientoDao {
             "WHERE " +
             "id_cuenta = ? " +
             "ORDER BY " +
-            "fecha DESC " +
-            "LIMIT " + LIMIT;
+            "fecha , id_movimiento " ;
+          
 
 	private static final String insertarMovimiento = "INSERT INTO movimiento(id_cuenta,id_tipo_movimiento, fecha, detalle, importe,id_destino) VALUES (?,?,?,?,?,?)";
 	
