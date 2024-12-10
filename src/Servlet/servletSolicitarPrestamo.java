@@ -59,12 +59,11 @@ public class servletSolicitarPrestamo extends HttpServlet {
         prestamoSolicitado.setEstado(3);
         
         boolean insertExitoso = prestamoNegocio.crearPrestamoSolicitado(prestamoSolicitado);
+        
+      
+   
+        response.sendRedirect("PrestamosUsuario?insert="+true);
 
-        if (insertExitoso) {
-            response.getWriter().append("Préstamo solicitado insertado exitosamente.");
-        } else {
-            response.getWriter().append("Error al insertar el préstamo solicitado.");
-        }
        
 	}
 

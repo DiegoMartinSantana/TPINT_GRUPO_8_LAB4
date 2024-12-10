@@ -11,7 +11,10 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
+<link rel="stylesheet"
+	href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.css" />
 
 <title>Autorizaciones</title>
 <style>
@@ -24,11 +27,11 @@
 </head>
 <body>
     <div class="row">
-      
+        <!-- Navegación -->
         <div class="col-2"> 
             <%@ include file="NavegacionComponente.jsp" %>
         </div>
-      
+        <!-- Contenido Principal -->
         <div class="col-9 section">
             <h2 class="text-center mb-4">Préstamos</h2>
             <div class="mb-3">
@@ -80,7 +83,7 @@
             %>
                <%if(prestamosFiltrados.size()!=0){ %>
             <div class="table">
-                <table class="table">
+                <table class="table" id="prestamosTable">
                     <thead>
                         <tr>
                             <th>Datos</th>
@@ -106,10 +109,12 @@
                             </td>
                             <td><%= prestamo.cbu %></td>
                             <td><%= prestamo.plazoCuotas %></td>
-                            <td><%= prestamo.montoCuota %></td>
-                            <td><%= prestamo.importeSolicitado %></td>
-                            <td><%= prestamo.interes %></td>
-                            <td><%= prestamo.importePagar %></td>
+                            
+                            <td><%=String.format("%.2f", prestamo.montoCuota) %></td>
+                            <td><%=String.format("%.2f", prestamo.importeSolicitado) %></td>
+
+                           	<td><%=String.format("%.2f%%", prestamo.interes)%></td> 
+                            <td><%=String.format("%.2f", prestamo.importePagar) %></td>
                             <td><%= prestamo.fechaPrestamo %></td>
                             <td>
                                 <% 
@@ -153,7 +158,20 @@
             <% }} %>
         </div>
     </div>
-  
+    <script>
+$(document).ready(function() {
+    // Eliminar filas ignoradas antes de inicializar DataTables
+    $('#prestamosTable tbody .datatable-ignore').remove();
+
+    // Inicializar DataTables
+    $('#prestamosTable').DataTable({
+        // Configuración opcional si necesitas personalizar algo
+        language: {
+        	url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json'
+        }
+    });
+});
+    </script>
 </body>
 
 </html>

@@ -86,6 +86,10 @@ public class PrestamosUsuarioServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		
+		if(request.getParameter("insert")!=null){
+			
+			request.getSession().setAttribute("PrestamoAceptado",true);
+		}
 		actualizarListado(request, response);
 
 		

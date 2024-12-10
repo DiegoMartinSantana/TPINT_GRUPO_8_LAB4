@@ -34,7 +34,15 @@
      	<% if(prestamos != null){ %>
 	
         <div class="row">
-            <div class="col-12">
+            <div class="col-12"><div>
+            <%if(session.getAttribute("PrestamoAceptado")!=null){ %>
+<div class="alert alert-primary alert-dismissible fade show" role="alert">
+  <strong>Prestamo Solicitado</strong>		 El banco analizara su solicitud.
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+<div>
+</div>
+<%} %>
                
                 <table class="table table-bordered table-hover" style="justify-content: center" id="prestamosTable">
                     <thead class="table">
@@ -61,17 +69,13 @@
                                 <td><%=prestamo.plazoCuotas %></td>
                                 <td><%=prestamo.interes %></td>
                                 <td style="padding:20px ;padding-rigth:20px"><%=String.format("%.0f", prestamo.importePagar) %> </td>
-                                <%if(prestamo.estado==4) {%>
+                                
+                                <%if(prestamo.estado==1) {%>
+                                	<td>En curso</td>
+                               <%} %>
+                           
+                                 <%if(prestamo.estado==2) {%>
                                 	<td>Finalizado</td>
-                               <%} %>
-                                <%if(prestamo.estado==3) {%>
-                                	<td>Pendiente</td>
-                               <%} %>
-                                <%if(prestamo.estado==2){ %>
-                                		<td>Rechazado</td>
-                               <%} %> 
-                                 <%if(prestamo.estado==1) {%>
-                                	<td>Aceptado</td>
                                 	
                                 	 
                                <%} %> 
