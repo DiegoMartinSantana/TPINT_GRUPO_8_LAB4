@@ -24,6 +24,7 @@ public class Cuenta {
         this.cbu = cbu;
         this.saldo = saldo;
         this.activa = activa;
+       
     }
 
     public int getIdCuenta() {

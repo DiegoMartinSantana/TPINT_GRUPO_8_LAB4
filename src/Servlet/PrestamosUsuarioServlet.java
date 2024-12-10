@@ -1,5 +1,6 @@
 package Servlet;
 
+import java.awt.List;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
@@ -30,7 +31,7 @@ public class PrestamosUsuarioServlet extends HttpServlet {
         super();
  
     }
-    
+   	private ArrayList<PrestamoDto> prestamosPorPagar = new ArrayList<PrestamoDto>();
     private PrestamosNegocio prestamosNegocio = new PrestamosNegocio();
     private CuentaNegocio cuentaNegocio = new CuentaNegocio();
 
@@ -41,22 +42,36 @@ public class PrestamosUsuarioServlet extends HttpServlet {
 	
     private void actualizarListado (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	Usuario usuarioLogin = (Usuario) request.getSession().getAttribute("Usuario");
+    	
+    	
 	  
+
 	    
 	    Cliente cliente = clienteNegocio.getClienteByNombreUsuario(usuarioLogin.getNombre_usuario());
 
 	     
 	    ArrayList<Cuenta> cuentas = cuentaNegocio.listarCuentasxCliente(cliente.getId());
 	    
+	    if(request.getParameter("pagar")!=null) {
+	    	
+	    		obtenerPrestamosPendientesPago(cuentas);
+	    		request.getSession().setAttribute("PrestamosPendientesPago",prestamosPorPagar);
+	    		RequestDispatcher rd = request.getRequestDispatcher("AbonarPrestamos.jsp");
+	            rd.forward(request, response);
+	            return;
+	    		
+	    }else {
+	    
 	    obtenerPrestamos(cuentas);
-
+		request.getSession().setAttribute("AllPrestamos",prestamosFiltrados);
+	    }
 	    /*
     	 prestamosAceptados = new ArrayList<PrestamoDto>();
     	 prestamosAceptados = prestamosNegocio.GetAll();
     	 */
     	
 	    //
-    	request.getSession().setAttribute("AllPrestamos",prestamosFiltrados);
+    
     	
 		RequestDispatcher rd = request.getRequestDispatcher("ListarPrestamosUser.jsp");
         rd.forward(request, response);
@@ -70,12 +85,28 @@ public class PrestamosUsuarioServlet extends HttpServlet {
 
 		
 	}
+ private void obtenerPrestamosPendientesPago (ArrayList<Cuenta> cuentas) {
+	  
+	 int x =0;
+	 ArrayList<PrestamoDto> prestamos = new ArrayList<PrestamoDto>();
 
+	 prestamos = prestamosNegocio.GetAll();
+		 for (Cuenta cuenta : cuentas) {
+			x++; 
+			 prestamosFiltrados = (ArrayList<PrestamoDto>) prestamos.stream()
+	           .filter(prestamo -> prestamo.getIdCuenta() == cuenta.getIdCuenta())
+	        .collect(Collectors.toList());
+			
+			prestamosPorPagar.addAll(prestamosFiltrados);
+			 	
+	        }
+ }
+ 
 	 private void obtenerPrestamos (ArrayList<Cuenta> cuentas ) {
 	    	
 		 int x =0;
 		 ArrayList<PrestamoDto> prestamos = new ArrayList<PrestamoDto>();
-		 ArrayList<PrestamoDto> allPrestamos = new ArrayList<PrestamoDto>();
+		
 		 prestamos = prestamosNegocio.GetAll();
 			 for (Cuenta cuenta : cuentas) {
 				x++; 
@@ -85,8 +116,8 @@ public class PrestamosUsuarioServlet extends HttpServlet {
 		           .filter(prestamo -> prestamo.getIdCuenta() == cuenta.getIdCuenta())
 		        .collect(Collectors.toList());
 				
-				 allPrestamos.addAll(prestamosFiltrados);
-
+			
+				 	
 		        }
      
 	 }

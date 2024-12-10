@@ -1,6 +1,3 @@
-/Negocio/
-/NegocioImpl/
-/DatosImpl/
-/Servlet/
 /Dominio/
-/Datos/
+/Servlet/
+/DatosImpl/

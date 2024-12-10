@@ -135,10 +135,13 @@ public class MovimientoDao implements IMovimientoDao {
 	@Override
 	public boolean crearMovimiento(Movimiento movimiento) {
 	    boolean isInsertExitoso = false;
-
-	    try (Connection conexion = Conexion.getConexion().getSQLConexion();
-	         PreparedStatement statement = conexion.prepareStatement(insertarMovimiento)) {
-
+	    Connection conexion;
+	    PreparedStatement  statement;
+	 
+	    try  {   
+	    	conexion = Conexion.getConexion().getSQLConexion();
+	    	statement = conexion.prepareStatement(insertarMovimiento);
+	    	
 	        statement.setInt(1, movimiento.getId_cuenta());
 	        statement.setInt(2, movimiento.getTipo());
 	        statement.setDate(3, java.sql.Date.valueOf(movimiento.getFecha()));

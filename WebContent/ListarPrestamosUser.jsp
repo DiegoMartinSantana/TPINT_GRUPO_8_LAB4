@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
     <%@ page import="Dominio.Dto.PrestamoDto" %> 
@@ -28,13 +29,14 @@
     %>
     <div class="container mt-5">
     
-        <h3 class="mb-4">Prestamos </h3>
+        <h3 class="mb-4">Historial </h3>
 
      	<% if(prestamos != null){ %>
+	
         <div class="row">
             <div class="col-12">
                
-                <table class="table table-bordered table-hover" id="prestamosTable">
+                <table class="table table-bordered table-hover" style="justify-content: center" id="prestamosTable">
                     <thead class="table">
                         <tr>
                           
@@ -46,6 +48,7 @@
                             <th>Importe Pagar</th>
                             <th>Estado</th>
                             <th>Fecha Prestamo</th>
+                          
                         </tr>
                     </thead>
                     <tbody>
@@ -54,10 +57,10 @@
                               
                                 <td><%=prestamo.cbu%></td>
                                 <td><%=prestamo.montoCuota %></td>
-                                <td><%=prestamo.importeSolicitado %></td>
+                                <td><%=String.format("%.0f", prestamo.importeSolicitado) %></td>
                                 <td><%=prestamo.plazoCuotas %></td>
                                 <td><%=prestamo.interes %></td>
-                                <td><%=prestamo.importePagar %></td>
+                                <td style="padding:20px ;padding-rigth:20px"><%=String.format("%.0f", prestamo.importePagar) %> </td>
                                 <%if(prestamo.estado==3) {%>
                                 	<td>Pendiente</td>
                                <%} %>
@@ -66,16 +69,19 @@
                                <%} %> 
                                  <%if(prestamo.estado==1) {%>
                                 	<td>Aceptado</td>
+                                	
+                                	 
                                <%} %> 
                                 
                                 <td><%=prestamo.fechaPrestamo %></td>
                            <%} %>
                             </tr>
-                   
+                   			
                     </tbody>
                 </table>
             </div>
         </div>
+	
 
         <%}else{ %>
         <p>sin prestamos.</p>	

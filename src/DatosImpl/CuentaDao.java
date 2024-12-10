@@ -81,35 +81,31 @@ public class CuentaDao implements ICuentaDao {
     
     @Override
     public boolean crearCuenta(Cuenta cuenta) {
-        PreparedStatement statement = null;
-        Connection conexion = null;
+        PreparedStatement statement ;
+        Connection conexion ;
         boolean isInsertExitoso = false;
         String cbu = generarCbu();
-        
+        conexion = Conexion.getConexion().getSQLConexion();
         try {
-            conexion = Conexion.getConexion().getSQLConexion();
+         
             statement = conexion.prepareStatement(INSERT);
             statement.setInt(1, cuenta.getIdCliente());
             statement.setInt(2, cuenta.getTipo());
             statement.setDate(3, java.sql.Date.valueOf(cuenta.getCreacion()));
             statement.setString(4, cbu);
             statement.setFloat(5, cuenta.getSaldo());
-            statement.setBoolean(6, cuenta.isActiva());
+            statement.setBoolean(6, true);
             	
             int rows = statement.executeUpdate();
             if (rows > 0) {
                 conexion.commit();
                 isInsertExitoso = true;
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            try {
-                if (conexion != null) {
-                    conexion.rollback();
-                }
-            } catch (SQLException ex) {
+        } catch (SQLException ex) {
+           
+           
                 ex.printStackTrace();
-            }
+       
         }
         return isInsertExitoso;
     }

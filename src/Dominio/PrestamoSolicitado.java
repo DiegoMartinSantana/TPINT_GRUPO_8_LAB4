@@ -42,6 +42,10 @@ public class PrestamoSolicitado {
 	}
 	public void setImporteSolicitado(float importeSolicitado) {
 		ImporteSolicitado = importeSolicitado;
+		
+	}
+	public String getImporteSolicitadoToString() {
+		return ""+ImporteSolicitado;
 	}
 	public int getPlazoCuotas() {
 		return PlazoCuotas;
@@ -49,9 +53,15 @@ public class PrestamoSolicitado {
 	public void setPlazoCuotas(int plazoCuotas) {
 		PlazoCuotas = plazoCuotas;
 	}
+	@Override
+	public String toString() {
+		return "PrestamoSolicitado [ImporteSolicitado=" + ImporteSolicitado + ", ImportePagar=" + ImportePagar + "]";
+	}
+
 	public float getInteres() {
 		return Interes;
 	}
+	
 	public void setInteres(float interes) {
 		Interes = interes;
 	}
@@ -60,6 +70,9 @@ public class PrestamoSolicitado {
 	}
 	public void setImportePagar(float importePagar) {
 		ImportePagar = importePagar;
+	}
+	public String getImportePagarToString() {
+		return ""+ImportePagar;
 	}
 	public int getEstado() {
 		return Estado;

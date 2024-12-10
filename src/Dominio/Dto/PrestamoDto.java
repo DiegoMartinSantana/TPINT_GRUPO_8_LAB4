@@ -24,6 +24,11 @@ public class PrestamoDto  {
     public void setIdCuenta(int idCuenta) {
                 this.idCuenta = idCuenta;
             }
-    
+    public String getImportePagarToString() {
+		return ""+importePagar;
+	}
+    public String getImporteSolicitadoToString() {
+		return ""+importeSolicitado;
+	}
 }
 

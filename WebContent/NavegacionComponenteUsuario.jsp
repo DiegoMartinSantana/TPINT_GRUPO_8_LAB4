@@ -46,40 +46,34 @@
         font-weight: 600;
     }
 </style>
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="HomeServlet">Inicio</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link " aria-current="page" href="Transferencias.jsp">Transferir</a>
+        </li>
+       
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Prestamos
+          </a>
+          <ul class="dropdown-menu">
 
-<div class="row">
-    <nav class="navbar navbar-expand-lg">
-        <div class="container-fluid">
-            
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-           
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="HomeServlet">Inicio</a>
-                    </li>
-                  
-                    <li class="nav-item">
-                        <a class="nav-link" href="Transferencias.jsp">Transferir</a>
-                    </li>
-             
+            <li><a class="dropdown-item" href="SolicitudPrestamo.jsp">Solicitar</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="PrestamosUsuario">Historial</a></li>
+             <li><hr class="dropdown-divider"></li>
+          	 <li><a class="dropdown-item" href="PrestamosUsuario?pagar=<%=true%>">Pagar Prestamos</a></li>
+          </ul>
+        </li>
         
-                    <li class="nav-item">
-                    
-                        <a class="nav-link" href="SolicitudPrestamo.jsp">Solicitar Prestamo</a>
-                    </li>
-                    <li class="nav-item">
-                    
-                        <a class="nav-link" href="PrestamosUsuario">Prestamos</a>
-                    </li>
-                    
-                </ul>
-            </div>
-
-            <% String usuario = (String) session.getAttribute("UsuarioNombre");
+      </ul>
+         <% String usuario = (String) session.getAttribute("UsuarioNombre");
                usuario = usuario.toUpperCase(); %>
                
              
@@ -93,7 +87,7 @@
                     <i class="bi bi-person-circle"></i>
                 </a>
             </div>
-        </div>
-    </nav>
-</div>
-
+     
+    </div>
+  </div>
+</nav>

@@ -55,7 +55,7 @@ public class AltaCuentaServlet extends HttpServlet {
         request.getRequestDispatcher("AltaCuenta.jsp").forward(request, response);
     }
 
-protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+protected void doPost(HttpServletRequest request , HttpServletResponse response) throws ServletException, IOException {
   
         
     	
@@ -87,9 +87,10 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response) 
         
         boolean exito = cuentaNegocio.agregarCuenta(nuevaCuenta);
     	boolean exito_mov = movimientoNegocio.crearMovimiento(nuevoMovimiento);
-
+    
     	if (exito && exito_mov) {
-            response.sendRedirect("ListarCuenta.jsp");
+            request.getRequestDispatcher("CuentaServlet").forward(request, response);
+
         }
       
         
