@@ -7,6 +7,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import Datos.IPrestamoDao;
 import Dominio.DatosPrestamosSolicitadosSP;
@@ -64,7 +65,7 @@ public class PrestamoDao implements IPrestamoDao {
 	        "id_cuenta, monto_cuota, interes, importe_solicitado, fecha, importe_pagar, plazo_cuotas" +
 	        ") VALUES (?, ?, ?, ?, ?, ?, ?)";
 	
-	private static final String aceptarPrestamoSP = "{CALL aceptar_prestamo(?, ?, ?, ?, ?)}";
+	private static final String aceptarPrestamoSP = "CALL aceptar_prestamo(?, ?, ?, ?, ?)";
 	
 	
 
@@ -258,33 +259,38 @@ public int  SetEstado(int idPrestamo, int set) {
 	}
 	
 	@Override
-	
-	
 	public void aceptarPrestamo(DatosPrestamosSolicitadosSP PrestamoSP) {
-				 Connection conexion = Conexion.getConexion().getSQLConexion();
-	             
-	             try {
+        Connection conexion = Conexion.getConexion().getSQLConexion();
 
-	            CallableStatement stmt = conexion.prepareCall(aceptarPrestamoSP); 
-	            stmt.setInt(1, PrestamoSP.getIdPrestamoSolicitado());
-	            stmt.setFloat(2, PrestamoSP.getMontoSolicitado());
-	            stmt.setInt(3, PrestamoSP.getIDCuenta());
-	            stmt.setDate(4, java.sql.Date.valueOf(PrestamoSP.getFecha())); 
-	            stmt.setString(5, PrestamoSP.getDetallePrestamoSolicitado());
+        try {
+               conexion.setAutoCommit(false);
+               CallableStatement stmt = conexion.prepareCall(aceptarPrestamoSP);
+               stmt.setInt(1, PrestamoSP.getIdPrestamoSolicitado());
+               stmt.setFloat(2, PrestamoSP.getMontoSolicitado());
+               stmt.setInt(3, PrestamoSP.getIDCuenta());
+               stmt.setDate(4, java.sql.Date.valueOf(PrestamoSP.getFecha()));
+               stmt.setString(5, PrestamoSP.getDetallePrestamoSolicitado());
 
-	            stmt.execute();
-	             }
-	            catch (SQLException e) {
-	                e.printStackTrace();
-	                try {
-	                    conexion.rollback();
-	                } catch (SQLException e1) {
-	                    e1.printStackTrace();
-	                }
-	            }
-	        
-	
-	}
+               stmt.execute();
+               conexion.commit();
+           } catch (SQLIntegrityConstraintViolationException e) {
+               System.out.println("Error de integridad referencial: " + e.getMessage());
+               e.printStackTrace();
+           } catch (SQLException e) {
+               System.out.println("Error de SQL: " + e.getMessage());
+               e.printStackTrace();
+               try {
+                   conexion.rollback();
+               } catch (SQLException e1) {
+                   e1.printStackTrace();
+               }
+           } catch (Exception e) {
+               System.out.println("Error general: " + e.getMessage());
+               e.printStackTrace();
+           }
+
+
+}
 	
 	
 	

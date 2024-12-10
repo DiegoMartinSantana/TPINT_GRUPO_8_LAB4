@@ -60,10 +60,12 @@ public class servletSolicitarPrestamo extends HttpServlet {
         
         boolean insertExitoso = prestamoNegocio.crearPrestamoSolicitado(prestamoSolicitado);
 
+        if (insertExitoso) {
+            response.getWriter().append("Préstamo solicitado insertado exitosamente.");
+        } else {
+            response.getWriter().append("Error al insertar el préstamo solicitado.");
+        }
        
-		RequestDispatcher rd = request.getRequestDispatcher("PrestamosUsuario");
-        rd.forward(request, response);
-        return;
 	}
 
 }

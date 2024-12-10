@@ -88,22 +88,24 @@ public class PrestamosServlet extends HttpServlet {
 	            }
 			
 		}else {
-	
-			prestamosNegocio.SetEstado(idPrestamo,2);
-		
-			if(request.getParameter("idPrestamo") != null ) {
-				
-				int prestamo = Integer.parseInt(request.getParameter("idPrestamo"));
-				
-				prestamosNegocio.rechazarPrestamo(prestamo);
-				actualizarListado(request, response);
 
-			}
-		}	
-		
-		}
-		
+            prestamosNegocio.SetEstado(idPrestamo,2);
+            actualizarListado(request, response);
+            if(request.getParameter("idPrestamo") != null ) {
 
-	}
+                int prestamo = Integer.parseInt(request.getParameter("idPrestamo"));
+
+                prestamosNegocio.rechazarPrestamo(prestamo);
+
+
+            }
+        }
+
+        }
+
+
+
+
+    }
 
 }
