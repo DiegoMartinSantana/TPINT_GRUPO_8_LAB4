@@ -17,6 +17,11 @@ public class PrestamosNegocio  implements IPrestamoNegocio{
 		ArrayList<PrestamoDto> prestamos = prestamoDao.listarPrestamos();
 		return prestamos;
 	}
+public ArrayList<PrestamoDto> GetAllAceptados() {
+		
+		ArrayList<PrestamoDto> prestamos = prestamoDao.listarPrestamosAceptados();
+		return prestamos;
+	}
 	public void SetEstado(int idPrestamo, int set) { //set =1 aprobado, 2= rechaza 
 		
 		prestamoDao.SetEstado(idPrestamo, set);

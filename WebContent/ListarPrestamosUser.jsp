@@ -61,6 +61,9 @@
                                 <td><%=prestamo.plazoCuotas %></td>
                                 <td><%=prestamo.interes %></td>
                                 <td style="padding:20px ;padding-rigth:20px"><%=String.format("%.0f", prestamo.importePagar) %> </td>
+                                <%if(prestamo.estado==4) {%>
+                                	<td>Finalizado</td>
+                               <%} %>
                                 <%if(prestamo.estado==3) {%>
                                 	<td>Pendiente</td>
                                <%} %>

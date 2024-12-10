@@ -1,22 +1,24 @@
 package Dominio;
 
+import java.sql.Date;
 import java.time.LocalDate;
 
 public class Cuota {
 
-	private int IdCuota;
+	
 	private int IdPrestamo;
 	private int NumeroCuota;
 	private float Importe;
-	private LocalDate FechaPago;
+
 	private LocalDate Vencimento;
+	public int getEstado() {
+		return Estado;
+	}
+	public void setEstado(int estado) {
+		Estado = estado;
+	}
+	private int Estado;
 	
-	public int getIdCuota() {
-		return IdCuota;
-	}
-	public void setIdCuota(int idCuota) {
-		IdCuota = idCuota;
-	}
 	public int getIdPrestamo() {
 		return IdPrestamo;
 	}
@@ -25,6 +27,14 @@ public class Cuota {
 	}
 	public int getNumeroCuota() {
 		return NumeroCuota;
+	}
+	public Cuota(int idPrestamo, int numeroCuota, float importe, LocalDate vencimento, int estado) {
+		super();
+		IdPrestamo = idPrestamo;
+		NumeroCuota = numeroCuota;
+		Importe = importe;
+		Vencimento = vencimento;
+		Estado = estado;
 	}
 	public void setNumeroCuota(int numeroCuota) {
 		NumeroCuota = numeroCuota;
@@ -35,28 +45,15 @@ public class Cuota {
 	public void setImporte(float importe) {
 		Importe = importe;
 	}
-	public LocalDate getFechaPago() {
-		return FechaPago;
-	}
-	public void setFechaPago(LocalDate fechaPago) {
-		FechaPago = fechaPago;
-	}
+
+	
 	public LocalDate getVencimento() {
 		return Vencimento;
 	}
-	public void setVencimento(LocalDate vencimento) {
-		Vencimento = vencimento;
+	public void setVencimento(LocalDate date) {
+		Vencimento = date;
 	}
 	public Cuota() {}
-	public Cuota(int idCuota, int idPrestamo, int numeroCuota, float importe, LocalDate fechaPago,
-			LocalDate vencimento) {
-		super();
-		IdCuota = idCuota;
-		IdPrestamo = idPrestamo;
-		NumeroCuota = numeroCuota;
-		Importe = importe;
-		FechaPago = fechaPago;
-		Vencimento = vencimento;
-	}
+	
 	
 }

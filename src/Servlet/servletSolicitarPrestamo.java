@@ -3,6 +3,7 @@ package Servlet;
 import java.io.IOException;
 import java.time.LocalDate;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -23,25 +24,18 @@ public class servletSolicitarPrestamo extends HttpServlet {
 	
 	 private PrestamosNegocio prestamoNegocio = new PrestamosNegocio();
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
+   
     public servletSolicitarPrestamo() {
         super();
-        // TODO Auto-generated constructor stub
+      
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		float importeSolicitado = Float.parseFloat(request.getParameter("monto"));
@@ -66,12 +60,10 @@ public class servletSolicitarPrestamo extends HttpServlet {
         
         boolean insertExitoso = prestamoNegocio.crearPrestamoSolicitado(prestamoSolicitado);
 
-      
-        if (insertExitoso) {
-            response.getWriter().append("Préstamo solicitado insertado exitosamente.");
-        } else {
-            response.getWriter().append("Error al insertar el préstamo solicitado.");
-        }
+       
+		RequestDispatcher rd = request.getRequestDispatcher("PrestamosUsuario");
+        rd.forward(request, response);
+        return;
 	}
 
 }

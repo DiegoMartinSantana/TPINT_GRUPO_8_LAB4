@@ -71,21 +71,20 @@ public class PrestamosServlet extends HttpServlet {
      
 		if(idPrestamo != 0) {
 		if(request.getParameter("btnAceptar") != null  &&  value != 0 && value == 1) {
-			//Alta			
+		
 		
 			PrestamoDto prestamoDto = prestamosNegocio.obtenerPrestamoPorId(idPrestamo);
 	                
 	            if (prestamoDto != null) {
-	               // Cuenta cuenta = cuentaNegocio.obtenerCuentaPorId(prestamoDto.idCuenta); 
 
-	              //  if (cuenta != null) {               
+
 	                	PrestamoSP.setIDCuenta(prestamoDto.idCuenta);
 	                	PrestamoSP.setMontoSolicitado(prestamoDto.importeSolicitado); 
 	                	PrestamoSP.setFecha(java.time.LocalDate.now());
 	                	PrestamoSP.setIdPrestamoSolicitado(idPrestamo);       	
 	                	prestamosNegocio.aceptarPrestamo(PrestamoSP);
 	                	actualizarListado(request, response);
-	               // }
+	             
 	            }
 			
 		}else {
@@ -104,9 +103,7 @@ public class PrestamosServlet extends HttpServlet {
 		
 		}
 		
-		
 
-	
 	}
 
 }

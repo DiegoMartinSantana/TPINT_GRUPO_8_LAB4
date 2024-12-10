@@ -603,7 +603,7 @@ BEGIN
     -- SI SE ESTA PAGANDO LA ULTIMA CUOTA DEL PRESTAMO, LE PONE ESTADO FINALIZADO
     IF v_total_cuotas = v_cuotas_pagadas THEN
         UPDATE prestamo
-        SET estado = 2 
+        SET estado = 4
         WHERE id_prestamo = p_id_prestamo;
     END IF;
 

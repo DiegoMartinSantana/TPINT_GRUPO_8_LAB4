@@ -43,6 +43,19 @@ public class PrestamoDao implements IPrestamoDao {
 			+ "			INNER JOIN CUENTA c ON c.id_cuenta = p.id_cuenta"
 			+ "			INNER JOIN CLIENTE cl ON cl.id_cliente = c.id_cliente";
 	
+	private static final String selectAllAceptados = "SELECT " +
+		    "pr.*, " +
+		    "cl.nombre, " +
+		    "cl.apellido, " +
+		    "cl.nombre_usuario, " +
+		    "cl.cuil, " +
+		    "c.cbu AS cbu_cuenta, " +
+		    "c.id_cuenta " +
+		    "FROM prestamo pr " +
+		    "INNER JOIN prestamo_solicitado p ON pr.id_prestamo_solicitado = p.id_prestamo_solicitado " +
+		    "INNER JOIN cuenta c ON c.id_cuenta = p.id_cuenta " +
+		    "INNER JOIN cliente cl ON cl.id_cliente = c.id_cliente";
+		
 	private static final String update = "UPDATE PRESTAMO SET ESTADO = ? WHERE id_prestamo = ?";
 	
 	
@@ -91,6 +104,40 @@ public class PrestamoDao implements IPrestamoDao {
 
 	    return prestamoDto;
 	}
+	
+	public ArrayList<PrestamoDto> listarPrestamosAceptados(){
+	    PreparedStatement statement;
+	    Connection conexion = Conexion.getConexion().getSQLConexion();
+	    ArrayList<PrestamoDto> prestamos=new ArrayList<PrestamoDto>();
+	    try {
+	        statement = conexion.prepareStatement(selectAllAceptados);
+	        ResultSet resultSet = statement.executeQuery();
+	        while (resultSet.next()) {
+	        	
+	        	PrestamoDto prestamoDto = new PrestamoDto();
+	        	prestamoDto.idPrestamo=resultSet.getInt("id_prestamo");
+	        	prestamoDto.cbu=(resultSet.getString("cbu_cuenta"));
+	        	prestamoDto.cuil=(resultSet.getString("cuil"));
+	        	prestamoDto.importePagar = resultSet.getFloat("importe_pagar");
+	            prestamoDto.importeSolicitado = resultSet.getFloat("importe_solicitado");
+	            prestamoDto.montoCuota = resultSet.getFloat("monto_cuota");
+	            prestamoDto.interes = resultSet.getFloat("interes");
+	            prestamoDto.plazoCuotas = resultSet.getInt("plazo_cuotas");
+	            prestamoDto.fechaPrestamo = resultSet.getDate("fecha").toLocalDate();
+	            prestamoDto.estado = resultSet.getInt("estado");
+	            String nombre = resultSet.getString("nombre");
+	            String apellido  = resultSet.getString("apellido");
+	            prestamoDto.nombre = nombre + " " + apellido;
+	            prestamoDto.idCuenta=resultSet.getInt("id_cuenta");
+       
+	        	prestamos.add(prestamoDto);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return prestamos;
+	}
+	
 public ArrayList<PrestamoDto> listarPrestamos(){
     PreparedStatement statement;
     Connection conexion = Conexion.getConexion().getSQLConexion();

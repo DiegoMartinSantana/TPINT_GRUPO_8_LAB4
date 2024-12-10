@@ -1,4 +1,4 @@
-  <%@ page import="Dominio.Dto.PrestamoDto" %> 
+  <%@ page import="Dominio.Cuota" %> 
 <%@ page import="java.util.ArrayList" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -31,7 +31,7 @@
             font-size: 0.9rem;
             padding: 0.5em 0.7em;
             border-radius: 12px;
-        }
+        }    
         .list-group-item i {
             color: #6c63ff;
             font-size: 1.5rem;
@@ -42,6 +42,13 @@
     ArrayList<PrestamoDto> prestamos = session.getAttribute("PrestamosPendientesPago") != null 
     ? (ArrayList<PrestamoDto>) session.getAttribute("PrestamosPendientesPago") 
     : null;    	
+    
+   
+    ArrayList<Cuota> Cuotas = session.getAttribute("Cuotas") != null 
+    ? (ArrayList<Cuota>) session.getAttribute("Cuotas")
+    : null;
+
+ 
     %>
 <%@include file="NavegacionComponenteUsuario.jsp" %>
 
@@ -52,12 +59,12 @@
 
 <div class="list-group "> 
 
-	<!-- VALIDAR QUE NO DIBUJE AL RECARGAR -->
+	
      	<% if(prestamos != null){ %>
      	  <%for(PrestamoDto prestamo : prestamos ){ %>
   
   
-  		<a href="CuotasServlet?id:<%=prestamo.idPrestamo %>" class="list-group-item list-group-item-action" style="padding:30px 40px">
+  		<a href="CuotasServlet?id=<%=prestamo.idPrestamo %>" class="list-group-item list-group-item-action" style="padding:30px 40px">
   		
   		Solicitado :<%=prestamo.importeSolicitado %>
   		<br>
@@ -76,44 +83,75 @@
 	<div class="col-9">
 	  <h3 class="mb-4 text-center">Ejemplos de Cuotas</h3>
         <ul class="list-group">
+        <%if(Cuotas!=null){ %>
+               <%for(Cuota cuota : Cuotas ){ %>
             <li class="list-group-item d-flex align-items-center justify-content-between">
                 <div>
                     <i class="bi bi-credit-card"></i>
-                    <strong>Cuota 1</strong>: $500.00
+                    <strong><%=cuota.getNumeroCuota() %></strong>: $<%=cuota.getImporte() %>
+                    <p><%=cuota.getVencimento() %></p>
                 </div>
-                <span class="badge bg-primary">Pagada</span>
+                <!-- uno peniente 2 pagado 3 vencida -->
+             <%if(cuota.getEstado()== 1 ){ %>
+                <span class="badge bg-warning">Pendiente</span>
+                
+                <%} %>
+        <%if(cuota.getEstado()==2){ %>
+                <span class="badge bg-success">Pagado</span>
+                
+                <%} %>
+        <%if(cuota.getEstado()==3){ %>
+                <span class="badge bg-danger">Vencida</span>
+                
+                <%} %>
+       
             </li>
-            <li class="list-group-item d-flex align-items-center justify-content-between">
+           <%} }else{%>
+           <li class="list-group-item d-flex align-items-center justify-content-between">
                 <div>
-                    <i class="bi bi-wallet2"></i>
-                    <strong>Cuota 2</strong>: $450.00
+                 
+                    <strong> No se registran cuotas para este Prestamo. </strong>
+                   
                 </div>
-                <span class="badge bg-success">Pendiente</span>
-            </li>
-            <li class="list-group-item d-flex align-items-center justify-content-between">
-                <div>
-                    <i class="bi bi-cash-stack"></i>
-                    <strong>Cuota 3</strong>: $480.00
-                </div>
-                <span class="badge bg-warning">Próxima</span>
-            </li>
-            <li class="list-group-item d-flex align-items-center justify-content-between">
-                <div>
-                    <i class="bi bi-bank"></i>
-                    <strong>Cuota 4</strong>: $520.00
-                </div>
-                <span class="badge bg-danger">Pagar</span>
-            </li>
-            <li class="list-group-item d-flex align-items-center justify-content-between">
-                <div>
-                    <i class="bi bi-coin"></i>
-                    <strong>Cuota 5</strong>: $600.00
-                </div>
-                <span class="badge bg-secondary">Reprogramada</span>
-            </li>
+                </li>
+                <%} %>
+                
         </ul>
 	</div>
 </div>
 </div>
 </body>
+
+
+
+
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

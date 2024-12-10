@@ -117,8 +117,7 @@ input[readonly] {
 	   const interesMap = {
 		         3: 2,
 		         6: 5,
-		         12: 7,
-		         24: 10
+		         12: 7
 		     };
    
 		     const cuotasSelect = document.getElementById('cuotas');
@@ -129,7 +128,7 @@ input[readonly] {
 		         interesInput.value = nuevoInteres;
 		     
  	  }
-    
+   
  
 </script>
 
@@ -170,7 +169,6 @@ input[readonly] {
                     <option value="3">3 cuotas</option>
                     <option value="6">6 cuotas</option>
                     <option value="12">12 cuotas</option>
-                    <option value="24">24 cuotas</option>
                 </select>
             </div>
             
@@ -179,15 +177,7 @@ input[readonly] {
        		 <label for="interes">Interés (%):</label>
       		  <input type="text" id="interes" name="interes" value="2" readonly >
    		 </div>
-                <!--  
-                <select id="interes" name="interes" required onchange="calcularMontoAPagar()">
-                    <option value="2">2%</option>
-                    <option value="5">5%</option>
-                    <option value="7">7%</option>
-                    <option value="10">10%</option>
-                </select>
-                -->
-
+               
             
             <div class="field">
                 <label for="fecha">Fecha del Préstamo:</label>

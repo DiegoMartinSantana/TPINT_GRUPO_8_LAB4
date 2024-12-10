@@ -12,4 +12,6 @@ public interface IPrestamoNegocio {
 	PrestamoDto obtenerPrestamoPorId(int idPrestamo);
 	public boolean crearPrestamoSolicitado(PrestamoSolicitado prestamoSolicitado);
 	public void aceptarPrestamo(DatosPrestamosSolicitadosSP PrestamoSP);
+	ArrayList<PrestamoDto> GetAllAceptados() ;
+	
 }
