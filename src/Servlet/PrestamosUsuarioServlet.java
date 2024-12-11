@@ -94,7 +94,7 @@ public class PrestamosUsuarioServlet extends HttpServlet {
 
 		
 	}
-	
+	//SECTOR CUOTAS
 	private void obtenerPrestamosPendientesPago (ArrayList<Cuenta> cuentas) {
 
 	 int x =0;
@@ -112,13 +112,13 @@ public class PrestamosUsuarioServlet extends HttpServlet {
 			 	
 	        }
  }
- 
+ //SECTOR HISTORIAL
 	 private void obtenerPrestamos (ArrayList<Cuenta> cuentas ) {
 		 
 		 int x =0;
 		 ArrayList<PrestamoDto> prestamos = new ArrayList<PrestamoDto>();
 		
-		 prestamos = prestamosNegocio.GetAll();
+		 prestamos = prestamosNegocio.GetAllAceptados();
 			 for (Cuenta cuenta : cuentas) {
 				x++; 
 

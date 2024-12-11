@@ -52,6 +52,7 @@
                         <th>Importe a Pagar</th>
                         <th>Estado</th>
                         <th>Fecha Préstamo</th>
+                         
                     </tr>
                 </thead>
                 <tbody>
@@ -71,6 +72,7 @@
                             <% } %>
                         </td>
                         <td><%= prestamo.fechaPrestamo %></td>
+                      
                     </tr>
                     <% } %>
                 </tbody>

@@ -189,7 +189,7 @@ INSERT INTO cliente (nombre_usuario, dni, cuil, nombre, apellido, sexo, nacional
 ('cliente13', 42123456, '20-42123456-8', 'Valentina', 'Luna', 2, 'Argentina', '1997-10-06', 'Belgrano 123', 'Catamarca', 14, 'valentina.luna@gmail.com', '3833456789', 1);
 
 -- Cuentas
-INSERT INTO cuenta (id_cliente, tipo, creacion, cbu, saldo, activa) VALUES
+INSERT INTO cuenta (id_cliente, tipo, creacion, cbu, saldo, activa) VALUES 
 (1, 1, '2022-01-15', '1234567890123456789012', 5015000, 1),
 (2, 2, '2021-06-20', '2345678901234567890123', 30000, 1),
 (3, 1, '2023-02-10', '3456789012345678901234', 5000, 1),
@@ -205,20 +205,24 @@ INSERT INTO cuenta (id_cliente, tipo, creacion, cbu, saldo, activa) VALUES
 (13, 2, '2023-01-30', '1323456789012345678904', 15000, 1),
 (5, 1, '2020-01-22', '1423456789012345678905', 8000, 1),
 (1,	1, '2024-12-09', '6179001701039202675035', 10000, 1),
-(3,	2, '2024-12-09', '8316047970121703739079', 10000, 1);
+(3,	2, '2024-12-09', '8316047970121703739079', 10000, 1),
+(5, 1, '2024-06-01', '5642384690004526388497', 10000, 1);
 
 INSERT INTO prestamo_solicitado (id_cuenta, monto_cuota, interes, importe_solicitado, fecha, importe_pagar, plazo_cuotas, estado) VALUES
 (2,  1000, 5, 10000, '2023-01-10', 10500, 10, 2),
 (2, 800, 4, 8000, '2023-02-15', 8320, 10, 3),
 (3,  1200, 6, 12000, '2023-03-12', 12720, 10, 2),
 (4, 500, 3, 5000, '2023-04-18', 5150, 10, 1),
-(5,  900, 4.5, 9000, '2023-05-05', 9360, 10, 3),
+(5,  900, 4.5, 9000, '2023-05-23', 9360, 10, 1),
+(5,  1100, 4.2, 11000, '2024-01-01', 11462, 10, 3),
+(14,  900, 4.5, 9000, '2023-05-05', 9360, 10, 3),
+(17,  1500, 5, 15000, '2023-10-01', 15750, 10, 1),
 (6,  1500, 5, 15000, '2023-06-21', 15750, 10, 1),
 (7,  700, 3.5, 7000, '2023-07-01', 7245, 10, 1),
-(8,  2000, 6, 20000, '2023-08-10', 21200, 10, 3),
-(9, 1100, 4.2, 11000, '2023-09-14', 11462, 10, 3),
-(10,  950, 3.8, 9500, '2023-10-25', 9861, 10, 3),
-(11,  3000, 7, 30000, '2023-11-30', 32100, 10, 3),
+(8,  2000, 6, 20000, '2023-08-10', 21200, 10, 1),
+(9, 1100, 4.2, 11000, '2023-09-14', 11462, 10, 1),
+(10,  950, 3.8, 9500, '2023-10-25', 9861, 10, 1),
+(11,  3000, 7, 30000, '2023-11-30', 32100, 10, 1),
 (10,  750, 3.6, 7500, '2023-12-11', 7770, 10, 3),
 (4, 500, 3, 5000, '2024-01-20', 5150, 10, 3),
 (2,  1000, 5, 10000, '2024-02-15', 10500, 10, 3),
@@ -229,70 +233,191 @@ INSERT INTO prestamo_solicitado (id_cuenta, monto_cuota, interes, importe_solici
 
 
 INSERT INTO movimiento (id_cuenta, id_tipo_movimiento, fecha, detalle, importe, id_destino) VALUES
-(15,	1,	'2024-12-09',	'Alta cuenta'	,10000,	15),
-(16,	1,	'2024-12-09',	'Alta cuenta',	10000,	16),
-(14,	2,	'2024-12-09',	'Transferencia familiar',	-500,	5),
-(5,	2,	'2024-12-09',	'Transferencia familiar',	500,	14),
-(5,	2,	'2024-12-09',	'Otro',	-9000,	14),
-(14,	2,	'2024-12-09',	'Otro',	9000,	5),
-(11,	1,	'2024-12-09',	'Prestamo Aceptado',	15000000,	0),
-(1,	1,	'2024-12-09',	'Prestamo Aceptado',	5000000,	0),
-(4,	1,	'2024-12-09',	'Prestamo Aceptado',	5000,	0),
-(6,	1,	'2024-12-09',	'Prestamo Aceptado',	15000,	0),
-(7,	1,	'2024-12-09',	'Prestamo Aceptado',	7000,	0);
+(15, 1, '2024-12-09', 'Alta cuenta', 10000, 15),
+(16, 1, '2024-12-09', 'Alta cuenta', 10000, 16),
+(14, 1, '2022-01-22', 'Alta cuenta', 10000, 14),
+(5,  1, '2023-05-25', 'Alta cuenta', 10000, 5),
+(17,  1, '2024-06-01', 'Alta cuenta', 10000, 17),
+(14, 4, '2024-12-09', 'Transferencia familiar', -500, 5),
+(5,  4, '2024-12-09', 'Transferencia familiar', 500, 14),
+(5,  4, '2024-12-09', 'Otro', -9000, 14),
+(14, 4, '2024-12-09', 'Otro', 9000, 5),
+(4, 2, '2024-12-09', 'Prestamo Aceptado', 5150, 0),
+(5,  2, '2023-05-23', 'Prestamo Aceptado', 9360, 0),
+(17,  2, '2023-06-01', 'Prestamo Aceptado', 15750, 0),
+(6,  2, '2024-12-09', 'Prestamo Aceptado', 15750, 0),
+(7,  2, '2024-12-09', 'Prestamo Aceptado', 7245, 0),
+(1,  2, '2023-05-23', 'Prestamo Aceptado', 5100000, 0),
+(11,  2, '2023-05-23', 'Prestamo Aceptado', 15300000, 0),
+(8,  2, '2023-05-23', 'Prestamo Aceptado', 21200, 0),
+(9,  2, '2023-05-23', 'Prestamo Aceptado', 11462, 0),
+(10,  2, '2023-05-23', 'Prestamo Aceptado', 9861, 0),
+(11,  2, '2023-05-23', 'Prestamo Aceptado', 32100, 0),
+(1,  1, '2024-12-09', 'Alta cuenta', 10000, 1),
+(3,  1, '2024-12-09', 'Alta cuenta', 10000, 3),
+(5,  3, '2023-06-23', 'Pago préstamo', 936, 5),
+(5,  3, '2023-07-23', 'Pago préstamo', 936, 5),
+(5,  3, '2023-08-23', 'Pago préstamo', 936, 5),
+(17,  3, '2023-11-01', 'Pago préstamo', 1575, 17),
+(17,  3, '2023-12-01', 'Pago préstamo', 1575, 17),
+(17,  3, '2024-01-01', 'Pago préstamo', 1575, 17),
+(17,  3, '2024-02-01', 'Pago préstamo', 1575, 17),
+(17,  3, '2024-03-01', 'Pago préstamo', 1575, 17),
+(17,  3, '2024-04-01', 'Pago préstamo', 1575, 17),
+(17,  3, '2024-05-01', 'Pago préstamo', 1575, 17),
+(17,  3, '2024-06-01', 'Pago préstamo', 1575, 17),
+(17,  3, '2024-07-01', 'Pago préstamo', 1575, 17),
+(17,  3, '2024-08-01', 'Pago préstamo', 1575, 17);
 
 
 
 INSERT INTO prestamo (id_prestamo_solicitado, id_movimiento, monto_cuota, interes, importe_solicitado, fecha, importe_pagar, plazo_cuotas, estado) VALUES
-(18,	7,	5202000,	2,	15000000,	'2024-12-09',	15300000,	3,	2),
-(17,	8,	1768680,	2,	5000000,	'2024-12-09',	5100000,	3,	1),
-(4,	9,	515,	3,	5000,	'2024-12-09',	5150,	10,	2),
-(6,	10,	1575,	5,	15000,	'2024-12-09',	15750,	10,	1),
-(7,	11,	724.5,	3.5,	7000,	'2024-12-09',	7245,	10,	1);
-
+(4, 10, 500, 3, 5000, '2023-04-18', 5150, 10, 1),
+(5, 11,  900, 4.5, 9000, '2023-05-23', 9360, 10, 1),
+(8, 12,  1500, 5, 15000, '2023-10-01', 15750, 10, 2),
+(9, 13,  1500, 5, 15000, '2023-06-21', 15750, 10, 1),
+(10, 14,  700, 3.5, 7000, '2023-07-01', 7245, 10, 1),
+(20, 15,	1734000, 2,	5000000, '2024-12-09',	5100000	,3,	1),
+(21, 16, 5100000, 2, 15000000,	'2024-12-09', 15300000,	3,	1),
+(11, 17,  2000, 6, 20000, '2023-08-10', 21200, 10, 1),
+(12, 18, 1100, 4.2, 11000, '2023-09-14', 11462, 10, 1),
+(13, 19,  950, 3.8, 9500, '2023-10-25', 9861, 10, 1),
+(14, 20,  3000, 7, 30000, '2023-11-30', 32100, 10, 1);
 
 INSERT INTO cuota (id_prestamo, numero_cuota, importe, vencimiento, estado) VALUES -- 1 - Pendiente, 2 - Pagado, 3 - Vencido
-(1,	1,	5202000, '2025-01-09', 1),
-(1	,2,	5202000, '2025-02-09',1),
-(1	,3,	5202000, '2025-03-09',1),
-(2,	1,	1768680	, '2025-01-09',1),
-(2,	2,	1768680, '2025-02-09',1),
-(2,	3,	1768680, '2025-03-09',	1),
-(3,	1,	515	, '2025-01-09',1),
-(3,	2,	515, '2025-02-09',1),
-(3,	3,	515, '2025-03-09',1),
-(3,	4,	515	, '2025-04-09',1),
-(3,	5,	515	, '2025-05-09',1),
-(3,	6,	515, '2025-06-09',	1),
-(3,	7,	515	, '2025-07-09',1),
-(3,	8,	515, '2025-08-09',	1),
-(3,	9,	515	, '2025-09-09',1),
-(3,	10,	515	, '2025-10-09',	1),
-(4,	1	,1575	, '2025-01-09',	1),
-(4,	2,	1575	, '2025-02-09',	1),
-(4,	3,	1575	, '2025-03-09',	1),
-(4,	4,	1575	, '2025-04-09',	1),
-(4,	5,	1575	, '2025-05-09',	1),
-(4,	6,	1575	, '2025-06-09',	1),
-(4,	7,	1575, '2025-07-09',	1),
-(4,	8,	1575	, '2025-08-09',	1),
-(4,	9,	1575, '2025-09-09',	1),
-(4,	10,	1575	, '2025-10-09',1),
-(5,	1,	724.5, '2025-01-09',	1),
-(5,	2,	724.5	, '2025-02-09',	1),
-(5,	3,	724.5, '2025-03-09',	1),
-(5,	4,	724.5	, '2025-04-09',	1),
-(5,	5,	724.5	, '2025-05-09',1),
-(5,	6,	724.5, '2025-06-09',	1),
-(5,	7,	724.5	, '2025-07-09',	1),
-(5,	8,	724.5	, '2025-08-09',	1),
-(5,	9,	724.5	, '2025-09-09',	1),
-(5,	10,	724.5	, '2025-10-09',	1);
+-- Préstamo 4: 5150 total, 10 cuotas
+(1, 1, 515, DATE_ADD('2023-04-18', INTERVAL 1 MONTH), 1),
+(1, 2, 515, DATE_ADD('2023-04-18', INTERVAL 2 MONTH), 1),
+(1, 3, 515, DATE_ADD('2023-04-18', INTERVAL 3 MONTH), 1),
+(1, 4, 515, DATE_ADD('2023-04-18', INTERVAL 4 MONTH), 1),
+(1, 5, 515, DATE_ADD('2023-04-18', INTERVAL 5 MONTH), 1),
+(1, 6, 515, DATE_ADD('2023-04-18', INTERVAL 6 MONTH), 1),
+(1, 7, 515, DATE_ADD('2023-04-18', INTERVAL 7 MONTH), 1),
+(1, 8, 515, DATE_ADD('2023-04-18', INTERVAL 8 MONTH), 1),
+(1, 9, 515, DATE_ADD('2023-04-18', INTERVAL 9 MONTH), 1),
+(1, 10, 515, DATE_ADD('2023-04-18', INTERVAL 10 MONTH), 1),
 
-/*
+-- Préstamo 5: 9360 total, 10 cuotas
+(2, 1, 936, DATE_ADD('2023-05-23', INTERVAL 1 MONTH), 2),
+(2, 2, 936, DATE_ADD('2023-05-23', INTERVAL 2 MONTH), 2),
+(2, 3, 936, DATE_ADD('2023-05-23', INTERVAL 3 MONTH), 2),
+(2, 4, 936, DATE_ADD('2023-05-23', INTERVAL 4 MONTH), 3),
+(2, 5, 936, DATE_ADD('2023-05-23', INTERVAL 5 MONTH), 3),
+(2, 6, 936, DATE_ADD('2023-05-23', INTERVAL 6 MONTH), 3),
+(2, 7, 936, DATE_ADD('2023-05-23', INTERVAL 7 MONTH), 1),
+(2, 8, 936, DATE_ADD('2023-05-23', INTERVAL 8 MONTH), 1),
+(2, 9, 936, DATE_ADD('2023-05-23', INTERVAL 9 MONTH), 1),
+(2, 10, 936, DATE_ADD('2023-05-23', INTERVAL 10 MONTH), 1),
+
+-- Préstamo 8: 15750 total, 10 cuotas
+(3, 1, 1575, DATE_ADD('2023-10-01', INTERVAL 1 MONTH), 2),
+(3, 2, 1575, DATE_ADD('2023-10-01', INTERVAL 2 MONTH), 2),
+(3, 3, 1575, DATE_ADD('2023-10-01', INTERVAL 3 MONTH), 2),
+(3, 4, 1575, DATE_ADD('2023-10-01', INTERVAL 4 MONTH), 2),
+(3, 5, 1575, DATE_ADD('2023-10-01', INTERVAL 5 MONTH), 2),
+(3, 6, 1575, DATE_ADD('2023-10-01', INTERVAL 6 MONTH), 2),
+(3, 7, 1575, DATE_ADD('2023-10-01', INTERVAL 7 MONTH), 2),
+(3, 8, 1575, DATE_ADD('2023-10-01', INTERVAL 8 MONTH), 2),
+(3, 9, 1575, DATE_ADD('2023-10-01', INTERVAL 9 MONTH), 2),
+(3, 10, 1575, DATE_ADD('2023-10-01', INTERVAL 10 MONTH), 2),
+
+-- Préstamo 9: 15750 total, 10 cuotas
+(4, 1, 1575, DATE_ADD('2023-06-21', INTERVAL 1 MONTH), 1),
+(4, 2, 1575, DATE_ADD('2023-06-21', INTERVAL 2 MONTH), 1),
+(4, 3, 1575, DATE_ADD('2023-06-21', INTERVAL 3 MONTH), 1),
+(4, 4, 1575, DATE_ADD('2023-06-21', INTERVAL 4 MONTH), 1),
+(4, 5, 1575, DATE_ADD('2023-06-21', INTERVAL 5 MONTH), 1),
+(4, 6, 1575, DATE_ADD('2023-06-21', INTERVAL 6 MONTH), 1),
+(4, 7, 1575, DATE_ADD('2023-06-21', INTERVAL 7 MONTH), 1),
+(4, 8, 1575, DATE_ADD('2023-06-21', INTERVAL 8 MONTH), 1),
+(4, 9, 1575, DATE_ADD('2023-06-21', INTERVAL 9 MONTH), 1),
+(4, 10, 1575, DATE_ADD('2023-06-21', INTERVAL 10 MONTH), 1),
+
+-- Préstamo 10: 7245 total, 10 cuotas
+(5, 1, 724.5, DATE_ADD('2023-07-01', INTERVAL 1 MONTH), 1),
+(5, 2, 724.5, DATE_ADD('2023-07-01', INTERVAL 2 MONTH), 1),
+(5, 3, 724.5, DATE_ADD('2023-07-01', INTERVAL 3 MONTH), 1),
+(5, 4, 724.5, DATE_ADD('2023-07-01', INTERVAL 4 MONTH), 1),
+(5, 5, 724.5, DATE_ADD('2023-07-01', INTERVAL 5 MONTH), 1),
+(5, 6, 724.5, DATE_ADD('2023-07-01', INTERVAL 6 MONTH), 1),
+(5, 7, 724.5, DATE_ADD('2023-07-01', INTERVAL 7 MONTH), 1),
+(5, 8, 724.5, DATE_ADD('2023-07-01', INTERVAL 8 MONTH), 1),
+(5, 9, 724.5, DATE_ADD('2023-07-01', INTERVAL 9 MONTH), 1),
+(5, 10, 724.5, DATE_ADD('2023-07-01', INTERVAL 10 MONTH), 1),
+
+-- Préstamo 20: 5100000 total, 3 cuotas
+(6, 1, 1700000, DATE_ADD('2024-12-09', INTERVAL 1 MONTH), 1),
+(6, 2, 1700000, DATE_ADD('2024-12-09', INTERVAL 2 MONTH), 1),
+(6, 3, 1700000, DATE_ADD('2024-12-09', INTERVAL 3 MONTH), 1),
+
+-- Préstamo 21: 15300000 total, 3 cuotas
+(7, 1, 5100000, DATE_ADD('2024-12-09', INTERVAL 1 MONTH), 1),
+(7, 2, 5100000, DATE_ADD('2024-12-09', INTERVAL 2 MONTH), 1),
+(7, 3, 5100000, DATE_ADD('2024-12-09', INTERVAL 3 MONTH), 1),
+
+-- Préstamo 11: 21200 total, 10 cuotas
+(8, 1, 2120, DATE_ADD('2023-08-10', INTERVAL 1 MONTH), 1),
+(8, 2, 2120, DATE_ADD('2023-08-10', INTERVAL 2 MONTH), 1),
+(8, 3, 2120, DATE_ADD('2023-08-10', INTERVAL 3 MONTH), 1),
+(8, 4, 2120, DATE_ADD('2023-08-10', INTERVAL 4 MONTH), 1),
+(8, 5, 2120, DATE_ADD('2023-08-10', INTERVAL 5 MONTH), 1),
+(8, 6, 2120, DATE_ADD('2023-08-10', INTERVAL 6 MONTH), 1),
+(8, 7, 2120, DATE_ADD('2023-08-10', INTERVAL 7 MONTH), 1),
+(8, 8, 2120, DATE_ADD('2023-08-10', INTERVAL 8 MONTH), 1),
+(8, 9, 2120, DATE_ADD('2023-08-10', INTERVAL 9 MONTH), 1),
+(8, 10, 2120, DATE_ADD('2023-08-10', INTERVAL 10 MONTH), 1),
+
+-- Préstamo 12: 11462 total, 10 cuotas
+(9, 1, 1146.2, DATE_ADD('2023-09-14', INTERVAL 1 MONTH), 1),
+(9, 2, 1146.2, DATE_ADD('2023-09-14', INTERVAL 2 MONTH), 1),
+(9, 3, 1146.2, DATE_ADD('2023-09-14', INTERVAL 3 MONTH), 1),
+(9, 4, 1146.2, DATE_ADD('2023-09-14', INTERVAL 4 MONTH), 1),
+(9, 5, 1146.2, DATE_ADD('2023-09-14', INTERVAL 5 MONTH), 1),
+(9, 6, 1146.2, DATE_ADD('2023-09-14', INTERVAL 6 MONTH), 1),
+(9, 7, 1146.2, DATE_ADD('2023-09-14', INTERVAL 7 MONTH), 1),
+(9, 8, 1146.2, DATE_ADD('2023-09-14', INTERVAL 8 MONTH), 1),
+(9, 9, 1146.2, DATE_ADD('2023-09-14', INTERVAL 9 MONTH), 1),
+(9, 10, 1146.2, DATE_ADD('2023-09-14', INTERVAL 10 MONTH), 1),
+
+-- Préstamo 13: 9861 total, 10 cuotas
+(10, 1, 986.1, DATE_ADD('2023-10-25', INTERVAL 1 MONTH), 1),
+(10, 2, 986.1, DATE_ADD('2023-10-25', INTERVAL 2 MONTH), 1),
+(10, 3, 986.1, DATE_ADD('2023-10-25', INTERVAL 3 MONTH), 1),
+(10, 4, 986.1, DATE_ADD('2023-10-25', INTERVAL 4 MONTH), 1),
+(10, 5, 986.1, DATE_ADD('2023-10-25', INTERVAL 5 MONTH), 1),
+(10, 6, 986.1, DATE_ADD('2023-10-25', INTERVAL 6 MONTH), 1),
+(10, 7, 986.1, DATE_ADD('2023-10-25', INTERVAL 7 MONTH), 1),
+(10, 8, 986.1, DATE_ADD('2023-10-25', INTERVAL 8 MONTH), 1),
+(10, 9, 986.1, DATE_ADD('2023-10-25', INTERVAL 9 MONTH), 1),
+(10, 10, 986.1, DATE_ADD('2023-10-25', INTERVAL 10 MONTH), 1),
+
+-- Préstamo 14: 32100 total, 10 cuotas
+(11, 1, 3210, DATE_ADD('2023-11-30', INTERVAL 1 MONTH), 1),
+(11, 2, 3210, DATE_ADD('2023-11-30', INTERVAL 2 MONTH), 1),
+(11, 3, 3210, DATE_ADD('2023-11-30', INTERVAL 3 MONTH), 1),
+(11, 4, 3210, DATE_ADD('2023-11-30', INTERVAL 4 MONTH), 1),
+(11, 5, 3210, DATE_ADD('2023-11-30', INTERVAL 5 MONTH), 1),
+(11, 6, 3210, DATE_ADD('2023-11-30', INTERVAL 6 MONTH), 1),
+(11, 7, 3210, DATE_ADD('2023-11-30', INTERVAL 7 MONTH), 1),
+(11, 8, 3210, DATE_ADD('2023-11-30', INTERVAL 8 MONTH), 1),
+(11, 9, 3210, DATE_ADD('2023-11-30', INTERVAL 9 MONTH), 1),
+(11, 10, 3210, DATE_ADD('2023-11-30', INTERVAL 10 MONTH), 1);
+
+
 INSERT INTO pago (id_prestamo, id_cuota, id_movimiento, fecha) VALUES
-(1, 1, 1, '2023-02-10'),
-(1, 2, 2, '2023-03-10')*/
+(2, 11, 23, '2023-06-23'),
+(2, 12, 24, '2023-07-23'),
+(2, 13, 25, '2023-08-23'),
+(3, 21, 26, '2023-11-01'),
+(3, 22, 27, '2023-12-01'),
+(3, 23, 28, '2024-01-01'),
+(3, 24, 29, '2024-02-01'),
+(3, 25, 30, '2024-03-01'),
+(3, 26, 31, '2024-04-01'),
+(3, 27, 32, '2024-05-01'),
+(3, 28, 33, '2024-06-01'),
+(3, 29, 34, '2024-07-01'),
+(3, 30, 35, '2024-08-01');
 
 
 
@@ -603,7 +728,7 @@ BEGIN
     -- SI SE ESTA PAGANDO LA ULTIMA CUOTA DEL PRESTAMO, LE PONE ESTADO FINALIZADO
     IF v_total_cuotas = v_cuotas_pagadas THEN
         UPDATE prestamo
-        SET estado = 4
+        SET estado = 2
         WHERE id_prestamo = p_id_prestamo;
     END IF;
 

@@ -62,7 +62,8 @@
                                             <strong>Importe:</strong> $<%=String.format("%.2f", prestamo.importeSolicitado) %> 
                                             <br>
                                             | <strong>Cuotas:</strong> <%= prestamo.plazoCuotas %>
-                                        </p>
+                                            <strong>Depositado en  : </strong><%=prestamo.cbu %>
+                           
                                        
                                     </div>
                                 </div>
