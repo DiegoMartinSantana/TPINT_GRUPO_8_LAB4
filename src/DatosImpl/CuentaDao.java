@@ -111,6 +111,11 @@ public class CuentaDao implements ICuentaDao {
         PreparedStatement statement ;
         Connection conexion ;
         boolean isInsertExitoso = false;
+        
+        if (!ValidarLimiteCuentas(cuenta.getIdCliente())) {
+            return false;
+        }
+        
         String cbu = generarCbu();
         conexion = Conexion.getConexion().getSQLConexion();
         try {

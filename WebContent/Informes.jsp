@@ -30,6 +30,8 @@
                     <h4 class="mb-0" >Generar Informes</h4>
                 </div>
                 <div class="card-body">
+                
+                
                     <form action="InformesServlet" method="post">
                         <div class="mb-3">
                             <label for="fechaDesde" class="form-label">Fecha desde</label>
@@ -39,7 +41,8 @@
                             <label for="fechaHasta" class="form-label">Fecha hasta</label>
                             <input type="date" id="fechaHasta" name="fechaHasta" class="form-control" required>
                         </div>
-                        <button type="submit" style="background-color: #c2c2d7;width:180px" class="btn ">Generar </button>
+                        <!-- <button type="submit" style="background-color: #c2c2d7;width:180px" class="btn ">Generar </button> -->
+                        <input type="submit" name="btnGenerar" value="Generar">
                     </form>
                 </div>
             </div>
@@ -51,32 +54,37 @@
                 <div class="card-header text-white" style="background-color: #4a4a87">
                     <h4 class="mb-0">Prestamos Aprobados</h4>
                 </div>
-                <div class="card-body">
-                    <div class="row mb-3">
-                        <div class="col-sm-4">
-                            <h6>Cantidad:</h6>
-                            <p><%// =informe.getCantidadPrestamos() %> préstamos</p>
-                        </div>
-                        <div class="col-sm-4">
-                            <h6>Total:</h6>
-                            <p>$<%//= informe.getTotalPrestado() %></p>
-                        </div>
-                        <div class="col-sm-4">
-                            <h6>Cliente Líder:</h6>
-                            <p><%//= informe.getClienteLider() %></p>
-                        </div>
-                    </div>
-                </div>
+                    <table>
+        <thead>
+            <tr>
+                <th>Cantidad</th>
+                <th>Total</th>
+                <th>Cliente Lider</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% 
+            Informe informe = (Informe)request.getAttribute("informePrestamos");
+            if(informe != null) { 
+            %>
+            <tr>
+                <td><%= informe.getCantidadPrestamos() %> préstamos</td>
+                <td>$<%= informe.getTotalPrestado() %></td>
+                <td><%= informe.getClienteLider() %></td>
+            </tr>
+            <% } %>
+        </tbody>
+    </table>
             </div>
 
             <div class="card mb-4">
                 <div class="card-header text-white" style="background-color: #5e5e94">
                     <h4 class="mb-0">Tasa de Cumplimiento</h4>
                 </div>
-                <div class="card-body">
-                    <h5><%//= informe.getTasaCumplimiento() %>%</h5>
-                    <small>*Registro de pagos concretados de préstamos otorgados en el rango seleccionado*</small>
-                </div>
+                <div class="section">
+				    <h2>Tasa de cumplimiento: <%= informe != null ? informe.getTasaCumplimiento() : "" %>%</h2>
+				    <h5>*Registro de pagos concretados de préstamos otorgados en el rango seleccionado*</h5>
+				</div>
             </div>
 
             <div class="card">
@@ -84,30 +92,34 @@
                     <h4 class="mb-0">Clientes VIP</h4>
                 </div>
                 <div class="card-body">
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>Nombre</th>
-                                <th>Total Prestado</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <% //for (Cliente cliente : informe.getClientesVIP()) { %>
-                            <tr>
-                                <td><%//= cliente.getNombre() %> <%//= cliente.getApellido() %></td>
-                                <td><%//= cliente.getTotalPrestado() %></td>
-                            </tr>
-                            <%// } %>
-                        </tbody>
-                    </table>
+                    <table>
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Total prestado</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% 
+            if(informe != null && informe.getClientesVIP() != null) {
+                for(Cliente cliente : informe.getClientesVIP()) { 
+            %>
+            <tr>
+                <td><%= cliente.getNombre() %> <%= cliente.getApellido() %></td>
+                <td>$<%= cliente.getTotalPrestado() %></td>
+            </tr>
+            <% 
+                } 
+            }
+            %>
+        </tbody>
+    </table>
                 </div>
             </div>
-            <% //} else { %>
-            <div class="alert alert-warning">No hay informes disponibles para las fechas seleccionadas.</div>
-            <%// } %>
+
         </div>
     </div>
-</div>
+
 
 
 </body>

@@ -23,7 +23,7 @@ public class InformesDao implements IInformesDao {
 			+ "			GROUP BY CONCAT(nombre, ' ', apellido) ORDER BY COUNT(*) DESC LIMIT 1) AS Cliente_Lider"
 			+ "			FROM prestamo WHERE fecha BETWEEN ? AND ?";
 	private static final String SELECT_CUMPLIMIENTO = "SELECT " +
-            "(SELECT COUNT(*) FROM cuota WHERE fecha_pago IS NOT NULL AND vencimiento BETWEEN ? AND ?) * 100.0 / " +
+            "(SELECT COUNT(*) FROM cuota WHERE vencimiento BETWEEN ? AND ?) * 100.0 / " +
             "(SELECT COUNT(*) FROM cuota WHERE vencimiento BETWEEN ? AND ?) AS tasa_cumplimiento";
 	private static final String SELECT_CLIENTES_VIP = 
 		    "SELECT c.id_cliente, c.nombre, c.apellido, SUM(p.importe_solicitado) AS total_prestado \r\n"
