@@ -18,79 +18,9 @@
 	href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.css" />
 
   <style>
+		<%@include file="../Styles/StyleHome.css" %>
+	</style>
 
-body {
-    background-color: #f9f9f9;
-    font-family: Arial, sans-serif;
-}
-
-.section-title {
-    font-weight: bold;
-    border-left: 4px solid #007bff;
-    padding-left: 10px;
-}
-
-.card {
-    border-radius: 12px;
-    border: none;
-    transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.card:hover {
-    transform: scale(1.02);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-}
-
-.highlight {
-    color: #007bff;
-    font-size: 1.2rem;
-    font-weight: bold;
-}
-
-.btn-outline-primary {
-    border: 2px solid #007bff;
-    font-weight: bold;
-    transition: background-color 0.3s, color 0.3s;
-}
-
-.btn-outline-primary:hover {
-    background-color: #007bff;
-    color: #fff;
-}
-
-
-.cuenta-card {
-    background: #ffffff;
-}
-
-.cuenta-card .card-body {
-    text-align: center;
-}
-
-.cuenta-card .saldo {
-    font-size: 1.5rem;
-    margin-top: 10px;
-}
-
-
-.transfer-card {
-    margin-top: 20px;
-}
-
-.table {
-    font-size: 0.9rem;
-}
-
-.table-hover tbody tr:hover {
-    background-color: #f1f5ff;
-}
-
-.table-primary {
-    background-color: #007bff;
-    color: white;
-}
- 
-    </style>
 
 </head>
 
@@ -112,7 +42,7 @@ body {
         <div class="card-body">
             <h6 class="text-primary fw-bold">CBU: <%= cuenta.getCbu() %></h6>
             <p class="text-muted mb-1">Saldo Disponible:</p>
-            <h5 class="saldo">$<%= cuenta.getSaldo() %></h5>
+            <h5 class="saldo">$<%= String.format("%.2f",cuenta.getSaldo()) %></h5>
             <a href="HomeServlet?cuentaId=<%= cuenta.getIdCuenta() %>" class="btn btn-outline-primary btn-block mt-3">
                Ver Transferencias <i class="fas fa-chevron-right"></i>
             </a>
@@ -146,7 +76,7 @@ body {
                         <% for (Movimiento transferencia : Transferencias) { %>
                             <tr>
                                 <td><%= transferencia.getFecha() %></td>
-                                <td>$<%= transferencia.getImporte() %></td>
+                                <td>$<%=String.format("%.2f",  transferencia.getImporte()) %></td>
                                 <td><%= transferencia.getDetalle() %></td>
                             </tr>
                         <% } %>

@@ -56,14 +56,7 @@
 
 <aside class="sidebar">
   <h5><%=session.getAttribute("UsuarioNombre") %></h5>
-  <!--  
-  <% /*  Usuario userSession = (Usuario)session.getAttribute("Usuario");
-  if(userSession.getTipo()== TipoUsuario.CLIENTE){
-	  	
-  }*/
-  
-   %>
-   -->
+
     <ul class="nav flex-column">
      
         <li class="nav-item">
@@ -108,7 +101,7 @@
        
     </ul>
     <form action="LoginServlet" method="post">
-             <button type="submit" class="btn btn-danger">Logout</button>
+             <button type="submit" class="btn btn-danger">Cerrar Sesion</button>
     </form>
     
     

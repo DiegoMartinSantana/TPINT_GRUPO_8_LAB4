@@ -1,0 +1,28 @@
+@charset "ISO-8859-1";
+
+body{
+	font-family: Arial, sans-serif;
+	
+}
+ .list-group-item {
+            border: none;
+            background: linear-gradient(135deg, #f3f4f6, #e3e8ee);
+            border-radius: 8px;
+            margin-bottom: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .list-group-item:hover {
+            transform: scale(1.02);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+        }
+        .list-group-item .badge {
+            font-size: 0.9rem;
+            padding: 0.5em 0.7em;
+            border-radius: 12px;
+        }    
+        .list-group-item i {
+            color: #6c63ff;
+            font-size: 1.5rem;
+            margin-right: 10px;
+        }

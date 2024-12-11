@@ -11,32 +11,14 @@
 <title>Pendientes Pago</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<style>
+		<%@include file="../Styles/StyleAbonarPrestamo.css" %>
+	</style>
 
 </head>
 <body>
-<style>
-        .list-group-item {
-            border: none;
-            background: linear-gradient(135deg, #f3f4f6, #e3e8ee);
-            border-radius: 8px;
-            margin-bottom: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-        .list-group-item:hover {
-            transform: scale(1.02);
-            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
-        }
-        .list-group-item .badge {
-            font-size: 0.9rem;
-            padding: 0.5em 0.7em;
-            border-radius: 12px;
-        }    
-        .list-group-item i {
-            color: #6c63ff;
-            font-size: 1.5rem;
-            margin-right: 10px;
-        }
+
+       
     </style>
  <% 
     ArrayList<PrestamoDto> prestamos = session.getAttribute("PrestamosPendientesPago") != null 

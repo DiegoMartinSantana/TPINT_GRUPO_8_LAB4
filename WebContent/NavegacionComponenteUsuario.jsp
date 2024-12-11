@@ -81,7 +81,7 @@
             
                 <h5><%= usuario %></h5>
                 <form action="LoginServlet" method="post">
-             <button type="submit" class="btn btn-danger">Logout</button>
+             <button type="submit" class="btn btn-danger">Cerrar Sesion</button>
    			 </form>
                 <a class="nav-icon ms-3" href="DatosPersonalesServlet">
                     <i class="bi bi-person-circle"></i>
