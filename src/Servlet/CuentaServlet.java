@@ -36,9 +36,7 @@ public class CuentaServlet extends HttpServlet {
     }
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		 //List<Cuenta> listaCuenta = cuentaDao.listarCuentas();
-	       // request.setAttribute("cuentas", listaCuenta);
-	       // request.getRequestDispatcher("ListarCuenta.jsp").forward(request, response);
+		
 	             
 
 	        if(request.getParameter("EliminarIdCuenta")!=null) {

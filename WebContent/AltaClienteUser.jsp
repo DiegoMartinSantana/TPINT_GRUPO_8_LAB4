@@ -31,21 +31,26 @@
         </div>
         <div class="section col-8">
     <h2>Generar Cliente</h2>
-    <form action="servletUsuario" method="post">
+    <form action="servletUsuario" method="post"   onsubmit="return validarContrasenas()">
      
         <div class="form-group">
         
+    <label for="contrasena">Contraseña:</label>
+    <div class="password-wrapper">
+        <input type="password" id="contrasena" name="contrasena" placeholder="Ingrese su contraseña" required>
+        <span class="material-icons toggle-password" id="togglePassword1" onclick="toggleVisibility('contrasena')">visibility</span>
+    </div>
+
+    <label for="repetirContrasena">Repetir Contraseña:</label>
+    <div class="password-wrapper">
+        <input type="password" id="repetirContrasena" name="repetirContrasena" placeholder="Repita la contraseña" required onblur="validarContrasenas()">
+        <span class="material-icons toggle-password" id="togglePassword2" onclick="toggleVisibility('repetirContrasena')">visibility</span>
+    </div>
+      <div id="errorMensaje" style="color: red; display: none;">Las contraseñas no coinciden.</div>
          <label for="usuario">Usuario:</label>
             <input type="text" id="usuario" name="usuario" placeholder="Ingrese su usuario" required>
 
-           <label for="contrasena">Contraseña:</label>
-<div class="password-wrapper">
-    <input type="password" id="contrasena" name="contrasena" placeholder="Ingrese su contraseña" required>
-      <span class="material-icons toggle-password" id="togglePassword">visibility</span>
-
-
-</div>
-            
+             
             <label for="dni">DNI:</label>
             <input type="text" id="dni" name="dni" placeholder="Ingrese su DNI" required>
 
@@ -102,18 +107,39 @@
 
            
         </div>
+<div>
+    <input type="submit" style="width:100%" value="Aceptar" name="btnAceptar" onclick="return validarContrasenas()">
+</div>
 
        
     </form>
-     <div class="">
-            <input type="submit" style="width:100%" value="Aceptar" name="btnAceptar">
-        </div>
+    
 </div>
 
     </div>
 <script>
+function validarContrasenas() {
+    const contrasena = document.getElementById("contrasena").value.trim();
+    const repetirContrasena = document.getElementById("repetirContrasena").value.trim();
+    const errorMensaje = document.getElementById("errorMensaje");
+
+    if (contrasena !== repetirContrasena) {
+        errorMensaje.style.display = "block"; 
+        document.getElementById("repetirContrasena").classList.add("input-error");
+    } else {
+        errorMensaje.style.display = "none"; 
+        document.getElementById("repetirContrasena").classList.remove("input-error");
+    }
+}
+
     document.getElementById("togglePassword").addEventListener("click", function () {
         const passwordInput = document.getElementById("contrasena");
+        const isPassword = passwordInput.type === "password";
+        passwordInput.type = isPassword ? "text" : "password";
+     
+    });
+    document.getElementById("togglePassword2").addEventListener("click", function () {
+        const passwordInput = document.getElementById("contrasena2");
         const isPassword = passwordInput.type === "password";
         passwordInput.type = isPassword ? "text" : "password";
      
