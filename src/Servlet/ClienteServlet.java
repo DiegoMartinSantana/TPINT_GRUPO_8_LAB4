@@ -28,7 +28,7 @@ public class ClienteServlet extends HttpServlet {
     private ArrayList<Provincia> provincias = new ArrayList<Provincia>();
     
     
-    private void ActualizarLista(HttpServletRequest request, HttpServletResponse response)    throws ServletException, IOException {
+    private void ActualizarLista(HttpServletRequest request, HttpServletResponse response,int eliminado)    throws ServletException, IOException {
    	 List<Cliente> listaClientes = clienteNegocio.listar(); 	 
    	 LlenarDdlProvincias(request, response);
    	 
@@ -42,7 +42,20 @@ public class ClienteServlet extends HttpServlet {
      }
    	 
         request.setAttribute("clientes", listaClientes);
+        if(eliminado==0) {
         request.getRequestDispatcher("ListarBanco.jsp").forward(request, response);
+        }else if(eliminado==1) {
+        	
+        	request.getRequestDispatcher("ListarBanco.jsp?Eliminado=" + true).forward(request, response);
+
+        	return;
+        }else if(eliminado==2) {
+        	
+         	request.getRequestDispatcher("ListarBanco.jsp?TieneCuentas=" + true).forward(request, response);
+
+        	return;
+        	
+        }
    }
    
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -62,8 +75,20 @@ public class ClienteServlet extends HttpServlet {
         	LlenarDdlProvincias(request,response);
         	request.getRequestDispatcher("AltaClienteUser.jsp").forward(request, response);	
         }
-        
-        ActualizarLista(request, response);
+        if(request.getParameter("IdClienteEliminar") != null) {
+        	int idEliminar = Integer.parseInt(request.getParameter("IdClienteEliminar"));
+        	boolean eliminado = clienteNegocio.Eliminar(idEliminar);
+        	if(eliminado) {
+
+        		ActualizarLista(request, response, 1);
+        	}else {
+        			
+        		
+        		ActualizarLista(request, response, 2);
+        	}
+        		return;
+        }
+        ActualizarLista(request, response,0);
     }
     
  
@@ -81,8 +106,6 @@ public class ClienteServlet extends HttpServlet {
     	
         cliente.setDni(Integer.parseInt(request.getParameter("dni")));
         
-        //falta provincia
-        //falta nacimiento
         
         cliente.setNombre(request.getParameter("nombre"));
         cliente.setCuil(request.getParameter("cuil"));
@@ -107,7 +130,7 @@ public class ClienteServlet extends HttpServlet {
 
         if (resultado != null) {
           
-            ActualizarLista(request, response);
+            ActualizarLista(request, response,0);
             request.getRequestDispatcher("ListarBanco.jsp").forward(request, response);	
             
         } else {

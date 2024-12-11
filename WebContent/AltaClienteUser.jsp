@@ -107,13 +107,15 @@
             <input type="text" id="localidad" name="localidad" placeholder="Ingrese su localidad" required pattern="^[a-zA-Z]+$" title="La localidad solo debe contener letras.">
 
             <label for="domicilio">Domicilio:</label>
-            <input type="text" id="domicilio" name="domicilio" placeholder="Ingrese su domicilio" required pattern="^[a-zA-Z0-9]+$" title="El domiiclio solo debe contener letras y números.">
+            <input type="text" id="domicilio" name="domicilio" placeholder="Ingrese su domicilio" required pattern="^[a-zA-Z0-9 ]+$" title="El domicilio solo debe contener letras, números y espacios.">
+
 
             <label for="correoElectronico">Correo Electrónico:</label>
             <input type="email" id="correoElectronico" name="correoElectronico" placeholder="Ingrese su correo electrónico" required>
 
             <label for="telefono">Teléfono:</label>
-            <input type="tel" id="telefono" name="telefono" placeholder="Ingrese su número de teléfono" required pattern="^\d+$" title="El telefono solo debe contener números.">
+            <input type="tel" id="telefono" name="telefono" placeholder="Ingrese su número de teléfono" required pattern="^[+]?[\d ]+$" title="El teléfono solo debe contener números, espacios y el signo '+'.">
+
 
            
         </div>

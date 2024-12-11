@@ -6,15 +6,15 @@ use SistemaBancario;
 drop table if exists provincia;
 create table provincia (
 	id_provincia int auto_increment,
-	nombre varchar(50) not null,
+	nombre varchar(60) not null,
 	primary key (id_provincia),
 	unique key (nombre)
 );
 
 drop table if exists usuario;
 create table usuario (
-  nombre_usuario varchar(30) not null,
-  pass varchar(35) not null,
+  nombre_usuario varchar(60) not null,
+  pass varchar(60) not null,
   tipo int not null,				-- 1: Administrador; 2: Cliente
   activo bit default 1,
   primary key (nombre_usuario)
@@ -23,9 +23,9 @@ create table usuario (
 drop table if exists cliente;
 create table cliente (
   id_cliente int auto_increment,
-  nombre_usuario varchar(20) not null,
+  nombre_usuario varchar(60) not null,
   dni int not null,
-  cuil varchar (20) not null,
+  cuil varchar (60) not null,
   nombre varchar(60) not null,
   apellido varchar(60) not null,
   sexo int not null,				-- 1: masculino; 2: femenino; 3: otro
@@ -35,7 +35,7 @@ create table cliente (
   localidad varchar(60) not null,
   id_provincia int not null,
   email varchar(100) not null,
-  telefono varchar(40) not null,
+  telefono varchar(60) not null,
   activo bit not null default 1,
   primary key (id_cliente),
   unique key (nombre_usuario),

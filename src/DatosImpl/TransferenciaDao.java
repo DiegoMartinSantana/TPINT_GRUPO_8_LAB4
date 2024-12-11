@@ -15,6 +15,8 @@ public class TransferenciaDao implements ITransferenciaDao {
 
 	private static TransferenciaDao instancia = null;
 	
+	private static final String select_IDcuentaXCBU="SELECT id_cuenta FROM cuenta WHERE cbu = ?";
+	
 	private static final String TRASNFERIR_FONDOS = "{CALL sp_transferir_fondos(?, ?, ?, ?)}";
 	
 	public static TransferenciaDao obtenerInstancia() {
@@ -50,4 +52,51 @@ public class TransferenciaDao implements ITransferenciaDao {
         }
 		
 	}
+	
+	
+
+
+	public int obtenerIDCuentaPorCBU(String cbu) {
+	    PreparedStatement statement = null;
+	    ResultSet resultSet = null;
+	    Connection conexion = Conexion.getConexion().getSQLConexion();
+	    
+	    int id_cuenta = 0;
+
+	    try {
+	        // Preparar la consulta con el valor del CBU
+	        statement = conexion.prepareStatement(select_IDcuentaXCBU);
+	        
+	        // Establecer el valor del parámetro 'cbu' (en el primer ?)
+	        statement.setString(1, cbu);
+	        
+	        // Ejecutar la consulta
+	        resultSet = statement.executeQuery();
+	        
+	        if (resultSet.next()) {
+	            id_cuenta = resultSet.getInt("id_cuenta");
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        // Cerrar recursos (statement y resultSet) para evitar fugas de memoria
+	        try {
+	            if (resultSet != null) {
+	                resultSet.close();
+	            }
+	            if (statement != null) {
+	                statement.close();
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
+	    
+	    return id_cuenta;
+	}
+
+
+
+
+
 }

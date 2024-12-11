@@ -42,7 +42,24 @@
         </div>
         <div class="row">
             <div class="col-12">
+            
                 <div >
+                <%if(request.getParameter("Eliminado")!=null){ %>
+                <div class="alert alert-success alert-dismissible fade show " role="alert">
+  <strong>Cliente Eliminado</strong> Se ha eliminado exitosamente el Cliente.
+  <button type="button" class="btn-close m-0" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+                
+                <%} %>
+                  <%if(request.getParameter("TieneCuentas")!=null){ %>
+                <div class="alert alert-danger alert-dismissible fade show " role="alert">
+  	<strong>Error al Eliminar.</strong> El cliente tiene cuentas asociadas.
+  	<button type="button" class="btn-close m-0" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+                
+                <%} %>
+               
+               
                     <table  id="clientesTable" class="table table-hover align-middle" style="border-radius: 16px; overflow: hidden; background: #fff; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
                         <thead style="background: #007bff; color: #fff; text-align: center;">
                             <tr>

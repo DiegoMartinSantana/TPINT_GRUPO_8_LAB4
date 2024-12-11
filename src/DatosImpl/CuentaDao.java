@@ -23,9 +23,9 @@ public class CuentaDao implements ICuentaDao {
     private static final String SELECT_BY_ID = "SELECT * FROM cuenta WHERE id_cuenta = ?";
     private static final String traerUltimoIDMovimiento ="SELECT IFNULL(MAX(id_cuenta), 0) + 1 AS next_id FROM cuenta";
     private static final String SELECT_CUENTAS_BY_CLIENTE = "SELECT id_cuenta, c.activa, nombre, apellido, dni, creacion, tipo, cbu, saldo " + 
-    														"FROM cuenta c INNER JOIN cliente cl on cl.id_cliente = c.id_cliente where c.id_cliente=?";
+    														"FROM cuenta c INNER JOIN cliente cl on cl.id_cliente = c.id_cliente where c.id_cliente=? and c.activa=true";
     private static final String UPDATE_SALDO = "UPDATE cuenta SET saldo = ? WHERE id_cuenta = ?";
-    private static final String CuentasDelCliente = "SELECT count(*) as Cantidad FROM cuenta where id_cliente = 1";
+    private static final String CuentasDelCliente = "SELECT count(*) as Cantidad FROM cuenta where id_cliente = ? and activa = true";
     private CuentaDao() { }
 
     public static CuentaDao obtenerInstancia() {
@@ -54,6 +54,7 @@ public class CuentaDao implements ICuentaDao {
 		    int cantidad=0;
 		    try {
 		        statement = conexion.prepareStatement(CuentasDelCliente);
+		        statement.setInt(1, idCliente);
 		        resultSet = statement.executeQuery();
 		        
 		        if (resultSet.next()) {
