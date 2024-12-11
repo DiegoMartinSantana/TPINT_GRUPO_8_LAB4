@@ -53,6 +53,21 @@ public class CuotasServlet extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
+		
+		if(request.getParameter("btnPagarCuota") != null) {
+			
+			  
+			String idCuotaString = request.getParameter("idcuota"); // O de donde provenga el idCuota
+			int idCuota = Integer.parseInt(idCuotaString); // Convertir a int
+			request.setAttribute("idCuota", idCuota); // Establecer el atributo en la solicitud
+			RequestDispatcher rd = request.getRequestDispatcher("PagarCuota.jsp");
+			rd.forward(request, response);
+			
+
+	    	   
+	       }
+		
+		
 	}
 
 }

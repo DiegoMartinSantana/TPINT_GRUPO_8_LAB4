@@ -6,11 +6,21 @@ import java.time.LocalDate;
 public class Cuota {
 
 	
+	private int IdCuota;
 	private int IdPrestamo;
 	private int NumeroCuota;
 	private float Importe;
 
 	private LocalDate Vencimento;
+	
+	public int getId() {
+		return IdCuota;
+	}
+	
+	public void setId(int id) {
+		IdCuota=id;
+	}
+	
 	public int getEstado() {
 		return Estado;
 	}

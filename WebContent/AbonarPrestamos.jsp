@@ -88,19 +88,38 @@
             <li class="list-group-item d-flex align-items-center justify-content-between">
                 <div>
                     <i class="bi bi-credit-card"></i>
+                    
                     <strong><%=cuota.getNumeroCuota() %></strong>: $<%=cuota.getImporte() %>
                     <p><%=cuota.getVencimento() %></p>
                 </div>
                 <!-- uno peniente 2 pagado 3 vencida -->
-             <%if(cuota.getEstado()== 1 ){ %>
-                <span class="badge bg-warning">Pendiente</span>
                 
-                <%} %>
-        <%if(cuota.getEstado()==2){ %>
+              <form action="CuotasServlet?idcuota?value=<%=cuota.getId()%>&idPrestamo=<%=cuota.getIdPrestamo()%>" method="POST">
+                
+            
+
+							<%
+								if (cuota.getEstado() == 1) {
+							%>
+                            <button class="btn btn-success" type="submit"
+								name="btnPagarCuota">Pagar</button>
+							<span class="badge bg-warning">Pendiente</span>
+
+
+							<%
+								}
+							%>
+			</form> <%
+ 	if (cuota.getEstado() == 2) {
+ %>
                 <span class="badge bg-success">Pagado</span>
                 
-                <%} %>
-        <%if(cuota.getEstado()==3){ %>
+                <%
+                                	}
+                                %>
+        <%
+        	if (cuota.getEstado() == 3) {
+        %>
                 <span class="badge bg-danger">Vencida</span>
                 
                 <%} %>

@@ -38,6 +38,7 @@ public class PagoDao implements IPagoDao {
 	        while (resultSet.next()) { 
 	            Cuota cuota = new Cuota();
        
+	            cuota.setId(resultSet.getInt("id_cuota"));
 	            cuota.setIdPrestamo(resultSet.getInt("id_prestamo"));
 	            cuota.setNumeroCuota(resultSet.getInt("numero_cuota"));
 	            cuota.setImporte(resultSet.getFloat("importe"));
