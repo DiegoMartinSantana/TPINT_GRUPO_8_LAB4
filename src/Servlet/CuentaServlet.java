@@ -49,6 +49,7 @@ public class CuentaServlet extends HttpServlet {
     	List<Cuenta> listaCuenta = cuentaNegocio.obtenerCuentas();
         request.setAttribute("cuentas", listaCuenta);
         request.getRequestDispatcher("ListarCuenta.jsp").forward(request, response);
+        return;
         
     
     }
@@ -70,7 +71,7 @@ public class CuentaServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
+		
 	}
 
 }

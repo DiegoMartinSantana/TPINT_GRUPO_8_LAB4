@@ -49,11 +49,6 @@ public class CuentaNegocio implements ICuentaNegocio {
 
     @Override
     public boolean eliminarCuenta(int idCuenta) {
-        Cuenta cuenta = cuentaDao.obtenerCuentaPorId(idCuenta);
-        if (cuenta == null || !cuenta.isActiva()) {
-            System.out.println("No se puede eliminar una cuenta que no existe o que está inactiva.");
-            return false;
-        }
         return cuentaDao.eliminarCuenta(idCuenta);
     }
 
