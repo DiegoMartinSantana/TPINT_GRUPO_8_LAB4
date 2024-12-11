@@ -29,10 +29,28 @@ public class CuentaServlet extends HttpServlet {
     }
 
     public void actualizarCuenta (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	
+    	if(request.getParameter("Limite")!=null){
+    		int limite = Integer.parseInt(request.getParameter("Limite"));
+    		
+    		if(limite==2) {
+    		request.getSession().removeAttribute("CreadaCorrectamente");
+    	 	request.getSession().setAttribute("LimiteCuentas", true);
+    	 	request.getRequestDispatcher("AltaCuenta.jsp").forward(request, response);
+    	 	return;
+    	 	}
+    				else if(limite==1){
+    		request.getSession().removeAttribute("LimiteCuentas");
+    	 	request.getSession().setAttribute("CreadaCorrectamente", true);
+    	 	request.getRequestDispatcher("AltaCuenta.jsp").forward(request, response);
+    	}
+    }
+    	
     	List<Cuenta> listaCuenta = cuentaNegocio.obtenerCuentas();
         request.setAttribute("cuentas", listaCuenta);
         request.getRequestDispatcher("ListarCuenta.jsp").forward(request, response);
         
+    
     }
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

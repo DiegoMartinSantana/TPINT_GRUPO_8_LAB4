@@ -16,12 +16,19 @@ public class CuentaNegocio implements ICuentaNegocio {
     }
 
     @Override
-    public boolean agregarCuenta(Cuenta cuenta) {
-       // if (cuenta.getCbu().length() != 22) {
-           // System.out.println("CBU debe tener 22 dígitos.");
-            //return false;
-        //}
-        return cuentaDao.crearCuenta(cuenta);
+    public int  agregarCuenta(Cuenta cuenta) {
+    
+	//1 = ok 2=error bd 3 = tiene 3 cuentas
+    	boolean Habilitado = cuentaDao.ValidarLimiteCuentas( cuenta.getIdCliente());
+    	
+    	if(Habilitado) {
+    	if(cuentaDao.crearCuenta(cuenta)){
+    		return 1;
+    	} 
+    	}else {
+    		return 3;
+    	}
+    	return 2;
     }
     public ArrayList<Cuenta> listarCuentasxCliente(int idCliente) {
     	ArrayList<Cuenta> cuentas = cuentaDao.listarCuentasxCliente(idCliente);

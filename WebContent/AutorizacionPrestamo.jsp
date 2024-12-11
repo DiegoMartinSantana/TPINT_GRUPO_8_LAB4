@@ -27,12 +27,12 @@
 </head>
 <body>
     <div class="row">
-        <!-- Navegación -->
+       
         <div class="col-2"> 
             <%@ include file="NavegacionComponente.jsp" %>
         </div>
-        <!-- Contenido Principal -->
-        <div class="col-9 section">
+        
+        <div class="col-9 section" style="margin-top:30px">
             <h2 class="text-center mb-4">Préstamos</h2>
             <div class="mb-3">
             

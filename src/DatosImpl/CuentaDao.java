@@ -25,6 +25,7 @@ public class CuentaDao implements ICuentaDao {
     private static final String SELECT_CUENTAS_BY_CLIENTE = "SELECT id_cuenta, c.activa, nombre, apellido, dni, creacion, tipo, cbu, saldo " + 
     														"FROM cuenta c INNER JOIN cliente cl on cl.id_cliente = c.id_cliente where c.id_cliente=?";
     private static final String UPDATE_SALDO = "UPDATE cuenta SET saldo = ? WHERE id_cuenta = ?";
+    private static final String CuentasDelCliente = "SELECT count(*) as Cantidad FROM cuenta where id_cliente = 1";
     private CuentaDao() { }
 
     public static CuentaDao obtenerInstancia() {
@@ -43,6 +44,32 @@ public class CuentaDao implements ICuentaDao {
         }
         return cbu;
     }
+	public boolean ValidarLimiteCuentas(int idCliente) {
+		
+		 PreparedStatement statement;
+		    ResultSet resultSet;
+		    
+		    Connection conexion = Conexion.getConexion().getSQLConexion();
+		 
+		    int cantidad=0;
+		    try {
+		        statement = conexion.prepareStatement(CuentasDelCliente);
+		        resultSet = statement.executeQuery();
+		        
+		        if (resultSet.next()) {
+		            cantidad = resultSet.getInt("Cantidad");
+		        }
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    }
+		    
+		   if(cantidad >= 3 )return false;
+		   
+		   return true;
+		
+		
+		
+	}
     public ArrayList<Cuenta> listarCuentasxCliente(int idCliente) {
         PreparedStatement statement;
         ResultSet resultSet;
@@ -277,4 +304,29 @@ public class CuentaDao implements ICuentaDao {
 		    return ultimoIDMovimiento;
 
 }
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

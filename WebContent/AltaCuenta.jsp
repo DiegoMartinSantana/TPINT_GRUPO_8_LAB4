@@ -17,6 +17,21 @@
 </style>
 </head>
 <body>
+
+ <% 
+ int  creada = 3 ;
+ if(request.getSession().getAttribute("LimiteCuentas")!=null){ 
+	boolean resp =(boolean)request.getSession().getAttribute("LimiteCuentas");
+	 
+ 	if(resp){
+ 		creada=2;
+ 	}else{
+ 		creada=1;
+ 	}
+ 	
+ } 
+ 
+ %>
 <div class="row">
     <div class="col-2">
         <%@include file="NavegacionComponente.jsp" %>
@@ -67,10 +82,29 @@
             </div>
 
            <input type="submit" style="width:100%;" value="Aceptar">
+          
            
         </form>
-    </div>
+
+         
+           <%	if(creada==2){ %>
+
+          <div class="alert alert-danger alert-dismissible fade show position-relative" role="alert" style="margin-top:20px">
+                    <strong>Error al Crear la Cuenta</strong> Maximo de 3 Cuentas por cliente.
+                    <button type="button" class="btn-close position-absolute top-0 end-0 m-0" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>       
+        
+       	 <%}else if(creada==1) { %>
+        	 <div class="alert alert-success alert-dismissible fade show position-relative" role="alert">
+             <strong>Cuenta Creada </strong> Se ha creado correctamente la cuenta.
+             <button type="button" class="btn-close position-absolute top-0 end-0 m-0" data-bs-dismiss="alert" aria-label="Close"></button>
+     	    </div>       
+        	
+     		  <% } %>
+       
 </div>
+</div>
+
 
 </body>
 </html>

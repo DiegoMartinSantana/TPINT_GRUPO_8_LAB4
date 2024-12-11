@@ -53,6 +53,7 @@ public class AltaCuentaServlet extends HttpServlet {
         
    
         request.getRequestDispatcher("AltaCuenta.jsp").forward(request, response);
+        return;
     }
 
 protected void doPost(HttpServletRequest request , HttpServletResponse response) throws ServletException, IOException {
@@ -84,11 +85,22 @@ protected void doPost(HttpServletRequest request , HttpServletResponse response)
         nuevoMovimiento.setImporte(saldoInicial);
         nuevoMovimiento.setFecha(fechaCreacion);
         nuevoMovimiento.setId_destino(UltimoIDCuenta);
+        boolean exito_mov=false;
+        int resultado = cuentaNegocio.agregarCuenta(nuevaCuenta);
         
-        boolean exito = cuentaNegocio.agregarCuenta(nuevaCuenta);
-    	boolean exito_mov = movimientoNegocio.crearMovimiento(nuevoMovimiento);
-    
-    	if (exito && exito_mov) {
+        if(resultado==1) {
+        	exito_mov= movimientoNegocio.crearMovimiento(nuevoMovimiento);
+        	 request.getRequestDispatcher("CuentaServlet?Limite="+1).forward(request, response);
+        	 return;
+        }
+    	
+        if(resultado == 3) {
+       
+        	  request.getRequestDispatcher("CuentaServlet?Limite="+2).forward(request, response);
+        	return;
+        }
+    	if (resultado==1 && exito_mov) {
+    		request.getSession().removeAttribute("LimiteCuentas");
             request.getRequestDispatcher("CuentaServlet").forward(request, response);
 
         }

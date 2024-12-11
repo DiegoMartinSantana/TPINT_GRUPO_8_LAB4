@@ -60,7 +60,7 @@
                         <%= cuenta.getTipo() == 1 ? "Caja de ahorro" : 
                             cuenta.getTipo() == 2 ? "Cuenta Corriente" : "N/A" %>
                     </td>
-                    <td style="text-align: center;"><%= cuenta.getSaldo() %></td>
+                    <td style="text-align: center;"><%= String.format("%.2f",cuenta.getSaldo()) %></td>
                     <td style="text-align: center;">
                      
                         <a href="CuentaServlet?EliminarIdCuenta=<%=cuenta.getIdCuenta()%>" 

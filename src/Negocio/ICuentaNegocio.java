@@ -5,7 +5,7 @@ import java.util.List;
 import Dominio.Cuenta;
 
 public interface ICuentaNegocio {
-	boolean agregarCuenta(Cuenta cuenta);
+	int agregarCuenta(Cuenta cuenta);
     boolean actualizarCuenta(Cuenta cuenta);
     boolean eliminarCuenta(int idCuenta);
     List<Cuenta> obtenerCuentas();
