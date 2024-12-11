@@ -80,12 +80,13 @@
             <div class="d-flex align-items-center">
             
                 <h5><%= usuario %></h5>
-                <form action="LoginServlet" method="post">
+               
+                <a class="nav-icon ms-3" href="DatosPersonalesServlet" > 
+                    <i class="bi bi-person-circle" style="margin-rigth:20px"></i>
+                </a>
+                 <form action="LoginServlet" method="post" style="margin-left:20px">
              <button type="submit" class="btn btn-danger">Cerrar Sesion</button>
    			 </form>
-                <a class="nav-icon ms-3" href="DatosPersonalesServlet">
-                    <i class="bi bi-person-circle"></i>
-                </a>
             </div>
      
     </div>

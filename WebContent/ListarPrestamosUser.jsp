@@ -27,73 +27,62 @@
 
     	
     %>
-    <div class="container mt-5">
-    
-        <h3 class="mb-4">Historial </h3>
+ <div class="container mt-5">
+    <h3 class="mb-4">Historial</h3>
 
-     	<% if(prestamos != null){ %>
-	
-        <div class="row">
-            <div class="col-12"><div>
+    <% if(prestamos != null){ %>
+
+    <div class="row">
+        <div class="col-12">
             <%if(session.getAttribute("PrestamoAceptado")!=null){ %>
-<div class="alert alert-primary alert-dismissible fade show" role="alert">
-  <strong>Prestamo Solicitado</strong>		 El banco analizara su solicitud.
-  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
-<div>
-</div>
-<%} %>
-               
-                <table class="table table-bordered table-hover" style="justify-content: center" id="prestamosTable">
-                    <thead class="table">
-                        <tr>
-                          
-                            <th>Cbu</th>
-                            <th>Monto Cuota</th>
-                            <th>Importe Solicitado</th>
-                            <th>Plazo Cuotas</th>
-                            <th>Interés</th>
-                            <th>Importe Pagar</th>
-                            <th>Estado</th>
-                            <th>Fecha Prestamo</th>
-                          
-                        </tr>
-                    </thead>
-                    <tbody>
-                             <%for(PrestamoDto prestamo : prestamos ){ %>
-                            <tr>
-                              
-                                <td><%=prestamo.cbu%></td>
-                                <td><%=prestamo.montoCuota %></td>
-                                <td><%=String.format("%.0f", prestamo.importeSolicitado) %></td>
-                                <td><%=prestamo.plazoCuotas %></td>
-                                <td><%=prestamo.interes %></td>
-                                <td style="padding:20px ;padding-rigth:20px"><%=String.format("%.0f", prestamo.importePagar) %> </td>
-                                
-                                <%if(prestamo.estado==1) {%>
-                                	<td>En curso</td>
-                               <%} %>
-                           
-                                 <%if(prestamo.estado==2) {%>
-                                	<td>Finalizado</td>
-                                	
-                                	 
-                               <%} %> 
-                                
-                                <td><%=prestamo.fechaPrestamo %></td>
-                           <%} %>
-                            </tr>
-                   			
-                    </tbody>
-                </table>
+            <div class="alert alert-primary alert-dismissible fade show" role="alert">
+                <strong>Préstamo Solicitado</strong> El banco analizará su solicitud.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
-        </div>
-	
+            <% } %>
 
-        <%}else{ %>
-        <p>sin prestamos.</p>	
-        <%} %>
+            <table class="table table-bordered table-hover text-center" id="prestamosTable">
+                <thead class="table-primary">
+                    <tr>
+                        <th>Cbu</th>
+                        <th>Monto Cuota</th>
+                        <th>Importe Solicitado</th>
+                        <th>Plazo Cuotas</th>
+                        <th>Interés</th>
+                        <th>Importe a Pagar</th>
+                        <th>Estado</th>
+                        <th>Fecha Préstamo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for(PrestamoDto prestamo : prestamos) { %>
+                    <tr>
+                        <td><%= prestamo.cbu %></td>
+                        <td><%= prestamo.montoCuota %></td>
+                        <td><%= String.format("%.0f", prestamo.importeSolicitado) %></td>
+                        <td><%= prestamo.plazoCuotas %></td>
+                        <td><%= prestamo.interes %></td>
+                        <td><%= String.format("%.0f", prestamo.importePagar) %></td>
+                        <td>
+                            <% if(prestamo.estado == 1) { %>
+                            En curso
+                            <% } else if(prestamo.estado == 2) { %>
+                            Finalizado
+                            <% } %>
+                        </td>
+                        <td><%= prestamo.fechaPrestamo %></td>
+                    </tr>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
     </div>
+
+    <% } else { %>
+    <p class="text-muted">Sin préstamos.</p>
+    <% } %>
+</div>
+
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>

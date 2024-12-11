@@ -23,7 +23,7 @@
         </div>
 
         
-        <div class="col-md-10" style="margin-top:30px">
+        <div class="col-md-9" style="margin-top:30px">
         
             <div class="card mb-4">
                 <div class="card-header text-white" style=" background-color: #4a4a87">

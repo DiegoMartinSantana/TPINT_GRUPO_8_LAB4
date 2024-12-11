@@ -55,7 +55,10 @@
 </style>
 
 <aside class="sidebar">
-  <h5><%=session.getAttribute("UsuarioNombre") %></h5>
+   <% String usuario = (String) session.getAttribute("UsuarioNombre");
+               usuario = usuario.toUpperCase(); %>
+               
+  <h5><%=usuario%></h5>
 
     <ul class="nav flex-column">
      
