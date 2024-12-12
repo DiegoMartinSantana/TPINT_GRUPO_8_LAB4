@@ -35,20 +35,20 @@ public class PagoNegocio implements IPagoNegocio{
 
 	}
 	
-	public int PagarCuota(int idCuota,int idCuentaDebitar ){
-		CuentaDao cuentaDao;
-		Pago pago = pagoDao.obtenerPago(idCuota);
-		PrestamoDto prestamo = prestamoDao.obtenerPrestamoPorIdV2(pago.getIdPrestamo());
-		cuentaDao = CuentaDao.obtenerInstancia();
-		Cuenta cuenta = cuentaDao.obtenerCuentaPorId(idCuentaDebitar);
-		if(cuenta.getSaldo()<prestamo.montoCuota ) {
-			//saldo insuficiente
-			return 2;
-		}
-		pagoDao.generarPago(pago);
-		return 1;
-		
+	public Pago getCuentaByCuota(int idCuota) {
+		return pagoDao.getCuentaByCuota(idCuota);
 	}
 	
+	public boolean pagar(int idCuota) {
+		
+		Pago pago = new Pago();
+		
+		pago = getCuentaByCuota(idCuota);
+				
+		return pagoDao.generarPago(pago);
+		
+	}
 }
+	
+
  

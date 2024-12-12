@@ -23,6 +23,12 @@ public class PagoDao implements IPagoDao {
             "INNER JOIN prestamo_solicitado ps ON ps.id_prestamo_solicitado = p.id_prestamo_solicitado " +
             "WHERE c.id_cuota = ?;";
 	private static final String getCuotasByPrestamo = "SELECT c.* FROM cuota c inner join prestamo p on p.id_prestamo = c.id_prestamo where c.id_Prestamo = ?";
+	private static final String getCuentaByCuota = "SELECT p.id_prestamo, ps.id_cuenta, c.id_cuota \r\n"
+			+ "from cuota c\r\n"
+			+ "inner join prestamo p on p.id_prestamo = c.id_prestamo\r\n"
+			+ "inner join prestamo_solicitado ps on ps.id_prestamo_solicitado = p.id_prestamo_solicitado\r\n"
+			+ "where c.id_cuota = ?";
+	
 	public static PagoDao obtenerInstancia() {
         if (instancia == null) {
             instancia = new PagoDao();
@@ -86,27 +92,60 @@ public class PagoDao implements IPagoDao {
 	    return cuotas;
 	}
 
-
 	@Override
-	public void generarPago(Pago pago) {
-	    Connection conexion = Conexion.getConexion().getSQLConexion();
-
-	    try {
-            conexion.setAutoCommit(false);
-	        CallableStatement stmt = conexion.prepareCall(PAGAR_CUOTA); 
-	        stmt.setInt(1, pago.getIdPrestamo());
-	        stmt.setInt(2, pago.getIdCuota());
-	        stmt.setInt(3, pago.getIdCuenta()); // Verifica el tipo correcto
-	        stmt.execute();
-	        conexion.commit(); // Asegúrate de confirmar la transacción si es necesario
-	    } catch (SQLException e) {
-	        System.err.println("Error al ejecutar el procedimiento almacenado: " + e.getMessage());
-	        try {
-	            conexion.rollback();
-	        } catch (SQLException e1) {
-	            System.err.println("Error al realizar el rollback: " + e1.getMessage());
+	public Pago getCuentaByCuota(int idCuota) {
+		Pago pago = new Pago();
+		
+		PreparedStatement statement;
+		Connection conexion = Conexion.getConexion().getSQLConexion();
+		
+		try {
+			statement = conexion.prepareStatement(getCuentaByCuota);
+	        statement.setInt(1, idCuota);
+	        ResultSet resultSet = statement.executeQuery();
+	        
+	        while(resultSet.next()) {
+	        	pago.setIdPrestamo(resultSet.getInt("id_prestamo"));
+	        	pago.setIdCuenta(resultSet.getInt("id_cuenta"));
+	        	pago.setIdCuota(resultSet.getInt("id_cuota"));
 	        }
+	        
+		} catch (SQLException e) {
+	        e.printStackTrace();
 	    }
+		
+		return pago;
+	}
+	
+	@Override
+	public boolean generarPago(Pago pago) {
+
+		Connection conexion = Conexion.getConexion().getSQLConexion();
+		
+		boolean exitoso = false;
+		
+		try {
+
+		CallableStatement stmt = conexion.prepareCall(PAGAR_CUOTA); 
+		stmt.setInt(1, pago.getIdPrestamo());
+        stmt.setInt(2, pago.getIdCuota());
+        stmt.setFloat(3, pago.getIdCuenta());
+        stmt.execute();
+        
+        exitoso = true;
+		}
+		
+        catch (SQLException e) {
+            e.printStackTrace();
+            try {
+                conexion.rollback();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+        }
+		
+		return exitoso;
+		
 	}
 	
 	

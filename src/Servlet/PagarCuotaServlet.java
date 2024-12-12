@@ -28,9 +28,9 @@ public class PagarCuotaServlet extends HttpServlet {
 		    	// validar saldo previo a pagar
 		    	int idCuotaPago = Integer.parseInt(request.getParameter("idCuota"));
 		    	
-		    	int resultado = pagoNegocio.PagarCuota(idCuotaPago,idCuentaPago);
+		    	boolean resultado = pagoNegocio.pagar(idCuotaPago);
 		    	
-		    if(resultado==2) {
+		    if(!resultado) {
                 request.setAttribute("saldoInsuficiente", true);
 		    	
 		    }else {

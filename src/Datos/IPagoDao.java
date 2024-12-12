@@ -7,9 +7,10 @@ import Dominio.Pago;
 
 public interface IPagoDao {
 
-	void generarPago(Pago pago);
+	boolean generarPago(Pago pago);
 	public ArrayList<Cuota> getCuotasByPrestamo(int idPrestamo);
-	public Pago obtenerPago(int idCouta);
+	public Pago getCuentaByCuota(int idCuota);
+	
 }
 
 	
