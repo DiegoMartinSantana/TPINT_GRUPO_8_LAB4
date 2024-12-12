@@ -59,7 +59,7 @@
                                     
                                         <h6 class="mb-1">Préstamo </h6>
                                         <p class="text-muted mb-0">
-                                            <strong>Importe:</strong> $<%=String.format("%.2f", prestamo.importeSolicitado) %> 
+                                            <strong>Importe:</strong> $<%=String.format("%,.2f", prestamo.importeSolicitado) %> 
                                             <br>
                                             <strong>Cuotas:</strong> <%= prestamo.plazoCuotas %>
                                             <br>
@@ -100,7 +100,7 @@
                                     <div>
                                         <h6 class="mb-1">Cuota <%= cuota.getNumeroCuota() %></h6>
                                         <p class="text-muted mb-0">
-                                            <strong>Importe:</strong> $<%= String.format("%.2f",cuota.getImporte()) %> 
+                                            <strong>Importe:</strong> $<%= String.format("%,.2f",cuota.getImporte()) %> 
                                                                                     </p>
                                                                                     <p class="text-muted mb-0">
                                              <strong>Vencimiento:</strong> <%= cuota.getVencimento() %>

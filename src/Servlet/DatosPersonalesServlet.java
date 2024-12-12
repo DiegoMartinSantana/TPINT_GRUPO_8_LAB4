@@ -59,6 +59,5 @@ public class DatosPersonalesServlet extends HttpServlet {
 	 
     public DatosPersonalesServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 }

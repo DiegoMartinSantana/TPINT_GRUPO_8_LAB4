@@ -42,7 +42,7 @@
         <div class="card-body">
             <h6 class="text-primary fw-bold">CBU: <%= cuenta.getCbu() %></h6>
             <p class="text-muted mb-1">Saldo Disponible:</p>
-            <h5 class="saldo">$<%= String.format("%.2f",cuenta.getSaldo()) %></h5>
+            <h5 class="saldo">$<%= String.format("%,.2f",cuenta.getSaldo()) %></h5>
             <a href="HomeServlet?cuentaId=<%= cuenta.getIdCuenta() %>" class="btn btn-outline-primary btn-block mt-3">
                Ver Transferencias <i class="fas fa-chevron-right"></i>
             </a>
@@ -76,7 +76,7 @@
                         <% for (Movimiento transferencia : Transferencias) { %>
                             <tr>
                                 <td><%= transferencia.getFecha() %></td>
-                                <td>$<%=String.format("%.2f",  transferencia.getImporte()) %></td>
+                                <td>$<%=String.format("%,.2f",  transferencia.getImporte()) %></td>
                                 <td><%= transferencia.getDetalle() %></td>
                             </tr>
                         <% } %>
@@ -88,12 +88,9 @@
 </div>
 <script>
 $(document).ready(function() {
-    // Eliminar filas ignoradas antes de inicializar DataTables
     $('#transferenciasTable tbody .datatable-ignore').remove();
 
-    // Inicializar DataTables
     $('#transferenciasTable').DataTable({
-        // Configuración opcional si necesitas personalizar algo
         language: {
         	url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json'
         }

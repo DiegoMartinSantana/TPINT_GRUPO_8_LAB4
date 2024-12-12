@@ -31,7 +31,6 @@ public class UsuarioDao implements IUsuarioDao {
 		return instancia;
 	}
 
-	//devuelve el usuario. logueado
 	@Override
 	public Usuario Loguear(String nombre_usuario, String pass) {
         PreparedStatement statement;

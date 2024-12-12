@@ -14,7 +14,7 @@
 </style>
 </head>
 <body>
-   <%// Informe informe = (Informe)request.getAttribute("informePrestamos"); %>
+   
 
     <div class="row">
         
@@ -41,7 +41,6 @@
                             <label for="fechaHasta" class="form-label">Fecha hasta</label>
                             <input type="date" id="fechaHasta" name="fechaHasta" class="form-control" required>
                         </div>
-                        <!-- <button type="submit" style="background-color: #c2c2d7;width:180px" class="btn ">Generar </button> -->
                         <input type="submit" name="btnGenerar" value="Generar">
                     </form>
                 </div>
@@ -49,7 +48,6 @@
 
           
          
-            <%// if (informe != null) { %>
             <div class="card mb-4">
                 <div class="card-header text-white" style="background-color: #4a4a87">
                     <h4 class="mb-0">Prestamos Aprobados</h4>
@@ -69,7 +67,7 @@
             %>
             <tr>
                 <td><%= informe.getCantidadPrestamos() %> préstamos</td>
-                <td>$ <%= String.format("%.2f",informe.getTotalPrestado()) %></td>
+                <td>$ <%= String.format("%,.2f",informe.getTotalPrestado()) %></td>
                 <td><%= informe.getClienteLider() %></td>
             </tr>
             <% } %>
@@ -107,7 +105,7 @@
             <tr>
                 <td><%= cliente.getNombre() %> <%= cliente.getApellido() %></td>
                 
-                <td>$ <%= String.format("%.2f",cliente.getTotalPrestado()) %></td>
+                <td>$ <%= String.format("%,.2f",cliente.getTotalPrestado()) %></td>
             </tr>
             <% 
                 } 

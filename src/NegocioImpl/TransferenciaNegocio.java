@@ -15,7 +15,6 @@ public class TransferenciaNegocio implements ITransferenciaNegocio{
 	        transferenciaDAO.generarTransferencia(transferencia);
 	        return true;
 	    } catch (Exception e) {
-	        // Manejar la excepción según sea necesario
 	        return false;
 	    }
 	}

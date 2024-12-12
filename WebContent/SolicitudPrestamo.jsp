@@ -16,39 +16,51 @@ v<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncodi
     </style>
 
 <script>
-	function calcularMontoAPagar() {
-		var montoSolicitado = parseFloat(document.getElementById("monto").value);
-		var interes = parseFloat(document.getElementById("interes").value);
 
-		if (isNaN(montoSolicitado) || isNaN(interes)) {
-			return;
-		}
+    function formatNumber(value) {
+        return new Intl.NumberFormat('es-ES', { 
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        }).format(value);
+    }
 
-		
-		var montoTotal = montoSolicitado * (1 + interes / 100);
+    function calcularMontoAPagar() {
+        const montoSolicitado = parseFloat(document.getElementById("monto").value);
+        const interes = parseFloat(document.getElementById("interes").value);
 
-		
-		document.getElementById("importe_pagar").value = montoTotal.toFixed(2);
-	}
-	 
-   function actualizarInteres(){
-	   const interesMap = {
-		         3: 2,
-		         6: 5,
-		         12: 7
-		     };
-   
-		     const cuotasSelect = document.getElementById('cuotas');
-		     const interesInput = document.getElementById('interes');
+        if (isNaN(montoSolicitado) || isNaN(interes)) {
+            return;
+        }
 
-		         const selectedCuotas = parseInt(cuotasSelect.value);
-		         const nuevoInteres = interesMap[selectedCuotas] || 0; 
-		         interesInput.value = nuevoInteres;
-		     
- 	  }
-   
- 
+        const montoTotal = montoSolicitado * (1 + interes / 100);
+
+        document.getElementById("importe_pagar").value = formatNumber(montoTotal);
+    }
+
+    function actualizarInteres() {
+        const interesMap = {
+            3: 2,
+            6: 5,
+            12: 7
+        };
+
+        const cuotasSelect = document.getElementById('cuotas');
+        const interesInput = document.getElementById('interes');
+
+        const selectedCuotas = parseInt(cuotasSelect.value);
+        const nuevoInteres = interesMap[selectedCuotas] || 0;
+        interesInput.value = nuevoInteres;
+
+        calcularMontoAPagar();
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const inputElement = document.getElementById('importe_pagar');
+        const rawValue = parseFloat(inputElement.value); 
+        inputElement.value = formatNumber(rawValue);
+    });
 </script>
+
 
 
 </head>
@@ -73,10 +85,10 @@ v<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncodi
             <div class="field">
                 <label for="monto">Monto del Préstamo:</label> 
                 <select id="monto" name="monto" required onchange="actualizarInteres() ; calcularMontoAPagar()">
-                    <option value="1000000">1.000.000</option>
-                    <option value="5000000">5.000.000</option>
-                    <option value="10000000">10.000.000</option>
-                    <option value="15000000">15.000.000</option>
+                    <option value="1000000">1.000.000,00</option>
+                    <option value="5000000">5.000.000,00</option>
+                    <option value="10000000">10.000.000,00</option>
+                    <option value="15000000">15.000.000,00</option>
                 </select>
             </div>
 

@@ -166,7 +166,6 @@ public class MovimientoDao implements IMovimientoDao {
 
 	@Override
 	public List<Movimiento> listarMovimiento() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -174,7 +173,6 @@ public class MovimientoDao implements IMovimientoDao {
 	
 	@Override
 	public Movimiento obtenerMovimientoPorId(int idMovimiento) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -189,7 +187,6 @@ public class MovimientoDao implements IMovimientoDao {
 	            throw new SQLException("La conexión a la base de datos es nula.");
 	        }
 
-	        // Desactivar autocommit para manejar la transacción manualmente
 	        conexion.setAutoCommit(false);
 
 	        statement = conexion.prepareStatement(insertarMovimiento);
@@ -202,17 +199,17 @@ public class MovimientoDao implements IMovimientoDao {
 
 	        int rows = statement.executeUpdate();
 	        if (rows > 0) {
-	            conexion.commit();  // Confirmar la transacción
+	            conexion.commit(); 
 	            isInsertExitoso = true;
 	        } else {
-	            conexion.rollback();  // Revertir la transacción si no hay filas afectadas
+	            conexion.rollback(); 
 	        }
 	    } catch (SQLException e) {
 	        System.err.println("Error al insertar el movimiento: " + e.getMessage());
 	        e.printStackTrace();
 	        try {
 	            if (conexion != null) {
-	                conexion.rollback();  // Revertir en caso de error
+	                conexion.rollback(); 
 	            }
 	        } catch (SQLException e1) {
 	            e1.printStackTrace();
@@ -220,11 +217,11 @@ public class MovimientoDao implements IMovimientoDao {
 	    } finally {
 	        try {
 	            if (statement != null) {
-	                statement.close();  // Cerrar el PreparedStatement
+	                statement.close();  
 	            }
 	            if (conexion != null) {
-	                conexion.setAutoCommit(true);  // Restaurar autocommit
-	                conexion.close();  // Cerrar la conexión
+	                conexion.setAutoCommit(true);  
+	                conexion.close(); 
 	            }
 	        } catch (SQLException e) {
 	            e.printStackTrace();

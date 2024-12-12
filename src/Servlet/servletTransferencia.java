@@ -26,7 +26,6 @@ public class servletTransferencia extends HttpServlet {
 	
     public servletTransferencia() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
     
@@ -37,13 +36,11 @@ public class servletTransferencia extends HttpServlet {
 		request.getRequestDispatcher("/transferencia.jsp").forward(request, response);
 	}
 	
-	//-1 = mismas cuentas
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		if (request.getParameter("btnTransferencia") != null) {
 		    try {
-		        // Obtener parámetros del formulario
 		        String origenParam = request.getParameter("id_cuenta_origen");
 		        String tipoDestino = request.getParameter("cuentaDestinoOpciones");
 		        String cbuDestinoParam;
@@ -87,7 +84,6 @@ public class servletTransferencia extends HttpServlet {
 		            throw new IllegalArgumentException("El importe debe ser mayor a cero.");
 		        }
 
-		        // Realizar la transferencia y validar el resultado
 		        boolean transferenciaExitosa = transferenciaNegocio.realizarTransferencia(transferencia);
 		        if (transferenciaExitosa) {
 		            request.setAttribute("mensaje", "Transferencia realizada con éxito.");
@@ -103,12 +99,11 @@ public class servletTransferencia extends HttpServlet {
 		        request.setAttribute("mensaje", "Error: " + e.getMessage());
 		        request.setAttribute("tipoMensaje", "error");
 		    } catch (Exception e) {
-		        e.printStackTrace(); // Debug en consola
+		        e.printStackTrace(); 
 		        request.setAttribute("mensaje", "Error inesperado: " + e.getMessage());
 		        request.setAttribute("tipoMensaje", "error");
 		    }
 
-		    // Reenviar al JSP
 		    request.getRequestDispatcher("/Transferencias.jsp").forward(request, response);
 		}
 		

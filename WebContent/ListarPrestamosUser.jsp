@@ -60,10 +60,10 @@
                     <tr>
                         <td><%= prestamo.cbu %></td>
                         <td><%= prestamo.montoCuota %></td>
-                        <td><%= String.format("%.0f", prestamo.importeSolicitado) %></td>
+                        <td><%= String.format("%,.2f", prestamo.importeSolicitado) %></td>
                         <td><%= prestamo.plazoCuotas %></td>
                         <td><%= prestamo.interes %></td>
-                        <td><%= String.format("%.0f", prestamo.importePagar) %></td>
+                        <td><%= String.format("%,.2f", prestamo.importePagar) %></td>
                         <td>
                             <% if(prestamo.estado == 1) { %>
                             En curso
@@ -89,12 +89,9 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
 $(document).ready(function() {
-    // Eliminar filas ignoradas antes de inicializar DataTables
     $('#prestamosTable tbody .datatable-ignore').remove();
 
-    // Inicializar DataTables
     $('#prestamosTable').DataTable({
-        // Configuración opcional si necesitas personalizar algo
         language: {
         	url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json'
         }

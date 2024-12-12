@@ -67,7 +67,7 @@
     <div class="list-group-item d-flex align-items-center justify-content-between">
         <div>
             <i class="bi bi-credit-card"></i> <strong><%= cuotaSeleccionada.getNumeroCuota() %></strong>:
-            $<%= String.format("%.2f",cuotaSeleccionada.getImporte()) %>
+            $<%= String.format("%,.2f",cuotaSeleccionada.getImporte()) %>
             <p>
                 Vencimiento: <%= cuotaSeleccionada.getVencimento() %>
             </p>

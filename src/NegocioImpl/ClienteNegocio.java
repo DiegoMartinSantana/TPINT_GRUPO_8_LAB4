@@ -45,7 +45,6 @@ public class ClienteNegocio implements IClienteNegocio{
 
 
         cuentaDao = CuentaDao.obtenerInstancia();
-        //validar si tiene cuentas asociadas
 
         ArrayList<Cuenta> cuentas = cuentaDao.listarCuentasxCliente(idCliente);
 

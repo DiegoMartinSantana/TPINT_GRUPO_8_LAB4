@@ -22,13 +22,9 @@ import NegocioImpl.UsuarioNegocio;
 @WebServlet("/servletUsuario")
 public class servletUsuario extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
+
     public servletUsuario() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	private UsuarioNegocio userNegocio = new UsuarioNegocio();

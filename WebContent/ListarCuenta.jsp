@@ -60,7 +60,7 @@
                         <%= cuenta.getTipo() == 1 ? "Caja de ahorro" : 
                             cuenta.getTipo() == 2 ? "Cuenta Corriente" : "N/A" %>
                     </td>
-                    <td style="text-align: center;"><%= String.format("%.2f",cuenta.getSaldo()) %></td>
+                    <td style="text-align: center;"><%= String.format("%,.2f",cuenta.getSaldo()) %></td>
                     <td style="text-align: center;">
                      
                         <a href="CuentaServlet?EliminarIdCuenta=<%=cuenta.getIdCuenta()%>" 
@@ -87,12 +87,9 @@
 </div>
 <script>
 $(document).ready(function() {
-    // Eliminar filas ignoradas antes de inicializar DataTables
     $('#cuentasTable tbody .datatable-ignore').remove();
 
-    // Inicializar DataTables
     $('#cuentasTable').DataTable({
-        // Configuración opcional si necesitas personalizar algo
         language: {
         	url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json'
         }

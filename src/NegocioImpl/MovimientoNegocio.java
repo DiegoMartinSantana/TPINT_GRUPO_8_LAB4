@@ -45,21 +45,7 @@ public class MovimientoNegocio implements IMovimientoNegocio  {
 	public ArrayList<Movimiento> obtenerUltimasTransferencias(int idCuenta) {
 		
 		ArrayList<Movimiento> movimientos =  movimientoDao.obtenerUltimasTransferencias(idCuenta);
-		/*
-		for(Movimiento mov : movimientos) {
 	
-			if(mov.getTipo()==3) {
-				mov.Destino= "Pago Prestamo";
-			
-			}else if(mov.getTipo()== 4) {
-				
-				//si el tipo de destino es una transferencia, entonces el id de destino tiene que ser un id cuenta
-				mov.Destino= ""
-			}
-		*/	
-		
-		
-		
 		return movimientos;
 	}
 

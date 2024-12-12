@@ -41,7 +41,7 @@ public ArrayList<PrestamoDto> GetAllAceptados() {
 	}
 	@Override
 	public boolean crearPrestamoSolicitado(PrestamoSolicitado prestamoSolicitado) {
-		// TODO Auto-generated method stub
+
 		return prestamoDao.crearPrestamoSolicitado(prestamoSolicitado);
 	}
 	

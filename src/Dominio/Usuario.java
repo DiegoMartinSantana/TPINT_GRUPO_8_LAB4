@@ -7,10 +7,9 @@ public class Usuario {
 	private boolean activo;
 
 	public Usuario() {
-        this.nombre_usuario = "default_user"; // Valor por defecto
-        this.tipo = TipoUsuario.CLIENTE; // Asumiendo que TipoUsuario tiene un valor por defecto
-        this.activo = true; // Valor predeterminado
-    }
+        this.nombre_usuario = "default_user";
+        this.tipo = TipoUsuario.CLIENTE; 
+        this.activo = true; }
 	
 	
 	public Usuario(String nombre_usuario, TipoUsuario tipo, boolean activo) {

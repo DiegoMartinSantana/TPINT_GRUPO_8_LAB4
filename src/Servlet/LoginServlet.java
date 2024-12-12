@@ -25,13 +25,8 @@ public class LoginServlet extends HttpServlet {
      * @see HttpServlet#HttpServlet()
      */
     public LoginServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+        super();}
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		UsuarioNegocio usuarioNegocio = new UsuarioNegocio();
@@ -68,9 +63,6 @@ public class LoginServlet extends HttpServlet {
 		}
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		request.getSession().removeAttribute("UsuarioNombre");
@@ -78,7 +70,7 @@ public class LoginServlet extends HttpServlet {
 		RequestDispatcher rd = request.getRequestDispatcher("Login.jsp");	
 		
 		if (request.getSession(false) != null) {
-	        request.getSession().invalidate(); //
+	        request.getSession().invalidate(); 
 	    }
 	    
 	    response.sendRedirect("Login.jsp");

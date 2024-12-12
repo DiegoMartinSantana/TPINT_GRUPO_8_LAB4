@@ -39,7 +39,6 @@ public class TransferenciaDao implements ITransferenciaDao {
 
 	        stmt.execute();
 	    } catch (SQLException e) {
-	        // Verificar si el error es por saldo insuficiente
 	        if (e.getMessage().contains("Saldo insuficiente")) {
 	            System.out.println("Error: " + e.getMessage());
 	            throw new SQLException("Saldo insuficiente para realizar la transferencia.");
@@ -60,7 +59,6 @@ public class TransferenciaDao implements ITransferenciaDao {
 	                e.printStackTrace();
 	            }
 	        }
-	        // No cerrar la conexión aquí
 	    }
 	}
 	
@@ -76,13 +74,10 @@ public class TransferenciaDao implements ITransferenciaDao {
 	    int id_cuenta = 0;
 
 	    try {
-	        // Preparar la consulta con el valor del CBU
 	        statement = conexion.prepareStatement(select_IDcuentaXCBU);
 	        
-	        // Establecer el valor del parámetro 'cbu' (en el primer ?)
 	        statement.setString(1, cbu);
 	        
-	        // Ejecutar la consulta
 	        resultSet = statement.executeQuery();
 	        
 	        if (resultSet.next()) {
@@ -91,7 +86,6 @@ public class TransferenciaDao implements ITransferenciaDao {
 	    } catch (SQLException e) {
 	        e.printStackTrace();
 	    } finally {
-	        // Cerrar recursos (statement y resultSet) para evitar fugas de memoria
 	        try {
 	            if (resultSet != null) {
 	                resultSet.close();

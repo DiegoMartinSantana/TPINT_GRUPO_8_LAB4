@@ -10,7 +10,6 @@ import Negocio.ICuentaNegocio;
 public class CuentaNegocio implements ICuentaNegocio {
 	private CuentaDao cuentaDao;
 
-    // Constructor
     public CuentaNegocio() {
         this.cuentaDao = CuentaDao.obtenerInstancia();
     }
@@ -18,7 +17,6 @@ public class CuentaNegocio implements ICuentaNegocio {
     @Override
     public int  agregarCuenta(Cuenta cuenta) {
     
-	//1 = ok 2=error bd 3 = tiene 3 cuentas
     	boolean Habilitado = cuentaDao.ValidarLimiteCuentas( cuenta.getIdCliente());
     	
     	if(Habilitado) {

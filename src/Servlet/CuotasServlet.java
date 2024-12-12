@@ -57,9 +57,9 @@ public class CuotasServlet extends HttpServlet {
 		if(request.getParameter("btnPagarCuota") != null) {
 			
 			  
-			String idCuotaString = request.getParameter("idcuota"); // O de donde provenga el idCuota
-			int idCuota = Integer.parseInt(idCuotaString); // Convertir a int
-			request.setAttribute("idCuota", idCuota); // Establecer el atributo en la solicitud
+			String idCuotaString = request.getParameter("idcuota"); 
+			int idCuota = Integer.parseInt(idCuotaString); 
+			request.setAttribute("idCuota", idCuota); 
 			RequestDispatcher rd = request.getRequestDispatcher("PagarCuota.jsp");
 			rd.forward(request, response);
 			

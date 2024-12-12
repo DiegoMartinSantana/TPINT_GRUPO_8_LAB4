@@ -104,13 +104,11 @@ function validarTransferencia() {
     var tipoSeleccionado = document.getElementById('cuentaDestinoOpciones').value;
     var monto = parseFloat(document.getElementById('monto').value);
     
-    // Validar que el monto sea mayor a 0
     if (monto <= 0) {
         alert('El monto debe ser mayor a 0');
         return false;
     }
     
-    // Validar CBU si se selecciona otra cuenta
     if (tipoSeleccionado === 'otraCuenta') {
         var cbuOtro = document.getElementById('cbuOtro').value;
         if (cbuOtro.length !== 22 ) {
