@@ -19,8 +19,8 @@ import Dominio.Provincia;
 public class ClienteDao implements IClienteDao{
 	
 	private static ClienteDao instancia = null;
-	
 	private static final String insert = "insert into cliente(nombre_usuario, dni, cuil, nombre, apellido, sexo, nacionalidad, nacimiento ,domicilio, localidad, id_provincia, email, telefono) VALUES(?, ?, ?,?, ?, ?,?,?, ?, ?,?, ?, ?)";
+	
 	private static final String select = "SELECT * FROM Cliente WHERE Activo = 1";
 	private static final String selectById ="Select * from Cliente where Activo =1 and id_cliente = ?";
 	private static final String selectByDni ="Select * from Cliente where Activo =1 and dni = ?";
@@ -96,16 +96,15 @@ public class ClienteDao implements IClienteDao{
 	    return cliente;
 	}
 
-	@Override
 	public boolean insert(String nombre_usuario, int dni, String cuil, String nombre, String apellido, int sexo,
-			String nacionalidad, LocalDate nacimiento, String domicilio, String localidad, int id_provincia, String email,
-			String telefono) 
-	{
-		
-		PreparedStatement statement;
+            String nacionalidad, LocalDate nacimiento, String domicilio, String localidad, int id_provincia, String email,
+            String telefono) 
+    {
+
+        PreparedStatement statement;
         Connection conexion = Conexion.getConexion().getSQLConexion();
         boolean isInsertExitoso = false;
-        
+
         try 
         {
             statement = conexion.prepareStatement(insert);
@@ -116,37 +115,36 @@ public class ClienteDao implements IClienteDao{
             statement.setString(5, apellido);
             statement.setInt(6, sexo);
             statement.setString(7, nacionalidad);
-	        statement.setDate(8, java.sql.Date.valueOf(nacimiento)); //local date a DATE 
+            statement.setDate(8, java.sql.Date.valueOf(nacimiento)); //local date a DATE 
             statement.setString(9, domicilio);
             statement.setString(10, localidad);
             statement.setInt(11, id_provincia);
             statement.setString(12, email);
             statement.setString(13, telefono);
-           
+
             int rows = statement.executeUpdate(); 
             if(rows>0)
-			{
-				conexion.commit();
-				isInsertExitoso = true;
-			}
+            {
+                conexion.commit();
+                isInsertExitoso = true;
+            }
         }
-                
-        catch (SQLException e) 
-    		{
-    			e.printStackTrace();
-    			try 
-    			{
-    				conexion.rollback();
-    			} 
-    			catch (SQLException e1) 
-    			{
-    				e1.printStackTrace();
-    			}
-    		}
-    		
-    		return isInsertExitoso;	
-}
 
+        catch (SQLException e) 
+            {
+                e.printStackTrace();
+                try 
+                {
+                    conexion.rollback();
+                } 
+                catch (SQLException e1) 
+                {
+                    e1.printStackTrace();
+                }
+            }
+
+            return isInsertExitoso;
+}
 	@Override
 	public List<Cliente> listar() {
 		PreparedStatement statement;

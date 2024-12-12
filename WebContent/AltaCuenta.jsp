@@ -68,7 +68,7 @@
             </div>
 
             <div class="form-group">
-                <label for="fechaCreacion">Fecha de Creación:</label>
+                <label for="fechaCreacion">Fecha de Creacion:</label>
                 <input type="date" id="fechaCreacion" name="fechaCreacion" 
                        value="<%= new java.text.SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date()) %>" 
                        readonly>
@@ -108,3 +108,5 @@
 
 </body>
 </html>
+message.txt
+5 KB

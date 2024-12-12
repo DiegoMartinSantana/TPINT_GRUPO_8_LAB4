@@ -55,8 +55,8 @@ public class servletUsuario extends HttpServlet {
 		     String email = request.getParameter("correoElectronico");
 		     String telefono = request.getParameter("telefono");
 		     int IdProv =Integer.parseInt(request.getParameter("DdlProvincia"));
-		     
-		     boolean existe=userNegocio.BuscarUsuario(nombreUsuario);
+		     //userNegocio.BuscarUsuario(nombreUsuario);
+		     boolean existe=false;
 		     
 			if (existe==false) {
 

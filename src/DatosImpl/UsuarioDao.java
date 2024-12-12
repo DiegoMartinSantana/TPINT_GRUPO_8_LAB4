@@ -15,13 +15,14 @@ public class UsuarioDao implements IUsuarioDao {
 	private static UsuarioDao instancia = null;
 	
 	
-	private static final String insertar = "insert into usuario(nombre_usuario,tipo,pass) values (?,?,?)";
+	private static final String insertar = "INSERT INTO usuario (nombre_usuario, tipo, pass) VALUES (?, ?, ?)";
+
 	private static final String leer ="select nombre_usuario,tipo,activo from usuario where nombre_usuario = ?";
 	private static final String login ="select nombre_usuario, tipo, activo from usuario where nombre_usuario = ? and pass = ?";
 	private static final String actualizarActivo ="update usuario set activo = ? where nombre_usuario = ?";
 	private static final String actualizar ="update usuario set pass = ? where nombre_usuario = ?";
 	private static final String remover = "delete from usuario where nombre_usuario = ?";
-	private static final String buscarUsuario ="select *from usuario where nombre_usuario= ?";
+	private static final String buscarUsuario ="select * from usuario where nombre_usuario = ?";
 	
 	
 	public static UsuarioDao ObtenerInstancia() {
@@ -74,38 +75,59 @@ public class UsuarioDao implements IUsuarioDao {
     }
 
 
-	@Override
-	public boolean Insertar(String nombre_usuario, int tipo, String pass) {
-		PreparedStatement statement;
-        Connection conexion = Conexion.getConexion().getSQLConexion();
-        boolean isInsertExitoso = false;
-        try 
-        {
-        	statement = conexion.prepareStatement(insertar);
-            statement.setString(1, nombre_usuario);
-            statement.setInt(2, tipo);
-            statement.setString(3, pass);
-            
-            if(statement.executeUpdate() > 0)
-			{
-				conexion.commit();
-				isInsertExitoso = true;
-			}
-        }
-        catch (SQLException e) 
-		{
-			e.printStackTrace();
-			try 
-			{
-				conexion.rollback();
-			} 
-			catch (SQLException e1) 
-			{
-				e1.printStackTrace();
-			}
-		}
-		
-		return isInsertExitoso;	
+	
+		@Override
+		public boolean Insertar(String nombre_usuario, int tipo, String pass) {
+		    PreparedStatement statement = null;
+		    Connection conexion = Conexion.getConexion().getSQLConexion();
+		    boolean isInsertExitoso = false;
+
+		  
+		    if (conexion == null) {
+		        System.err.println("Error: Conexión nula.");
+		        return false;
+		    }
+
+		    try {
+		        if (conexion.isClosed()) {
+		            System.err.println("Error: Conexión cerrada.");
+		            return false;
+		        }
+
+		    
+		        String insertar = "INSERT INTO usuario (nombre_usuario, tipo, pass) VALUES (?, ?, ?)";
+
+		       
+		        statement = conexion.prepareStatement(insertar);
+
+		    
+		        statement.setString(1, nombre_usuario);
+		        statement.setInt(2, tipo);
+		        statement.setString(3, pass);
+
+		   
+		        if (statement.executeUpdate() > 0) {
+		            conexion.commit();
+		            isInsertExitoso = true;
+		        }
+		    } catch (SQLException e) {
+		        System.err.println("Error SQL al preparar o ejecutar la consulta: " + e.getMessage());
+		        e.printStackTrace();
+		        try {
+		       
+		            if (conexion != null && !conexion.isClosed()) {
+		                conexion.rollback();
+		                System.err.println("Rollback ejecutado.");
+		            } else {
+		                System.err.println("Rollback no ejecutado porque la conexión está cerrada.");
+		            }
+		        } catch (SQLException e1) {
+		            System.err.println("Error en rollback: " + e1.getMessage());
+		            e1.printStackTrace();
+		        }
+		    } 
+
+		    return isInsertExitoso;
 	}
 
 	@Override
@@ -133,7 +155,7 @@ public class UsuarioDao implements IUsuarioDao {
 		
         
         boolean isInsertExitoso = false;
-        
+ 
         try (Connection conexion = Conexion.getConexion().getSQLConexion();
                PreparedStatement statement = conexion.prepareStatement(buscarUsuario)) {
                statement.setString(1, nombre);
