@@ -59,17 +59,21 @@ public class ClienteServlet extends HttpServlet {
    }
    
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-               
-        if(request.getParameter("IdCliente") != null) {
+            
+    
+    	
+        if(request.getParameter("IdClienteEditar") != null) {
         	
-        int idCliente = Integer.parseInt(request.getParameter("IdCliente"));
-        	Cliente clienteModify = clienteNegocio.getClienteById(idCliente);
-        	clienteModify.getApellido();
+        int idCliente = Integer.parseInt(request.getParameter("IdClienteEditar"));
+        	Cliente clienteModificar = clienteNegocio.getClienteById(idCliente);
+        	
+        	
         	LlenarDdlProvincias(request, response);
         	
-        	request.setAttribute("Cliente", clienteModify);
-        	request.getRequestDispatcher("ModificarClienteUser.jsp").forward(request, response);	
         	
+        	request.setAttribute("Cliente", clienteModificar);
+        	request.getRequestDispatcher("ModificarClienteUser.jsp").forward(request, response);	
+        	return;
         }
         if(request.getParameter("Alta")!=null){
         	LlenarDdlProvincias(request,response);
@@ -101,44 +105,44 @@ public class ClienteServlet extends HttpServlet {
 	
     }
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	
-    	Cliente cliente = new Cliente();
-    	
-        cliente.setDni(Integer.parseInt(request.getParameter("dni")));
-        
-        
-        cliente.setNombre(request.getParameter("nombre"));
-        cliente.setCuil(request.getParameter("cuil"));
-        cliente.setApellido(request.getParameter("apellido"));
-        cliente.setSexo(request.getParameter("sexo").equals("Masculino") ? 1 : (request.getParameter("sexo").equals("Femenino") ? 2 : 3));
-        cliente.setNacionalidad(request.getParameter("nacionalidad"));
-        cliente.setDomicilio(request.getParameter("direccion"));
-        cliente.setLocalidad(request.getParameter("localidad"));
-	     LocalDate nacimiento = LocalDate.parse(request.getParameter("fechaNacimiento"));
 
-        cliente.setNacimiento(nacimiento);
-        
-        int IdProv =Integer.parseInt(request.getParameter("DdlProvincia"));
-        Provincia prov = new Provincia(IdProv,"");
-        cliente.setProvincia(prov);
-        cliente.setEmail(request.getParameter("email"));
-        cliente.setTelefono(request.getParameter("telefono"));
-
-        cliente.setId(Integer.parseInt(request.getParameter("id")));
-        
-        Cliente resultado = clienteNegocio.Modificar(cliente);
-
-        if (resultado != null) {
-          
-            ActualizarLista(request, response,0);
-            request.getRequestDispatcher("ListarBanco.jsp").forward(request, response);	
-            
-        } else {
-        	
-        }
-			
-	}
+		Cliente cliente = new Cliente();
 	
+    cliente.setDni(Integer.parseInt(request.getParameter("dni")));
+    
+    
+    cliente.setNombre(request.getParameter("nombre"));
+    cliente.setCuil(request.getParameter("cuil"));
+    cliente.setApellido(request.getParameter("apellido"));
+    cliente.setSexo(request.getParameter("sexo").equals("Masculino") ? 1 : (request.getParameter("sexo").equals("Femenino") ? 2 : 3));
+    cliente.setNacionalidad(request.getParameter("nacionalidad"));
+    cliente.setDomicilio(request.getParameter("direccion"));
+    cliente.setLocalidad(request.getParameter("localidad"));
+     LocalDate nacimiento = LocalDate.parse(request.getParameter("fechaNacimiento"));
+
+    cliente.setNacimiento(nacimiento);
+    
+    int IdProv =Integer.parseInt(request.getParameter("DdlProvincia"));
+    Provincia prov = new Provincia(IdProv,"");
+    cliente.setProvincia(prov);
+    cliente.setEmail(request.getParameter("email"));
+    cliente.setTelefono(request.getParameter("telefono"));
+
+    cliente.setId(Integer.parseInt(request.getParameter("id")));
+    
+    
+	Cliente resultado = clienteNegocio.Modificar(cliente);
+
+    if (resultado != null) {
+      
+    
+    
+        
+    } else {
+    	
+    }
+		
+    }
+    }
     
 
-}

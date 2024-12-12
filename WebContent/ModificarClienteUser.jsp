@@ -20,7 +20,7 @@
     Cliente cliente = (Cliente) request.getAttribute("Cliente");
 %>
 <% if(cliente ==null){
-	request.getRequestDispatcher("ListarBanco.jsp").forward(request, response);
+	request.getRequestDispatcher("ClienteServlet").forward(request, response);
 }	
 	%>
 

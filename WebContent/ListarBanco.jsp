@@ -42,107 +42,85 @@
         </div>
         <div class="row">
             <div class="col-12">
-
-						<div>
-							<%
-								if(request.getParameter("Eliminado") != null) {
-							%>
-							<div class="alert alert-success alert-dismissible fade show "
-								role="alert">
-								<strong>Cliente Eliminado</strong> Se ha eliminado exitosamente
-								el Cliente.
-								<button type="button" class="btn-close m-0"
-									data-bs-dismiss="alert" aria-label="Close"></button>
-							</div>
-
-							<%} %>
-							<%if(request.getParameter("TieneCuentas")!=null){ %>
-							<div class="alert alert-danger alert-dismissible fade show "
-								role="alert">
-								<strong>Error al Eliminar.</strong> El cliente tiene cuentas
-								asociadas.
-								<button type="button" class="btn-close m-0"
-									data-bs-dismiss="alert" aria-label="Close"></button>
-							</div>
-
-							<%} %>
-
-							<%if(request.getParameter("Agregado")!=null){ %>
-							<div class="alert alert-danger alert-dismissible fade show "
-								role="alert">
-								<strong>Se agrego correctamente.</strong> El cliente esta en la lista de clientes.
-								<button type="button" class="btn-close m-0"
-									data-bs-dismiss="alert" aria-label="Close"></button>
-							</div>
-
-							<%} %>
-
-
-							<table id="clientesTable" class="table table-hover align-middle"
-								style="border-radius: 16px; overflow: hidden; background: #fff; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-								<thead
-									style="background: #007bff; color: #fff; text-align: center;">
-									<tr>
-										<th>Usuario</th>
-										<th>DNI</th>
-										<th>CUIL</th>
-
-										<th>Nombre</th>
-										<th>Sexo</th>
-										<th>Email</th>
-										<th>Teléfono</th>
-										<th>Dirección</th>
-										<th>Acciones</th>
-									</tr>
-								</thead>
-								<tbody>
-									<%                    
+            
+                <div >
+                <%if(request.getParameter("Eliminado")!=null){ %>
+                <div class="alert alert-success alert-dismissible fade show " role="alert">
+  <strong>Cliente Eliminado</strong> Se ha eliminado exitosamente el Cliente.
+  <button type="button" class="btn-close m-0" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+                
+                <%} %>
+                  <%if(request.getParameter("TieneCuentas")!=null){ %>
+                <div class="alert alert-danger alert-dismissible fade show " role="alert">
+  	<strong>Error al Eliminar.</strong> El cliente tiene cuentas asociadas.
+  	<button type="button" class="btn-close m-0" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+                
+                <%} %>
+               
+               
+                    <table  id="clientesTable" class="table table-hover align-middle" style="border-radius: 16px; overflow: hidden; background: #fff; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                        <thead style="background: #007bff; color: #fff; text-align: center;">
+                            <tr>
+                            <th>Usuario</th>
+                                <th>DNI</th>
+                                <th>CUIL</th>
+                               
+                                <th>Nombre</th>
+                                 <th>Sexo</th>
+                                <th>Email</th>
+                                <th>Teléfono</th>
+                                <th>Dirección</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <%                    
                             List<Cliente> clientes = (List<Cliente>)request.getAttribute("clientes");
                             if(clientes != null && !clientes.isEmpty()) {
                                 for(Cliente cliente : clientes) {
                             %>
-									<tr style="border-bottom: 1px solid #e0e0e0;">
-										<td style="text-align: center;"><%= cliente.getNombreUsuario() %></td>
-										<td style="text-align: center;"><%= cliente.getDni() %></td>
-										<td style="text-align: center;"><%= cliente.getCuil() %></td>
-
-										<td style="text-align: center;"><%= cliente.getNombre() %>
-											<%= cliente.getApellido() %></td>
-										<% if(cliente.getSexo() == 1) { %>
-										<td style="text-align: center;">Masculino</td>
-										<% } else if(cliente.getSexo() == 2) { %>
-										<td style="text-align: center;">Femenino</td>
-										<% } else { %>
-										<td style="text-align: center;">Otro</td>
-										<% } %>
-										<td style="text-align: center;"><%= cliente.getEmail() %></td>
-										<td style="text-align: center;"><%= cliente.getTelefono() %></td>
-										<td>
-											<div style="font-size: 14px; text-align: center;">
-												<%= cliente.getNacionalidad() %>,
-												<%= cliente.getProvincia().getNombre() %>,
-												<%= cliente.getLocalidad() %>,
-												<%= cliente.getDomicilio() %>
-											</div>
-										</td>
-										<td style="text-align: center;"><a
-											href="ClienteServlet?IdCliente=<%= cliente.getId() %>"
-											class="btn btn-primary btn-sm me-2"> <i
-												class="bi bi-pencil-fill"></i> Editar
-										</a> <a
-											href="ClienteServlet?IdClienteEliminar=<%= cliente.getId() %>"
-											class="btn btn-danger btn-sm"> <i
-												class="bi bi-trash-fill"></i> Eliminar
-										</a></td>
-									</tr>
-									<% 
+                            <tr style="border-bottom: 1px solid #e0e0e0;">
+                            <td style="text-align: center;"><%= cliente.getNombreUsuario() %></td>
+                                <td style="text-align: center;"><%= cliente.getDni() %></td>
+                                <td style="text-align: center;"><%= cliente.getCuil() %></td>
+                                
+                                <td style="text-align: center;"><%= cliente.getNombre() %> <%= cliente.getApellido() %></td>
+                                <% if(cliente.getSexo() == 1) { %>
+                                    <td style="text-align: center;">Masculino</td>
+                                <% } else if(cliente.getSexo() == 2) { %>
+                                    <td style="text-align: center;">Femenino</td>
+                                <% } else { %>
+                                    <td style="text-align: center;">Otro</td>
+                                <% } %>
+                                <td style="text-align: center;"><%= cliente.getEmail() %></td>
+                                <td style="text-align: center;"><%= cliente.getTelefono() %></td>
+                                <td>
+                                    <div style="font-size: 14px; text-align: center; ;">
+                                        <%= cliente.getNacionalidad() %>, 
+                                        <%= cliente.getProvincia().getNombre() %>, 
+                                        <%= cliente.getLocalidad() %>, 
+                                        <%= cliente.getDomicilio() %>
+                                    </div>
+                                </td>
+                                <td style="text-align: center;">
+                                    <a href="ClienteServlet?IdClienteEditar=<%= cliente.getId() %>" class="btn btn-primary btn-sm me-2">
+                                        <i class="bi bi-pencil-fill"></i> Editar
+                                    </a>
+                                    <a href="ClienteServlet?IdClienteEliminar=<%= cliente.getId() %>" class="btn btn-danger btn-sm">
+                                        <i class="bi bi-trash-fill"></i> Eliminar
+                                    </a>
+                                </td>
+                            </tr>
+                            <% 
                                 }
                             }
                             %>
-								</tbody>
-							</table>
-						</div>
-					</div>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 </div>
