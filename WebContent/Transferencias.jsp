@@ -139,21 +139,15 @@ document.addEventListener('DOMContentLoaded', mostrarOpcionesCuenta);
         <%
         float interes = 2;
         List<Cuenta> cuentas = (List<Cuenta>) request.getSession().getAttribute("Cuentas");
-        String error = (String) request.getAttribute("error");
-        String success = (String) request.getAttribute("success");
+        String mensaje = (String) request.getAttribute("mensaje");
+        String tipoMensaje = (String) request.getAttribute("tipoMensaje");
         %>
         
         <% if (cuentas != null && !cuentas.isEmpty()) { %>
             <!-- Mostrar mensajes de error o éxito -->
-            <% if (error != null && !error.isEmpty()) { %>
-                <div class="alert alert-danger" role="alert">
-                    <%= error %>
-                </div>
-            <% } %>
-            
-            <% if (success != null && !success.isEmpty()) { %>
-                <div class="alert alert-success" role="alert">
-                    <%= success %>
+            <% if (mensaje != null && !mensaje.isEmpty()) { %>
+                <div class="alert alert-<%= tipoMensaje %>" role="alert">
+                    <%= mensaje %>
                 </div>
             <% } %>
         
@@ -164,19 +158,19 @@ document.addEventListener('DOMContentLoaded', mostrarOpcionesCuenta);
                         <div class="mb-3">
                             <label for="id_cuenta_origen" class="form-label">Cuenta de Origen:</label>
                             <select name="id_cuenta_origen" class="form-select">
-							    <% for (Cuenta cuenta : cuentas) { 
-							        String tipoCuenta = "";
-							        if (cuenta.getTipo() == 1) {
-							            tipoCuenta = "Caja de Ahorro";
-							        } else if (cuenta.getTipo() == 2) {
-							            tipoCuenta = "Cuenta Corriente";
-							        }
-							    %>
-							        <option value="<%= cuenta.getIdCuenta() %>">
-							            <%= tipoCuenta %> - CBU: <%= cuenta.getCbu() %>
-							        </option>
-							    <% } %>
-							</select>
+                                <% for (Cuenta cuenta : cuentas) { 
+                                    String tipoCuenta = "";
+                                    if (cuenta.getTipo() == 1) {
+                                        tipoCuenta = "Caja de Ahorro";
+                                    } else if (cuenta.getTipo() == 2) {
+                                        tipoCuenta = "Cuenta Corriente";
+                                    }
+                                %>
+                                    <option value="<%= cuenta.getIdCuenta() %>">
+                                        <%= tipoCuenta %> - CBU: <%= cuenta.getCbu() %>
+                                    </option>
+                                <% } %>
+                            </select>
                         </div>
                     </div>
                     
@@ -197,27 +191,24 @@ document.addEventListener('DOMContentLoaded', mostrarOpcionesCuenta);
                 <div class="row">
                     <div class="col-md-6" id="misCuentasField">
                         <div class="mb-3">
-                        <%
-                        
-                        %>
                             <label for="id_cuenta_destino" class="form-label">Seleccionar Cuenta:</label>
                             <select name="id_cuenta_destino" class="form-select">
-							    <% for (Cuenta cuenta : cuentas) { 
-							        String tipoCuenta = "";
-							        if (cuenta.getTipo() == 1) {
-							            tipoCuenta = "Caja de Ahorro";
-							        } else if (cuenta.getTipo() == 2) {
-							            tipoCuenta = "Cuenta Corriente";
-							        }
-							    %>
-							        <option value="<%= cuenta.getIdCuenta() %>">
-							            <%= tipoCuenta %> - CBU: <%= cuenta.getCbu() %>
-							        </option>
-							    <% } %>
-							</select>
-							<%if(request.getSession().getAttribute("MismasCuentas")!=null){ %>
-							<p style="color:red">Seleccione una cuenta distinta a la de origen.</p>
-                        	<%} %>
+                                <% for (Cuenta cuenta : cuentas) { 
+                                    String tipoCuenta = "";
+                                    if (cuenta.getTipo() == 1) {
+                                        tipoCuenta = "Caja de Ahorro";
+                                    } else if (cuenta.getTipo() == 2) {
+                                        tipoCuenta = "Cuenta Corriente";
+                                    }
+                                %>
+                                    <option value="<%= cuenta.getIdCuenta() %>">
+                                        <%= tipoCuenta %> - CBU: <%= cuenta.getCbu() %>
+                                    </option>
+                                <% } %>
+                            </select>
+                            <% if (request.getSession().getAttribute("MismasCuentas") != null) { %>
+                            <p style="color:red">Seleccione una cuenta distinta a la de origen.</p>
+                            <% } %>
                         </div>
                     </div>
 

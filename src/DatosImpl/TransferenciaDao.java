@@ -27,31 +27,43 @@ public class TransferenciaDao implements ITransferenciaDao {
     }
 
 	@Override
-	public void generarTransferencia(Transferencia transferencia) {
-		
-        Connection conexion = Conexion.getConexion().getSQLConexion();
-	
-		
-		try {
+	public void generarTransferencia(Transferencia transferencia) throws SQLException {
+	    Connection conexion = Conexion.getConexion().getSQLConexion();
+	    CallableStatement stmt = null;
+	    try {
+	        stmt = conexion.prepareCall(TRASNFERIR_FONDOS);
+	        stmt.setInt(1, transferencia.getId_cuenta_origen());
+	        stmt.setInt(2, transferencia.getId_cuenta_destino());
+	        stmt.setFloat(3, transferencia.getImporte_transferencia());
+	        stmt.setString(4, transferencia.getDetalle());
 
-		CallableStatement stmt = conexion.prepareCall(TRASNFERIR_FONDOS); 
-		stmt.setInt(1, transferencia.getId_cuenta_origen());
-        stmt.setInt(2, transferencia.getId_cuenta_destino());
-        stmt.setFloat(3, transferencia.getImporte_transferencia());
-        stmt.setString(4, transferencia.getDetalle());
-
-        stmt.execute();
-		}
-        catch (SQLException e) {
-            e.printStackTrace();
-            try {
-                conexion.rollback();
-            } catch (SQLException e1) {
-                e1.printStackTrace();
-            }
-        }
-		
+	        stmt.execute();
+	    } catch (SQLException e) {
+	        // Verificar si el error es por saldo insuficiente
+	        if (e.getMessage().contains("Saldo insuficiente")) {
+	            System.out.println("Error: " + e.getMessage());
+	            throw new SQLException("Saldo insuficiente para realizar la transferencia.");
+	        } else {
+	            e.printStackTrace();
+	            try {
+	                conexion.rollback();
+	            } catch (SQLException e1) {
+	                e1.printStackTrace();
+	            }
+	            throw e;
+	        }
+	    } finally {
+	        if (stmt != null) {
+	            try {
+	                stmt.close();
+	            } catch (SQLException e) {
+	                e.printStackTrace();
+	            }
+	        }
+	        // No cerrar la conexión aquí
+	    }
 	}
+	
 	
 	
 

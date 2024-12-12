@@ -10,11 +10,14 @@ public class TransferenciaNegocio implements ITransferenciaNegocio{
 
 	
 	@Override
-	public boolean realizarTransferencia(Transferencia transferencia) throws Exception{
-		
-		transferenciaDAO.generarTransferencia(transferencia);
-        return true;
-		
+	public boolean realizarTransferencia(Transferencia transferencia) {
+	    try {
+	        transferenciaDAO.generarTransferencia(transferencia);
+	        return true;
+	    } catch (Exception e) {
+	        // Manejar la excepción según sea necesario
+	        return false;
+	    }
 	}
 
 
