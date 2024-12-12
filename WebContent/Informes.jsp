@@ -69,7 +69,7 @@
             %>
             <tr>
                 <td><%= informe.getCantidadPrestamos() %> préstamos</td>
-                <td>$<%= informe.getTotalPrestado() %></td>
+                <td>$ <%= String.format("%.2f",informe.getTotalPrestado()) %></td>
                 <td><%= informe.getClienteLider() %></td>
             </tr>
             <% } %>
@@ -106,7 +106,8 @@
             %>
             <tr>
                 <td><%= cliente.getNombre() %> <%= cliente.getApellido() %></td>
-                <td>$<%= cliente.getTotalPrestado() %></td>
+                
+                <td>$ <%= String.format("%.2f",cliente.getTotalPrestado()) %></td>
             </tr>
             <% 
                 } 

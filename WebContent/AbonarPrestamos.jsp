@@ -61,7 +61,8 @@
                                         <p class="text-muted mb-0">
                                             <strong>Importe:</strong> $<%=String.format("%.2f", prestamo.importeSolicitado) %> 
                                             <br>
-                                            | <strong>Cuotas:</strong> <%= prestamo.plazoCuotas %>
+                                            <strong>Cuotas:</strong> <%= prestamo.plazoCuotas %>
+                                            <br>
                                             <strong>Depositado en  : </strong><%=prestamo.cbu %>
                            
                                        
@@ -99,25 +100,33 @@
                                     <div>
                                         <h6 class="mb-1">Cuota <%= cuota.getNumeroCuota() %></h6>
                                         <p class="text-muted mb-0">
-                                            <strong>Importe:</strong> $<%= cuota.getImporte() %> 
+                                            <strong>Importe:</strong> $<%= String.format("%.2f",cuota.getImporte()) %> 
+                                                                                    </p>
+                                                                                    <p class="text-muted mb-0">
                                              <strong>Vencimiento:</strong> <%= cuota.getVencimento() %>
-                                        </p>
+</p>
                                     </div>
                                 </div>
-                                <div class="installment-actions">
+                                
                                     <% if (cuota.getEstado() == 1) { %>
+                                    <span class="badge bg-primary status-badge">Pendiente</span>
+                                   <div class="installment-actions">
                                         <a href="PagarCuota.jsp?idCuota=<%=cuota.getId()%>"  class="btn btn-primary">Pagar cuota </a>
-                                        <span class="badge bg-primary status-badge">Pendiente</span>
+                                         </div>
                                     <% } %>
                                     
                                     <% if (cuota.getEstado() == 2) { %>
                                   
                                         <span class="badge bg-success status-badge">Pagado</span>
+                                        
                                     <% } else if (cuota.getEstado() == 3) { %>
-                                    <a href="PagarCuota.jsp?idCuota=<%=cuota.getId()%>"  class="btn btn-primary">Pagar cuota </a>
+                                    
                                         <span class="badge bg-danger status-badge">Vencida</span>
+                                         <div class="installment-actions">
+                                    <a href="PagarCuota.jsp?idCuota=<%=cuota.getId()%>"  class="btn btn-primary">Pagar cuota </a>
+                                    </div>
                                     <% } %>
-                                </div>
+                               
                             </div>
                         <% } %>
                     <% } else { %>

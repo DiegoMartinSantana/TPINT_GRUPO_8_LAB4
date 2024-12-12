@@ -58,6 +58,21 @@
                                     <p><%= cliente.getCuil() %></p>
                                 </div>
                             </div>
+                            
+                            
+                            
+                            <div class="info-item">
+                                <div class="info-icon">
+                                    <i class="fas fa-fingerprint"></i>
+                                </div>
+                                <div class="info-details">
+                                    <h6>Nacionalidad</h6>
+                                    <p><%= cliente.getNacionalidad() %></p>
+                                </div>
+                            </div>
+                            
+                           
+                            
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -90,15 +105,7 @@
                                     <p><%= cliente.getLocalidad() %></p>
                                 </div>
                             </div>
-                            <div class="info-item">
-                                <div class="info-icon">
-                                    <i class="fas fa-globe"></i>
-                                </div>
-                                <div class="info-details">
-                                    <h6>Nacionalidad</h6>
-                                    <p><%= cliente.getNacionalidad() %></p>
-                                </div>
-                            </div>
+                            
                         </div>
                     </div>
                 </div>
