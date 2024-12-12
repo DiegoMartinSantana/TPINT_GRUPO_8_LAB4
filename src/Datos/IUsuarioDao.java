@@ -10,5 +10,6 @@ public interface IUsuarioDao {
 	boolean Remover(String nombre_usuario);
 	boolean ActualizarActivo(String nombre_usuario, int activo);
 	boolean Actualizar(String nombre_usuario, String pass);
+	boolean BuscarUsuario(String nombre);
 	
 }

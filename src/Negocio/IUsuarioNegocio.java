@@ -11,5 +11,6 @@ public interface IUsuarioNegocio {
 	boolean remove(Usuario usuario);
 	boolean updateActivo(Usuario usuario);
 	boolean updatePassword(Usuario usuario, String pass);
+	boolean BuscarUsuario(String nombre);
 	
 }

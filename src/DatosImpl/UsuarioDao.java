@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import Datos.IUsuarioDao;
+import Dominio.Cuenta;
 import Dominio.TipoUsuario;
 import Dominio.Usuario;
 
@@ -20,6 +21,7 @@ public class UsuarioDao implements IUsuarioDao {
 	private static final String actualizarActivo ="update usuario set activo = ? where nombre_usuario = ?";
 	private static final String actualizar ="update usuario set pass = ? where nombre_usuario = ?";
 	private static final String remover = "delete from usuario where nombre_usuario = ?";
+	private static final String buscarUsuario ="select *from usuario where nombre_usuario= ?";
 	
 	
 	public static UsuarioDao ObtenerInstancia() {
@@ -36,7 +38,7 @@ public class UsuarioDao implements IUsuarioDao {
         Connection conexion = Conexion.getConexion().getSQLConexion();
         
         if (conexion == null) {
-            throw new IllegalStateException("No se pudo obtener la conexión a la base de datos.");
+            throw new IllegalStateException("No se pudo obtener la conexiÃ³n a la base de datos.");
         }
         
         Usuario usuario = null;
@@ -125,6 +127,28 @@ public class UsuarioDao implements IUsuarioDao {
 	@Override
 	public boolean Remover(String nombre_usuario) {
 		return true;
+	}
+
+	@Override
+	public boolean BuscarUsuario(String nombre) {
+		
+        
+        boolean isInsertExitoso = false;
+        
+        try (Connection conexion = Conexion.getConexion().getSQLConexion();
+               PreparedStatement statement = conexion.prepareStatement(buscarUsuario)) {
+               statement.setString(1, nombre);
+               ResultSet resultSet = statement.executeQuery();
+
+               if (resultSet.next()) {
+            	   isInsertExitoso = true;
+               }
+           } catch (SQLException e) {
+               e.printStackTrace();
+           }
+        
+		
+		return isInsertExitoso;	
 	}
 
 }

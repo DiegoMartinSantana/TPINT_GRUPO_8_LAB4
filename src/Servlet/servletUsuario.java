@@ -60,16 +60,33 @@ public class servletUsuario extends HttpServlet {
 		     String telefono = request.getParameter("telefono");
 		     int IdProv =Integer.parseInt(request.getParameter("DdlProvincia"));
 		     
-		     userNegocio.insert(nombreUsuario, tipoUsuario, contrasena);
-		   
+		     boolean existe=userNegocio.BuscarUsuario(nombreUsuario);
 		     
-		     clienteNegocio.insert(nombreUsuario, dni, cuil, nombre, apellido, sexo, nacionalidad,nacimiento, domicilio, localidad, IdProv, email, telefono);
-			     
-			 
-		     RequestDispatcher rd = request.getRequestDispatcher("AltaClienteUser.jsp");   
-		     rd.forward(request, response);    
+			if (existe==false) {
+
+				userNegocio.insert(nombreUsuario, tipoUsuario, contrasena);
+
+				boolean agrego = clienteNegocio.insert(nombreUsuario, dni, cuil, nombre, apellido, sexo, nacionalidad,
+						nacimiento, domicilio, localidad, IdProv, email, telefono);
+
+				if (agrego) {
+
+					request.getRequestDispatcher("AltaClienteUser.jsp?Agregado=" + true).forward(request, response);
+
+				}
+				else {
+					request.getRequestDispatcher("AltaClienteUser.jsp?NoAgregadoPorOtro=" + true).forward(request, response);
+				}
+			}
+			 else {
+				 
+				 request.getRequestDispatcher("AltaClienteUser.jsp?NoAgregado=" + true).forward(request, response);
+				 
+			 }
+		        
 		
 		}	
 	}
 
 }
+

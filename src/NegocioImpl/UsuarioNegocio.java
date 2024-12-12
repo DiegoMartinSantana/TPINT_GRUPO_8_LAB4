@@ -56,4 +56,10 @@ public class UsuarioNegocio implements IUsuarioNegocio {
 		return true;
 	}
 
+	@Override
+	public boolean BuscarUsuario(String nombre) {
+		// TODO Auto-generated method stub
+		return usuarioDao.BuscarUsuario(nombre);
+	}
+
 }
