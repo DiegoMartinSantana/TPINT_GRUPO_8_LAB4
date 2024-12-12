@@ -33,15 +33,12 @@
     <h2>Generar Cliente</h2>
     <form action="servletUsuario" method="post"   onsubmit="return validarContrasenas()">
 
-
-
 				<%
 					if(request.getParameter("Agregado") != null) {
 				%>
 				<div class="alert alert-success alert-dismissible fade show"
 					role="alert">
-					<strong>Se agrego correctamente.</strong> El cliente esta en la
-					lista de clientes.
+					<strong>Cliente creado</strong> El cliente se a�adio correctamente. 
 					<button type="button" class="btn-close m-0" data-bs-dismiss="alert"
 						aria-label="Close"></button>
 				</div>
@@ -55,8 +52,7 @@
 				%>
 				<div class="alert alert-danger alert-dismissible fade show "
 					role="alert">
-					<strong>No se pudo agregar el cliente.</strong> El NOMBRE DE
-					USUARIO EXISTE.
+					<strong>No se pudo agregar el cliente.</strong>Nombre de usuario existente.
 					<button type="button" class="btn-close m-0" data-bs-dismiss="alert"
 						aria-label="Close"></button>
 				</div>
@@ -69,7 +65,7 @@
 				%>
 				<div class="alert alert-danger alert-dismissible fade show "
 					role="alert">
-					<strong>No se pudo agregar el cliente.</strong> Ingresaste mal algun dato
+					<strong>No se pudo agregar el cliente.</strong> Ocurrio un error en los datos ingresados.
 					<button type="button" class="btn-close m-0" data-bs-dismiss="alert"
 						aria-label="Close"></button>
 				</div>
@@ -80,39 +76,39 @@
      
      
    <label for="usuario">Usuario:</label>
-<input type="text" id="usuario" name="usuario" placeholder="Ingrese su usuario" required  pattern="^[a-zA-Z0-9]+$" title="El usuario solo debe contener letras y números.">
+<input type="text" id="usuario" name="usuario" placeholder="Ingrese su usuario" required  pattern="^[a-zA-Z0-9]+$" title="El usuario solo debe contener letras y numeros.">
 
 
      
      
             
-    <label for="contrasena">Contraseña:</label>
+    <label for="contrasena">Contrase�a:</label>
     <div class="password-wrapper">
-        <input type="password" id="contrasena" name="contrasena" placeholder="Ingrese su contraseña" required>
+        <input type="password" id="contrasena" name="contrasena" placeholder="Ingrese su contrase�a" required>
         <span class="material-icons toggle-password" id="togglePassword1" onclick="toggleVisibility('contrasena')">visibility</span>
     </div>
 
-    <label for="repetirContrasena">Repetir Contraseña:</label>
+    <label for="repetirContrasena">Repetir Contrase�a:</label>
     <div class="password-wrapper">
-        <input type="password" id="repetirContrasena" name="repetirContrasena" placeholder="Repita la contraseña" required onblur="validarContrasenas()">
+        <input type="password" id="repetirContrasena" name="repetirContrasena" placeholder="Repita la contrase�a" required onblur="validarContrasenas()">
         <span class="material-icons toggle-password" id="togglePassword2" onclick="toggleVisibility('repetirContrasena')">visibility</span>
     </div>
      
-         <div id="errorMensaje" style="color: red; display: none;">Las contraseñas no coinciden.</div>
+         <div id="errorMensaje" style="color: red; display: none;">Las contrase�as no coinciden.</div>
 
 
 
 		    <label for="dni">DNI:</label> 
-		    <input type="text" id="dni"	name="dni" placeholder="Ingrese su DNI" required pattern="^\d{1,8}$" title="El DNI debe contener entre 1 y 8 dígitos (solo números del 0 al 9).">
+		    <input type="text" id="dni"	name="dni" placeholder="Ingrese su DNI" required pattern="^\d+$" title="El DNI debe contener solo numeros.">
 
 			<label for="cuil">CUIL:</label>
-            <input type="text" id="cuil" name="cuil" placeholder="Ingrese su CUIL" required pattern="^\d+$" title="El CUIL solo debe contener números.">
+            <input type="text" id="cuil" name="cuil" placeholder="Ingrese su CUIL" required pattern="^\d+$" title="El CUIL solo debe contener numeros.">
 
             <label for="nombre">Nombre:</label>
-            <input type="text" id="nombre" name="nombre" placeholder="Ingrese su nombre" required pattern="^[a-zA-Z]+$" title="El nombre solo debe contener letras.">
+            <input type="text" id="nombre" name="nombre" placeholder="Ingrese su nombre" required pattern="^[a-zA-Z\s]+$" title="El nombre solo debe contener letras.">
 
             <label for="apellido">Apellido:</label>
-            <input type="text" id="apellido" name="apellido" placeholder="Ingrese su apellido" required pattern="^[a-zA-Z]+$" title="El apellido solo debe contener letras.">
+            <input type="text" id="apellido" name="apellido" placeholder="Ingrese su apellido" required pattern="^[a-zA-Z0-9 ]+$" title="El apellido solo debe contener letras.">
 
             <label for="sexo">Sexo:</label>
             <select id="sexo" name="sexo" required>
@@ -130,7 +126,7 @@
             <label for="fechaNacimiento">Fecha de Nacimiento:</label>
             <input type="date" id="fechaNacimiento" name="fechaNacimiento" required>
          <label for="nacionalidad">Nacionalidad:</label>
-            <input type="text" id="nacionalidad" name="nacionalidad" placeholder="Ingrese su nacionalidad" required pattern="^[a-zA-Z]+$" title="La nacionalidad solo debe contener letras.">
+            <input type="text" id="nacionalidad" name="nacionalidad" placeholder="Ingrese su nacionalidad" required pattern="^[a-zA-Z\s]+$" title="La nacionalidad solo debe contener letras.">
         
             <label for="provincia">Provincia:</label>
             <select id="DdlProvincia" name="DdlProvincia" required>
@@ -145,17 +141,17 @@
             </select>
 
             <label for="localidad">Localidad:</label>
-            <input type="text" id="localidad" name="localidad" placeholder="Ingrese su localidad" required pattern="^[a-zA-Z]+$" title="La localidad solo debe contener letras.">
+            <input type="text" id="localidad" name="localidad" placeholder="Ingrese su localidad" required pattern="^[a-zA-Z0-9 ]+$" title="La localidad solo debe contener letras, numeros y espacios.">
 
             <label for="domicilio">Domicilio:</label>
-            <input type="text" id="domicilio" name="domicilio" placeholder="Ingrese su domicilio" required pattern="^[a-zA-Z0-9 ]+$" title="El domicilio solo debe contener letras, números y espacios.">
+            <input type="text" id="domicilio" name="domicilio" placeholder="Ingrese su domicilio" required pattern="^[a-zA-Z0-9 ]+$" title="El domicilio solo debe contener letras, numeros y espacios.">
 
 
-            <label for="correoElectronico">Correo Electrónico:</label>
-            <input type="email" id="correoElectronico" name="correoElectronico" placeholder="Ingrese su correo electrónico" required>
+            <label for="correoElectronico">Correo Electronico:</label>
+            <input type="email" id="correoElectronico" name="correoElectronico" placeholder="Ingrese su correo electronico" required>
 
-            <label for="telefono">Teléfono:</label>
-            <input type="tel" id="telefono" name="telefono" placeholder="Ingrese su número de teléfono" required pattern="^[+]?[\d ]+$" title="El teléfono solo debe contener números, espacios y el signo '+'.">
+            <label for="telefono">Telefono:</label>
+            <input type="tel" id="telefono" name="telefono" placeholder="Ingrese su numero de telefono" required pattern="^[+]?[\d ]+$" title="El telefono solo debe contener numeros, espacios y el signo '+'.">
 
 
            

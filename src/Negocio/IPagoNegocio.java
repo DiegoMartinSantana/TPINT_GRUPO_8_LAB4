@@ -9,5 +9,5 @@ public interface IPagoNegocio {
 
 	 public boolean realizarPago(Pago pago) throws Exception;
 	public ArrayList<Cuota> getCuotasByPrestamo(int idPrestamo);
-	
+	public int PagarCuota(int idCuota, int idCuentaDebitar);	
 }

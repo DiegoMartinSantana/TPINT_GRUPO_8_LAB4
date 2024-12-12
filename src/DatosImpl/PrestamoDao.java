@@ -16,6 +16,7 @@ import Dominio.PrestamoSolicitado;
 import Dominio.Dto.PrestamoDto;
 
 public class PrestamoDao implements IPrestamoDao {
+	private static final String selectByIdPrestamo = "SELECT * FROM prestamo where id_prestamo = ?;";
 	private static final String selectById ="SELECT "
             + "p.id_prestamo_solicitado, "
             + "c.id_cuenta, "
@@ -102,6 +103,32 @@ public class PrestamoDao implements IPrestamoDao {
 	            String nombre = resultSet.getString("nombre");
 	            String apellido = resultSet.getString("apellido");
 	            prestamoDto.nombre = nombre + " " + apellido;
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+
+	    return prestamoDto;
+	}
+	
+	
+	public PrestamoDto obtenerPrestamoPorIdV2(int idPrestamo) {
+	    PreparedStatement statement;
+	    Connection conexion = Conexion.getConexion().getSQLConexion();
+	    PrestamoDto prestamoDto = null;
+
+
+	    try {
+	        statement = conexion.prepareStatement(selectByIdPrestamo);
+	        statement.setInt(1, idPrestamo); 
+
+	        ResultSet resultSet = statement.executeQuery();
+
+	        if (resultSet.next()) {
+	            prestamoDto = new PrestamoDto();
+	            prestamoDto.idPrestamo = resultSet.getInt("id_prestamo");
+	            prestamoDto.montoCuota = resultSet.getFloat("monto_cuota");
+	            
 	        }
 	    } catch (SQLException e) {
 	        e.printStackTrace();

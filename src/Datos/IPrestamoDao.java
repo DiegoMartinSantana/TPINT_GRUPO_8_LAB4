@@ -13,4 +13,5 @@ public interface IPrestamoDao {
     boolean rechazarPrestamo(int idPrestamoSolicitado);
     boolean crearPrestamoSolicitado(PrestamoSolicitado prestamosSolicitado);
     void aceptarPrestamo(DatosPrestamosSolicitadosSP PrestamoSP);
+    public PrestamoDto obtenerPrestamoPorIdV2(int idPrestamo);
 }

@@ -23,17 +23,21 @@ public class PagarCuotaServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		if (request.getParameter("btnTransferencia") != null) {
+		if (request.getParameter("btnPagarCuota") != null) {
 		    	int idCuentaPago = Integer.parseInt(request.getParameter("id_cuenta_pago")); 
-		    	int idCuotaPago = Integer.parseInt(request.getParameter("idCuota")); 
+		    	// validar saldo previo a pagar
+		    	int idCuotaPago = Integer.parseInt(request.getParameter("idCuota"));
 		    	
+		    	int resultado = pagoNegocio.PagarCuota(idCuotaPago,idCuentaPago);
 		    	
+		    if(resultado==2) {
+                request.setAttribute("saldoInsuficiente", true);
 		    	
-		    	
-		    	
-		    	
-		    	
-		    request.getRequestDispatcher("/Transferencias.jsp").forward(request, response);
+		    }else {
+		    	request.setAttribute("pagoRealizado", true);
+		    }
+		    			    	
+		    request.getRequestDispatcher("PagarCuota.jsp?idCuota=" + idCuotaPago).forward(request, response);
 		
 		
 		

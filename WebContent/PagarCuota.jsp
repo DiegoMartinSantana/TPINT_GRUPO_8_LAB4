@@ -45,8 +45,8 @@
 %>
 
 
-<form action="servletTransferencia" method="post">
- <input type="hidden" id="id" name="id" value="<%=idCuota%>"> 
+<form action="PagarCuota" method="post">
+ <input type="hidden" id="id" name="idCuota" value="<%=idCuota%>"> 
 	<label for="id_cuenta_origen" class="form-label">Cuenta a debitar:</label>
 	
                             <select name="id_cuenta_pago" class="form-select">
@@ -59,7 +59,7 @@
                                     }
                                 %>
                                     <option value="<%= cuenta.getIdCuenta() %>">
-                                        <%= tipoCuenta %> - CBU: <%= cuenta.getCbu() %> - Saldo: $<%=cuenta.getSaldo()%>
+                                        <%= tipoCuenta %> - CBU: <%= cuenta.getCbu() %> - Saldo: $<%= String.format("%,.2f",cuenta.getSaldo())%>
                                     </option>
                                 <% } %>
                             </select>
@@ -73,12 +73,17 @@
             </p>
         </div>
     </div>
-    <input type="submit" class="btn btn-primary w-100" name="btnPagarCuota" value="Pagar Cuota">
+    <input type="submit" class="btn btn-primary w-100" name="btnPagarCuota" value="btnPagarCuota">
     </form>
-
-
-	
-
+<% String mensaje = "Pago realizado con exito"; %>
+            <% if (request.getAttribute("pagoRealizado")!= null) { %>
+                <div class="alert alert-success"><%= mensaje %></div>
+            <% } %>
+             <% String mensajeError ="Saldo insuficiente"; %>
+            <% if (request.getAttribute("saldoInsuficiente")!= null) { %>
+                <div class="alert alert-danger"><%= mensajeError %></div>
+            <% } %>
+            
 
 
 </body>
