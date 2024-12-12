@@ -34,6 +34,10 @@
         
         <div class="col-9 section" style="margin-top:30px">
             <h2 class="text-center mb-4">Préstamos</h2>
+            
+
+            
+            
             <div class="mb-3">
             
                 <a class="btn btn-primary " href="AutorizacionPrestamo.jsp?show=<%=1%>">Autorizados</a>
@@ -41,7 +45,15 @@
                  <a class="btn btn-warning"  href="AutorizacionPrestamo.jsp?show=<%=3%>">Pendientes</a>
              
             </div>
-
+            
+<% String mensaje = (String) request.getAttribute("mensaje"); %>
+            <% if (mensaje != null) { %>
+                <div class="alert alert-success"><%= mensaje %></div>
+            <% } %>
+             <% String mensajeError = (String) request.getAttribute("mensajeError"); %>
+            <% if (mensajeError != null) { %>
+                <div class="alert alert-danger"><%= mensajeError %></div>
+            <% } %>
             <% 
             String showParam = request.getParameter("show");
             int show = (showParam != null) ? Integer.parseInt(showParam) : 0;
@@ -158,6 +170,7 @@
             <% }} %>
         </div>
     </div>
+    
     <script>
 $(document).ready(function() {
     $('#prestamosTable tbody .datatable-ignore').remove();

@@ -17,48 +17,36 @@ v<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncodi
 
 <script>
 
-    function formatNumber(value) {
-        return new Intl.NumberFormat('es-ES', { 
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2
-        }).format(value);
-    }
+function calcularMontoAPagar() {
+	var montoSolicitado = parseFloat(document.getElementById("monto").value);
+	var interes = parseFloat(document.getElementById("interes").value);
 
-    function calcularMontoAPagar() {
-        const montoSolicitado = parseFloat(document.getElementById("monto").value);
-        const interes = parseFloat(document.getElementById("interes").value);
+	if (isNaN(montoSolicitado) || isNaN(interes)) {
+		return;
+	}
 
-        if (isNaN(montoSolicitado) || isNaN(interes)) {
-            return;
-        }
+	
+	var montoTotal = montoSolicitado * (1 + interes / 100);
 
-        const montoTotal = montoSolicitado * (1 + interes / 100);
+	
+	document.getElementById("importe_pagar").value = montoTotal.toFixed(2);
+}
+ 
+function actualizarInteres(){
+   const interesMap = {
+	         3: 2,
+	         6: 5,
+	         12: 7
+	     };
 
-        document.getElementById("importe_pagar").value = formatNumber(montoTotal);
-    }
+	     const cuotasSelect = document.getElementById('cuotas');
+	     const interesInput = document.getElementById('interes');
 
-    function actualizarInteres() {
-        const interesMap = {
-            3: 2,
-            6: 5,
-            12: 7
-        };
-
-        const cuotasSelect = document.getElementById('cuotas');
-        const interesInput = document.getElementById('interes');
-
-        const selectedCuotas = parseInt(cuotasSelect.value);
-        const nuevoInteres = interesMap[selectedCuotas] || 0;
-        interesInput.value = nuevoInteres;
-
-        calcularMontoAPagar();
-    }
-
-    document.addEventListener("DOMContentLoaded", () => {
-        const inputElement = document.getElementById('importe_pagar');
-        const rawValue = parseFloat(inputElement.value); 
-        inputElement.value = formatNumber(rawValue);
-    });
+	         const selectedCuotas = parseInt(cuotasSelect.value);
+	         const nuevoInteres = interesMap[selectedCuotas] || 0; 
+	         interesInput.value = nuevoInteres;
+	     
+	  }
 </script>
 
 

@@ -59,7 +59,7 @@
                     <% for(PrestamoDto prestamo : prestamos) { %>
                     <tr>
                         <td><%= prestamo.cbu %></td>
-                        <td><%= prestamo.montoCuota %></td>
+                        <td><%= String.format("%,.2f",prestamo.montoCuota) %></td>
                         <td><%= String.format("%,.2f", prestamo.importeSolicitado) %></td>
                         <td><%= prestamo.plazoCuotas %></td>
                         <td><%= prestamo.interes %></td>

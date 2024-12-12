@@ -83,6 +83,8 @@ public class PrestamosServlet extends HttpServlet {
 	                	PrestamoSP.setFecha(java.time.LocalDate.now());
 	                	PrestamoSP.setIdPrestamoSolicitado(idPrestamo);       	
 	                	prestamosNegocio.aceptarPrestamo(PrestamoSP);
+	                	
+	                    request.setAttribute("mensaje", "El préstamo ha sido aceptado exitosamente.");
 	                	actualizarListado(request, response);
 	             
 	            }
@@ -95,6 +97,8 @@ public class PrestamosServlet extends HttpServlet {
                 int prestamo = Integer.parseInt(request.getParameter("idPrestamo"));
 
                 prestamosNegocio.rechazarPrestamo(prestamo);
+                
+                request.setAttribute("mensajeError", "El préstamo ha sido rechazado exitosamente.");
                 actualizarListado(request, response);
 
 
