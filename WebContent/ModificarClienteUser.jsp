@@ -23,6 +23,20 @@
 	request.getRequestDispatcher("ClienteServlet").forward(request, response);
 }	
 	%>
+	
+	<%
+					if(request.getAttribute("modificado") != null) {
+				%>
+				<div class="alert alert-success alert-dismissible fade show"
+					role="alert">
+					<strong>Se modifico el cliente.</strong> Cliente modificado.
+					<button type="button" class="btn-close m-0" data-bs-dismiss="alert"
+						aria-label="Close"></button>
+				</div>
+
+				<%
+					}
+				%>
 
 <div class="row">
        <div class="col-2"> 

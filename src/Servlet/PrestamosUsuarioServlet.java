@@ -53,6 +53,8 @@ public class PrestamosUsuarioServlet extends HttpServlet {
 
 	     
 	    ArrayList<Cuenta> cuentas = cuentaNegocio.listarCuentasxCliente(cliente.getId());
+	    request.getSession().setAttribute("cuentasDesplegable",cuentas);
+	    
 	    
 	    if(request.getParameter("pagar")!=null) {
 	    		

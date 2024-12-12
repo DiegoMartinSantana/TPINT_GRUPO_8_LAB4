@@ -100,22 +100,21 @@
                                         <h6 class="mb-1">Cuota <%= cuota.getNumeroCuota() %></h6>
                                         <p class="text-muted mb-0">
                                             <strong>Importe:</strong> $<%= cuota.getImporte() %> 
-                                            | <strong>Vencimiento:</strong> <%= cuota.getVencimento() %>
+                                             <strong>Vencimiento:</strong> <%= cuota.getVencimento() %>
                                         </p>
                                     </div>
                                 </div>
                                 <div class="installment-actions">
                                     <% if (cuota.getEstado() == 1) { %>
-                                        <form action="CuotasServlet?idcuota?value=<%= cuota.getId() %>&idPrestamo=<%= cuota.getIdPrestamo() %>" method="POST" class="d-inline">
-                                            <button class="btn btn-primary btn-sm" type="submit" name="btnPagarCuota">
-                                                Pagar Cuota
-                                            </button>
-                                        </form>
+                                        <a href="PagarCuota.jsp?idCuota=<%=cuota.getId()%>"  class="btn btn-primary">Pagar cuota </a>
+                                        <span class="badge bg-primary status-badge">Pendiente</span>
                                     <% } %>
                                     
                                     <% if (cuota.getEstado() == 2) { %>
+                                  
                                         <span class="badge bg-success status-badge">Pagado</span>
                                     <% } else if (cuota.getEstado() == 3) { %>
+                                    <a href="PagarCuota.jsp?idCuota=<%=cuota.getId()%>"  class="btn btn-primary">Pagar cuota </a>
                                         <span class="badge bg-danger status-badge">Vencida</span>
                                     <% } %>
                                 </div>

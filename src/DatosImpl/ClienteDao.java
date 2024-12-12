@@ -32,11 +32,10 @@ public class ClienteDao implements IClienteDao{
             "nacionalidad = ?, " +
             "domicilio = ?, " +
             "localidad = ?, " +
-            "email = ?, " +
-            "telefono = ? " +
-            "nacimiento = ?"+
-            "id_provincia = ?"+
-            "WHERE id_cliente = ? AND activo = 1;";
+            "telefono = ?, " +
+            "nacimiento = ?, "+
+            "id_provincia = ? "+
+            "WHERE id_cliente = ? AND activo = 1; ";
 	
 	private static final String selectByCuentaCliente="SELECT c.id_cuenta, c.tipo AS tipo_cuenta, c.creacion AS fecha_creacion, c.cbu, c.saldo, c.activa, cl.id_cliente, cl.nombre, cl.apellido, cl.email, cl.telefono" + 
 			                                          "FROM cuenta c INNER JOIN cliente cl ON c.id_cliente = cl.id_cliente" + 
@@ -68,11 +67,10 @@ public class ClienteDao implements IClienteDao{
 	        statement.setString(4, cliente.getNacionalidad());
 	        statement.setString(5, cliente.getDomicilio());
 	        statement.setString(6, cliente.getLocalidad());
-	        statement.setString(7, cliente.getEmail());
-	        statement.setString(8, cliente.getTelefono());
-	        statement.setInt(9, cliente.getId());
-	        statement.setDate(10, java.sql.Date.valueOf(cliente.getNacimiento())); 
-	        statement.setInt(11, cliente.getProvincia().getId_provincia());
+	        statement.setString(7, cliente.getTelefono());
+	        statement.setDate(8, java.sql.Date.valueOf(cliente.getNacimiento())); 
+	        statement.setInt(9, cliente.getProvincia().getId_provincia());
+	        statement.setInt(10, cliente.getId());
 	        
 	        int rowsUpdated = statement.executeUpdate();
 	        if (rowsUpdated > 0) {

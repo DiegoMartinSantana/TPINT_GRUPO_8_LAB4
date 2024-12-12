@@ -28,5 +28,12 @@ public class PagoNegocio implements IPagoNegocio{
 		
 
 	}
+	
+	public boolean PagarCuota(Pago pago){
+
+		return true;
+		
+	}
+	
 }
  

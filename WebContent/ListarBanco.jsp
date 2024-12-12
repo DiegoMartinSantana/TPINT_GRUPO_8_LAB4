@@ -58,6 +58,14 @@
 </div>
                 
                 <%} %>
+                
+                <%if(request.getAttribute("modificado")!=null){ %>
+                <div class="alert alert-success alert-dismissible fade show " role="alert">
+  <strong>Cliente modificado</strong> Cliente modificado correctamente.
+  <button type="button" class="btn-close m-0" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+                
+                <%} %>
                
                
                     <table  id="clientesTable" class="table table-hover align-middle" style="border-radius: 16px; overflow: hidden; background: #fff; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">

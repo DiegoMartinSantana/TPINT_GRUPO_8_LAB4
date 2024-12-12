@@ -5,16 +5,11 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import DatosImpl.ClienteDao;
-import DatosImpl.ProvinciaDao;
-import DatosImpl.UsuarioDao;
 import Dominio.Cliente;
 import Dominio.Provincia;
 import NegocioImpl.ClienteNegocio;
@@ -59,6 +54,7 @@ public class ClienteServlet extends HttpServlet {
    }
    
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
             
     
     	
@@ -132,17 +128,13 @@ public class ClienteServlet extends HttpServlet {
     
     
 	Cliente resultado = clienteNegocio.Modificar(cliente);
-
-    if (resultado != null) {
-      
-    
-    
-        
-    } else {
-    	
+	
+	request.setAttribute("Cliente", resultado);
+	request.setAttribute("modificado", true);
+	request.getRequestDispatcher("ModificarClienteUser.jsp").forward(request, response);	
+	return;
+	
     }
-		
-    }
-    }
+}
     
 

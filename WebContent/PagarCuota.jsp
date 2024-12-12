@@ -1,4 +1,5 @@
 <%@ page import="Dominio.Cuota" %> 
+<%@ page import="Dominio.Cuenta" %> 
 <%@ page import="java.util.ArrayList" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -20,28 +21,50 @@
     ArrayList<Cuota> Cuotas = session.getAttribute("Cuotas") != null 
     ? (ArrayList<Cuota>) session.getAttribute("Cuotas")
     : null;
+    
+    ArrayList<Cuenta> Cuentas = session.getAttribute("cuentasDesplegable") != null 
+    	    ? (ArrayList<Cuenta>) session.getAttribute("cuentasDesplegable")
+    	    : null;
 
  
     %>
 <body>
 
 	<% 
-    int idCuota = (int) request.getAttribute("idCuota"); // Obtén el id de la cuota desde los atributos de la solicitud.
-    Cuota cuotaSeleccionada = null;
-
-    // Si tienes una lista de Cuotas llamada "Cuotas" en el request, filtra la cuota correspondiente.
-    if (Cuotas != null) {
+    int idCuota = Integer.parseInt(request.getParameter("idCuota"));
+	Cuota cuotaSeleccionada = new Cuota();
+	if (Cuotas != null) {
         for (Cuota cuota : Cuotas) {
-            if (cuota.getId() == idCuota) {  // Compara los valores de tipo int
-                cuotaSeleccionada = cuota; // Asignamos la cuota seleccionada
-                break; // Salimos del loop una vez encontrada la cuota
+            if (cuota.getId() == idCuota) { 
+                cuotaSeleccionada = cuota; 
+                break; 
             }
         }
     }
+   
 %>
 
-<% if (cuotaSeleccionada != null) { %>
-    <li class="list-group-item d-flex align-items-center justify-content-between">
+
+<form action="servletTransferencia" method="post">
+ <input type="hidden" id="id" name="id" value="<%=idCuota%>"> 
+	<label for="id_cuenta_origen" class="form-label">Cuenta a debitar:</label>
+	
+                            <select name="id_cuenta_pago" class="form-select">
+                                <% for (Cuenta cuenta : Cuentas) { 
+                                    String tipoCuenta = "";
+                                    if (cuenta.getTipo() == 1) {
+                                        tipoCuenta = "Caja de Ahorro";
+                                    } else if (cuenta.getTipo() == 2) {
+                                        tipoCuenta = "Cuenta Corriente";
+                                    }
+                                %>
+                                    <option value="<%= cuenta.getIdCuenta() %>">
+                                        <%= tipoCuenta %> - CBU: <%= cuenta.getCbu() %> - Saldo: $<%=cuenta.getSaldo()%>
+                                    </option>
+                                <% } %>
+                            </select>
+                            
+    <div class="list-group-item d-flex align-items-center justify-content-between">
         <div>
             <i class="bi bi-credit-card"></i> <strong><%= cuotaSeleccionada.getNumeroCuota() %></strong>:
             $<%= cuotaSeleccionada.getImporte() %>
@@ -49,14 +72,11 @@
                 Vencimiento: <%= cuotaSeleccionada.getVencimento() %>
             </p>
         </div>
-    </li>
-<% } else { %>
-    <li class="list-group-item d-flex align-items-center justify-content-between">
-        <div>
-            <strong>No se encuentra la cuota correspondiente a este préstamo.</strong>
-        </div>
-    </li>
-<% } %>
+    </div>
+    <input type="submit" class="btn btn-primary w-100" name="btnPagarCuota" value="Pagar Cuota">
+    </form>
+
+
 	
 
 
