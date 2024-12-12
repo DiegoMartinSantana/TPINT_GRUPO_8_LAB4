@@ -1,4 +1,4 @@
-v<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" %>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" %>
 <%@ page import="Dominio.Cuenta" %> 
 <%@ page import="java.util.List" %>
 
@@ -6,14 +6,33 @@ v<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncodi
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <title>Pedido de Préstamo</title>
     <style>
-      <style>
-<%@include file="../Styles/StyleSolicitarPrestamo.css" %>
-
-</style>
       
-    </style>
+<%@include file="../Styles/StyleSolicitarPrestamo.css" %>
+	 .field {
+            margin-bottom: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: start;
+            font-size: 1.2rem;
+        }
+        .field label {
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: #333;
+        }
+        #importe_pagar {
+         font-size:1.25rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        #importe_pagar:hover {
+          scale(1.1);
+            
+        }
+        </style>
+
 
 <script>
 
@@ -104,13 +123,10 @@ function actualizarInteres(){
                        readonly>
             </div>
 
-           
-			<div class="field">
-				<label for="monto_a_pagar">Monto Total a Pagar:</label> 
-				<input type="text" id="importe_pagar" name="importe_pagar" value="1020000"readonly>
-			</div>
-
-
+          <div class="field">
+        <label for="monto_a_pagar">Monto Total a Pagar:</label> 
+        <input type="text" id="importe_pagar" name="importe_pagar" value="1020000" readonly>
+    </div>
 			
             <div class="field">
                 <label for="cuenta">Seleccionar Cuenta de Depósito:</label>
@@ -123,7 +139,7 @@ function actualizarInteres(){
                 </select>
             </div>
 
-            <button type="submit">Solicitar Préstamo</button>
+            <button type="submit" class="btn btn-primary" style="padding:12.5px">  Solicitar Préstamo</button>
         </form>
         
         <% } else { %>

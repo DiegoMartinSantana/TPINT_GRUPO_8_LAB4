@@ -114,6 +114,7 @@ public class ClienteServlet extends HttpServlet {
     cliente.setNacionalidad(request.getParameter("nacionalidad"));
     cliente.setDomicilio(request.getParameter("direccion"));
     cliente.setLocalidad(request.getParameter("localidad"));
+    
      LocalDate nacimiento = LocalDate.parse(request.getParameter("fechaNacimiento"));
 
     cliente.setNacimiento(nacimiento);
@@ -128,9 +129,10 @@ public class ClienteServlet extends HttpServlet {
     
     
 	Cliente resultado = clienteNegocio.Modificar(cliente);
-	
+	resultado.setNombreUsuario(request.getParameter("nombreUsuario"));
 	request.setAttribute("Cliente", resultado);
 	request.setAttribute("modificado", true);
+	LlenarDdlProvincias(request, response);
 	request.getRequestDispatcher("ModificarClienteUser.jsp").forward(request, response);	
 	return;
 	

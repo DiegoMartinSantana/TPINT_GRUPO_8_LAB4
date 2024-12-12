@@ -27,19 +27,8 @@
 }	
 	%>
 	
-	<%
-					if(request.getAttribute("modificado") != null) {
-				%>
-				<div class="alert alert-success alert-dismissible fade show"
-					role="alert">
-					<strong>Se modifico el cliente.</strong> Cliente modificado.
-					<button type="button" class="btn-close m-0" data-bs-dismiss="alert"
-						aria-label="Close"></button>
-				</div>
 
-				<%
-					}
-				%>
+				
 
 <div class="row">
     <div class="col-2"> 
@@ -53,19 +42,18 @@
             		<input  name="dni"  readonly="readonly" value="<%= cliente.getDni() %>"   style="background-color: lightblue; border: none; "type="text"  id="dni">
             		
            			 <input type="hidden" id="id" name="id" value="<%= cliente.getId() %>"> 
-
+ 		
            
                 <label for="cuil">CUIL :</label>
                 <input type="text" id="cuil" style="background-color: lightblue; border: none;" name="cuil" value="<%= cliente.getCuil() %>" readonly="readonly">
 
-                <label for="nombreUsuario">Nombre de Usuario:</label>
-                <input type="text" id="nombreUsuario" style="background-color: lightblue; border: none;" name="nombreUsuario" value="<%= cliente.getNombreUsuario() %>" readonly="readonly">
+                <input type="hidden" id="nombreUsuario" style="background-color: lightblue; border: none;" name="nombreUsuario" value="<%= cliente.getNombreUsuario() %>" readonly="readonly">
 
                 <label for="nombre">Nombre:</label>
                 <input type="text" id="nombre" name="nombre" placeholder="Ingrese su nombre" value="<%= cliente.getNombre() %>" required pattern="^[a-zA-Z\s]+$" title="El nombre solo debe contener letras.">
 
                 <label for="apellido">Apellido:</label>
-                <input type="text" id="apellido" name="apellido" placeholder="Ingrese su apellido" value="<%= cliente.getApellido() %>" required pattern="^[a-zA-Z\s]+$" title="El apellido solo debe contener letras.">
+                <input type="text" id="apellido" name="apellido" placeholder="Ingrese su apellido" value="<%= cliente.getApellido() %>" required  pattern="^[a-zA-Z\u00C0-\u017F\s]+$"  title="El apellido solo debe contener letras.">
 
                 <label for="sexo">Sexo:</label>
                 <select id="sexo" name="sexo" required>
@@ -74,12 +62,13 @@
                     <option value="2" <%= cliente.getSexo() == 2 ? "selected" : "" %>>Femenino</option>
                     <option value="3" <%= cliente.getSexo() == 3 ? "selected" : "" %>>Otro</option>
                 </select>
+                 <label for="fechaNacimiento">Fecha de Nacimiento:</label>
+                <input type="date" id="fechaNacimiento" name="fechaNacimiento" value="<%= cliente.getNacimiento() %>" required>
+                
                 </div>
                 
  		<div class="form-group-right">
-                <label for="fechaNacimiento">Fecha de Nacimiento:</label>
-                <input type="date" id="fechaNacimiento" name="fechaNacimiento" value="<%= cliente.getNacimiento() %>" required>
-
+               
                 <label for="nacionalidad">Nacionalidad:</label>
                 <input type="text" id="nacionalidad" name="nacionalidad" placeholder="Ingrese su nacionalidad" value="<%= cliente.getNacionalidad() %>" required pattern="^[a-zA-Z]+$" title="La nacionalidad solo debe contener letras.">
 
@@ -103,10 +92,10 @@
                 </select>
 
 				      <label for="localidad">Localidad:</label>
-                <input type="text" id="localidad" name="localidad" placeholder="Ingrese su localidad" value="<%= cliente.getLocalidad() %>" required pattern="^[a-zA-Z0-9 ]+$" title="La localidad solo debe contener letras, numeros y espacios.">
+                <input type="text" id="localidad" name="localidad" placeholder="Ingrese su localidad" value="<%= cliente.getLocalidad() %>" required  pattern="^^[a-zA-Z0-9\s.]+$"  title="La localidad solo debe contener letras, numeros y espacios.">
                 
                 <label for="direccion">Domicilio:</label>
-                <input type="text" id="direccion" name="direccion" placeholder="Ingrese su domicilio" value="<%= cliente.getDomicilio() %>" required pattern="^[a-zA-Z0-9 ]+$" title="El domicilio solo debe contener letras, números y espacios.">
+                <input type="text" id="direccion" name="direccion" placeholder="Ingrese su domicilio" value="<%= cliente.getDomicilio() %>" required pattern="^^[a-zA-Z0-9\s.]+$" title="El domicilio solo debe contener letras, números y espacios.">
 
           
 
@@ -117,10 +106,22 @@
                 <input type="tel" id="telefono" name="telefono" placeholder="Ingrese su número de teléfono" value="<%= cliente.getTelefono() %>" required pattern="^[+]?[\d ]+$" title="El teléfono solo debe contener números, espacios y el signo '+'.">
            </div>
 
-            <div style="margin-top: 15px;">
+            <div >
                 <input type="submit" style="width: 100%;" value="Guardar Cambios" name="btnGuardar">
+
             </div>
+            
         </form>
+        	<% if(request.getAttribute("modificado") != null) {%>
+				
+				<div class="alert alert-success alert-dismissible fade show " style="margin-top:20px"
+					role="alert">
+					<strong>Se modifico el cliente.</strong> Cliente modificado.
+					<button type="button" class="btn-close m-0" data-bs-dismiss="alert"
+						aria-label="Close"></button>
+				</div>
+
+				<%} %>
     </div>
 </div>
 
