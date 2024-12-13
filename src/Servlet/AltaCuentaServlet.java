@@ -21,9 +21,7 @@ import NegocioImpl.ClienteNegocio;
 import NegocioImpl.CuentaNegocio;
 import NegocioImpl.MovimientoNegocio;
 
-/**
- * Servlet implementation class AltaCuentaServlet
- */
+
 @WebServlet("/AltaCuentaServlet")
 public class AltaCuentaServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
@@ -90,8 +88,7 @@ protected void doPost(HttpServletRequest request , HttpServletResponse response)
         
         if(resultado==1) {
         	exito_mov= movimientoNegocio.crearMovimiento(nuevoMovimiento);
-        	 request.getRequestDispatcher("CuentaServlet?Limite="+1).forward(request, response);
-        	 return;
+        	
         }
     	
         if(resultado == 3) {
@@ -101,11 +98,12 @@ protected void doPost(HttpServletRequest request , HttpServletResponse response)
         }
     	if (resultado==1 && exito_mov) {
     		request.getSession().removeAttribute("LimiteCuentas");
-            request.getRequestDispatcher("CuentaServlet").forward(request, response);
+    		request.setAttribute("CuentaCreada", true);
+            request.getRequestDispatcher("AltaCuenta.jsp").forward(request, response);
+
 
         }
       
         
     }
 }
-

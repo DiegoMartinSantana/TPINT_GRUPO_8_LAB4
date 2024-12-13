@@ -8,7 +8,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <title>Login</title>
 <style>
-      
+
        <%@include file="../Styles/StyleLogin.css" %>
     </style>
 </head>
@@ -18,15 +18,16 @@
         <form action="LoginServlet" method="get">
             <label for="username">Nombre de Usuario:</label>
             <input type="text" id="username" name="username" required>
-            
+
             <label for="password">Contraseña:</label>
             <input type="password" id="password" name="password" required>
-            
+
             <div class="button-container">
                 <input type="submit" value="Aceptar">
             </div>
         </form>
-         <div <% if(request.getAttribute("UsuarioNulo") == null) { %>style="display:none;"<% } %>>
+
+         <div <% if(request.getAttribute("UsuarioNulo") == null) { %>style="display:none;"<% } %> style="margin-top:15px;color:red;">
     <%= request.getAttribute("UsuarioNulo") %>
 </div>
     </div>

@@ -31,34 +31,7 @@
     <form action="servletUsuario" method="post"   onsubmit="return validarContrasenas()">
 
 				
-					<%if(request.getParameter("Agregado") != null) {%>
-				
-				<div class="alert alert-success alert-dismissible fade show"
-					role="alert">
-					<strong>Cliente creado</strong> El cliente se añadio correctamente. 
-					<button type="button" class="btn-close m-0" data-bs-dismiss="alert"
-						aria-label="Close"></button>
-				</div><%} %>
-
-		
-					<%if (request.getParameter("NoAgregado") != null) {%>
-				
-				<div class="alert alert-danger alert-dismissible fade show "
-					role="alert">
-					<strong>No se pudo agregar el cliente.</strong>Nombre de usuario existente.
-					<button type="button" class="btn-close m-0" data-bs-dismiss="alert"
-						aria-label="Close"></button>
-				</div><%} %>
-			
-				
-				<%	if (request.getParameter("NoAgregadoPorOtro") != null) {%>
-				
-				<div class="alert alert-danger alert-dismissible fade show "
-					role="alert">
-					<strong>No se pudo agregar el cliente.</strong> Ocurrio un error en los datos ingresados.
-					<button type="button" class="btn-close m-0" data-bs-dismiss="alert"
-						aria-label="Close"></button>
-				</div>	<%} %>
+					
 
 			
 
@@ -147,10 +120,38 @@
            
         </div>
 <div>
+<%if(request.getParameter("Agregado") != null) {%>
+				
+				<div class="alert alert-success alert-dismissible fade show"
+					role="alert">
+					<strong>Cliente creado</strong> El cliente se añadio correctamente. 
+					<button type="button" class="btn-close m-0" data-bs-dismiss="alert"
+						aria-label="Close"></button>
+				</div><%} %>
+
+		
+					<%if (request.getParameter("NoAgregado") != null) {%>
+				
+				<div class="alert alert-danger alert-dismissible fade show "
+					role="alert">
+					<strong>No se pudo agregar el cliente.</strong>Nombre de usuario existente.
+					<button type="button" class="btn-close m-0" data-bs-dismiss="alert"
+						aria-label="Close"></button>
+				</div><%} %>
+			
+				
+				<%	if (request.getParameter("NoAgregadoPorOtro") != null) {%>
+				
+				<div class="alert alert-danger alert-dismissible fade show "
+					role="alert">
+					<strong>No se pudo agregar el cliente.</strong> Ocurrio un error en los datos ingresados.
+					<button type="button" class="btn-close m-0" data-bs-dismiss="alert"
+						aria-label="Close"></button>
+				</div>	<%} %>
     <input type="submit" style="width:100%" value="Aceptar" name="btnAceptar" onclick="return validarContrasenas()">
     
 </div>
-
+	
     </form>
     
 </div>

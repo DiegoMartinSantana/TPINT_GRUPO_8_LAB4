@@ -52,7 +52,7 @@
             <% } %>
              <% String mensajeError = (String) request.getAttribute("mensajeError"); %>
             <% if (mensajeError != null) { %>
-                <div class="alert alert-danger"><%= mensajeError %></div>
+                <div class="alert alert-success"><%= mensajeError %></div>
             <% } %>
             <% 
             String showParam = request.getParameter("show");

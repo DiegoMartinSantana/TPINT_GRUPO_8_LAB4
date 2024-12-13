@@ -86,7 +86,14 @@
            
         </form>
 
-         
+         <%	if(request.getAttribute("CuentaCreada")!=null){ %>
+
+          <div class="alert alert-success alert-dismissible fade show position-relative" role="alert" style="margin-top:20px">
+                    <strong>Cuenta creada</strong>  Cuenta creada con exito.
+                    <button type="button" class="btn-close position-absolute top-0 end-0 m-0" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>       
+        
+       	 <%}%>
            <%	if(creada==2){ %>
 
           <div class="alert alert-danger alert-dismissible fade show position-relative" role="alert" style="margin-top:20px">
@@ -108,5 +115,3 @@
 
 </body>
 </html>
-message.txt
-5 KB

@@ -142,16 +142,16 @@ document.addEventListener('DOMContentLoaded', mostrarOpcionesCuenta);
         %>
         
         <% if (cuentas != null && !cuentas.isEmpty()) { %>
-            <!-- Mostrar mensajes de error o éxito -->
+      
             <% if (mensaje != null && !mensaje.isEmpty()) { %>
-                <div class="alert alert-<%= tipoMensaje %>" role="alert">
-                    <%= mensaje %>
-                </div>
-            <% } %>
+    <div class="alert" style="border: 2px solid #ff4d4d; color: #ff4d4d; background-color: #fff5f5; padding: 15px; border-radius: 5px; font-family: Arial, sans-serif; font-size: 14px; margin-top: 10px;" role="alert">
+        <strong>¡Atención!</strong> <%= mensaje %>
+    </div>
+<% } %>
         
             <form action="servletTransferencia" method="post" onsubmit="return validarTransferencia()">
                 <div class="row">
-                    <!-- Selección de cuenta origen -->
+                   
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label for="id_cuenta_origen" class="form-label">Cuenta de Origen:</label>
@@ -172,7 +172,7 @@ document.addEventListener('DOMContentLoaded', mostrarOpcionesCuenta);
                         </div>
                     </div>
                     
-                    <!-- Selección entre Mis Cuentas u Otra Cuenta -->
+                   
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label for="cuentaDestinoOpciones" class="form-label">Destinatario:</label>
@@ -185,7 +185,7 @@ document.addEventListener('DOMContentLoaded', mostrarOpcionesCuenta);
                     </div>
                 </div>
 
-                <!-- Campos dinámicos -->
+              
                 <div class="row">
                     <div class="col-md-6" id="misCuentasField">
                         <div class="mb-3">
@@ -205,8 +205,8 @@ document.addEventListener('DOMContentLoaded', mostrarOpcionesCuenta);
                                 <% } %>
                             </select>
                             <% if (request.getSession().getAttribute("MismasCuentas") != null) { %>
-                            <p style="color:red">Seleccione una cuenta distinta a la de origen.</p>
-                            <% } %>
+                            <p style="color:red"> Seleccione una cuenta distinta a la de origen.</p>
+                            <% } %> 
                         </div>
                     </div>
 
@@ -220,7 +220,7 @@ document.addEventListener('DOMContentLoaded', mostrarOpcionesCuenta);
                     </div>
                 </div>
 
-                <!-- Fecha, monto y detalle -->
+           
                 <div class="row">
                     <div class="col-md-6">
                         <div class="mb-3">

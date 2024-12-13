@@ -44,7 +44,7 @@
             <p class="text-muted mb-1">Saldo Disponible:</p>
             <h5 class="saldo">$<%= String.format("%,.2f",cuenta.getSaldo()) %></h5>
             <a href="HomeServlet?cuentaId=<%= cuenta.getIdCuenta() %>" class="btn btn-outline-primary btn-block mt-3">
-               Ver Transferencias <i class="fas fa-chevron-right"></i>
+               Ver Movimientos <i class="fas fa-chevron-right"></i>
             </a>
         </div>
         
@@ -60,7 +60,7 @@
     </div>
 
     
-    <h4 class="section-title mt-5 mb-4"><i class="fas fa-history"></i> Historial Transferencias</h4>
+    <h4 class="section-title mt-5 mb-4"><i class="fas fa-history"></i> Historial Movimientos</h4>
     <div class="card transfer-card shadow-sm">
         <div class="card-body">
             <div class="table-responsive">

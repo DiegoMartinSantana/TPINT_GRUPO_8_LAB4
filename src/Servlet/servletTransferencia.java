@@ -13,17 +13,10 @@ import javax.servlet.http.HttpServletResponse;
 import Dominio.Transferencia;
 import NegocioImpl.TransferenciaNegocio;
 
-/**
- * Servlet implementation class servletTrasferencia
- */
 @WebServlet("/servletTransferencia")
 public class servletTransferencia extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-	/*private MovimientoNegocio movimientoNegocio = new MovimientoNegocio();
-	 ClienteNegocio clienteNegocio = new ClienteNegocio();
-	 TransferenciaDao traDao = new TransferenciaDao();*/
-	
+
     public servletTransferencia() {
         super();
     }
@@ -89,7 +82,7 @@ public class servletTransferencia extends HttpServlet {
 		            request.setAttribute("mensaje", "Transferencia realizada con éxito.");
 		            request.setAttribute("tipoMensaje", "success");
 		        } else {
-		            request.setAttribute("mensaje", "Error al realizar la transferencia.");
+		            request.setAttribute("mensaje", "No tienes saldo suficiente.");
 		            request.setAttribute("tipoMensaje", "error");
 		        }
 		    } catch (NumberFormatException e) {
